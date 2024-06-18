@@ -1,7 +1,5 @@
 <?php
 
-use models\entities\User;
-
 /**
  * Classe utilitaire : cette classe ne contient que des méthodes statiques qui peuvent être appelées
  * directement sans avoir besoin d'instancier un objet Utils.
@@ -21,14 +19,14 @@ class Utils
     public static function user(): bool
     {
         // On vérifie que l'utilisateur est connecté.
-        if (!isset($_SESSION['user'])) {
-            return false;
-        }
-        $user = new User($_SESSION['user']);
+        $userConnected = isset($_SESSION['user']) ? true : false;
 
-        if ($_SESSION['idUser'] === $user->getId()) {
-            return true;
-        }
+
+        /*     $userRepo = new \repositories\UserRepository();
+             $user = $userRepo->getUserById($_SESSION['user']['id']);
+             var_dump($user);*/
+
+        return $userConnected;
     }
 
     /**
@@ -131,6 +129,27 @@ class Utils
             $refOrder .= " active";
         }
         return $refOrder;
+    }
+
+    /**
+     * @param  $dateOrigin
+     * @return string
+     * @throws Exception
+     */
+    public static function dateIntervalDuration($dateOrigin)
+    {
+        $dateEnd   = "NOW";
+//        $dateStart = new DateTime($dateOrigin);
+        $dateEnd   = new DateTime($dateEnd);
+        $interval  = $dateEnd->diff($dateOrigin);
+        // params accepte par format '%y years, %d days, %H hours, %I minutes, %S seconds';
+        if($interval->y < 1){
+            return $interval->format('%d jour(s)');
+
+        }else{
+            return $interval->format('%y an(s)' );
+        }
+
     }
 
 }
