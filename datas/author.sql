@@ -1,4 +1,6 @@
-insert into `2024_oc_p6_tomtroc`.author (id, fullname, created_at, modified_at) values (1, 'bcastaner0', '2020-04-04 10:22:16', '2021-02-22 05:21:14');
+USE `2024_oc_p6_tomtroc` ;
+
+insert into author (id, fullname, created_at, modified_at) values (1, 'bcastaner0', '2020-04-04 10:22:16', '2021-02-22 05:21:14');
 insert into author (id, fullname, created_at, modified_at) values (2, 'satlay1', '2020-02-03 09:23:55', '2023-04-20 11:47:31');
 insert into author (id, fullname, created_at, modified_at) values (3, 'lwhacket2', '2020-03-02 22:53:10', '2023-05-25 05:11:53');
 insert into author (id, fullname, created_at, modified_at) values (4, 'bbutchart3', '2020-05-12 02:51:08', '2021-07-13 07:19:43');

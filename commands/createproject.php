@@ -1,7 +1,5 @@
 <?php
 
-use commands\Command;
-
 require_once "config\_config.php";
 function ft_printcolor(string $color, string $message)
 {
@@ -96,20 +94,17 @@ function ft_readline($qa = false)
 
 function sqlMigrate($filname)
 {
-
-    $sql       = file_get_contents('datas/'.$filname . '.sql');
+    $sql = file_get_contents('datas/' . $filname . '.sql');
+    // TOFIXED quand ";" se trouve dans le texte/content de la requeste exemple username = "boudin; de"
     $sql_array = explode(";", $sql);
-
-//    print_r($sql_array);
-//    die();
-    $db        = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASS);
+    array_pop($sql_array);
+    $db = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASS);
     $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
     $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
 
 
-// TOFIXED Voire le explode garde 1 el vide -> shift
     foreach ($sql_array as $val) {
-        var_dump("QUERY // : ".$val);
+        var_dump("QUERY // : " . $val . "\n");
         $db->query($val);
     }
 }
@@ -117,17 +112,17 @@ function sqlMigrate($filname)
 function generateMigrations()
 {
     $migrations = [
-        "migrations"
-//        "user",
-//        "book",
-//        "author",
-//        "message",
+        "migrations",
+        "user",
+        "book",
+        "author",
+        "message",
 //        "book_has_author",
 //        "user_has_book"
     ];
     foreach ($migrations as $migration) {
         sqlMigrate($migration);
-        echo $migration . " -> done";
+        echo $migration . " -> done\n";
     }
 }
 
@@ -135,9 +130,10 @@ function generateMigrations()
  * DEBUT DU SCRIPT
  */
 // install flolder/command
-while (true) {
-//    $input = ft_readline();
-    generateMigrations();
-    $cmd = new Command();
+generateMigrations();
 
-}
+//while (true) {
+//    $input = ft_readline();
+//    $cmd = new Command();
+
+//}

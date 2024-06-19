@@ -1,3 +1,4 @@
+USE `2024_oc_p6_tomtroc` ;
 insert into 2024_oc_p6_tomtroc.book (id, title, content, thumb, stock, created_at, modified_at) values (1, 'tleverentz0', 'Suture of laceration of scrotum and tunica vaginalis', 'http://dummyimage.com/200.png/dddddd/000000', true, '2020-06-05 22:45:33', '2021-04-17 20:15:13');
 insert into book (id, title, content, thumb, stock, created_at, modified_at) values (2, 'lkarle1', 'Cardiac mapping', 'http://dummyimage.com/200.png/cc0000/ffffff', true, '2020-03-05 04:26:07', '2022-10-25 15:34:34');
 insert into book (id, title, content, thumb, stock, created_at, modified_at) values (3, 'chechlin2', 'Other transfusion of whole blood', 'http://dummyimage.com/200.png/ff4444/ffffff', true, '2020-01-26 02:53:54', '2021-11-08 14:15:04');
