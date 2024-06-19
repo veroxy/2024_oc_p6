@@ -138,14 +138,11 @@ class Utils
      */
     public static function dateIntervalDuration($dateOrigin)
     {
-        $dateEnd   = "NOW";
-//        $dateStart = new DateTime($dateOrigin);
-        $dateEnd   = new DateTime($dateEnd);
+        $dateEnd   = new DateTime(); // 'now' default
         $interval  = $dateEnd->diff($dateOrigin);
         // params accepte par format '%y years, %d days, %H hours, %I minutes, %S seconds';
         if($interval->y < 1){
             return $interval->format('%d jour(s)');
-
         }else{
             return $interval->format('%y an(s)' );
         }

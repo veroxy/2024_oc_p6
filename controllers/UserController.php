@@ -25,6 +25,7 @@ class UserController extends AbstactController
             $user = $userRepo->getUserById($uid);
         }
 
+        // TODO gere books empty
         if (Utils::user() & $_SESSION['idUser'] == $user->getId()) {
                 $books = $booksRepo->getBookByUser( $user->getId());
 

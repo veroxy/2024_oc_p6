@@ -1,5 +1,6 @@
 <?php
 
+namespace commands;
 class Command
 {
     /**
@@ -29,13 +30,10 @@ class Command
 
     public static function ft_readline($qa = false)
     {
-        if(!$qa) {
+        if (!$qa) {
             $input = readline("Entrez votre commande : ");
-            /*for($i=1; $i<3; ++$i){
-                $input = !empty($input) ? $input : ft_readline();
-            }*/
             echo !empty($input) ? "Vous avez saisi : $input\n" : ft_colorError("vous n'avez rien saisi.\n");
-        }else{
+        } else {
             $input = readline("Oui(O) ou Non(N) : ");
             $input = $input === strtolower("O") ? true : false;
         }

@@ -1,5 +1,8 @@
 <?php
 
+use commands\Command;
+
+require_once "config\_config.php";
 function ft_printcolor(string $color, string $message)
 {
     switch ($color) {
@@ -91,12 +94,50 @@ function ft_readline($qa = false)
     return $input;
 }
 
+function sqlMigrate($filname)
+{
+
+    $sql       = file_get_contents('datas/'.$filname . '.sql');
+    $sql_array = explode(";", $sql);
+
+//    print_r($sql_array);
+//    die();
+    $db        = new PDO('mysql:host=' . DB_HOST . ';dbname=' . DB_NAME . ';charset=utf8', DB_USER, DB_PASS);
+    $db->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    $db->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
+
+
+// TOFIXED Voire le explode garde 1 el vide -> shift
+    foreach ($sql_array as $val) {
+        var_dump("QUERY // : ".$val);
+        $db->query($val);
+    }
+}
+
+function generateMigrations()
+{
+    $migrations = [
+        "migrations"
+//        "user",
+//        "book",
+//        "author",
+//        "message",
+//        "book_has_author",
+//        "user_has_book"
+    ];
+    foreach ($migrations as $migration) {
+        sqlMigrate($migration);
+        echo $migration . " -> done";
+    }
+}
 
 /**
  * DEBUT DU SCRIPT
  */
-
+// install flolder/command
 while (true) {
-    $input = ft_readline();
+//    $input = ft_readline();
+    generateMigrations();
+    $cmd = new Command();
 
 }

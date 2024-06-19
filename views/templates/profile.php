@@ -8,7 +8,7 @@
         <h2 class="fw-normal"><?= $user->getUsername() ?></h2>
         <p>Membre depuis <?= Utils::dateIntervalDuration($user->getCreatedAt()) ?></p>
         <h5>bibliothèque</h5>
-        <p><?= Utils::dateIntervalDuration($user->getCreatedAt()) ?></p>
+        <p><i class=""></i><?= count($books) ?> livres</p>
     </div>
     <div class="col-lg-6">
         <form action="index.php?action=suscribeUser" method="post" class="foldedCorner">
