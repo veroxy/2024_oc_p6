@@ -117,8 +117,8 @@ function generateMigrations()
         "book",
         "author",
         "message",
-//        "book_has_author",
-//        "user_has_book"
+        "book_has_author",
+        "user_has_book"
     ];
     foreach ($migrations as $migration) {
         sqlMigrate($migration);

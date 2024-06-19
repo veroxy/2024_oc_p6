@@ -29,7 +29,7 @@ insert into user_has_book (book_id, user_id) values (10, 11);
 insert into user_has_book (book_id, user_id) values (2, 17);
 insert into user_has_book (book_id, user_id) values (19, 9);
 insert into user_has_book (book_id, user_id) values (19, 18);
-insert into user_has_book (book_id, user_id) values (17, 13);
+insert into user_has_book (book_id, user_id) values (16, 13);
 insert into user_has_book (book_id, user_id) values (12, 13);
 insert into user_has_book (book_id, user_id) values (19, 13);
 insert into user_has_book (book_id, user_id) values (4, 16);
