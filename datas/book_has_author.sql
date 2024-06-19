@@ -1,3 +1,4 @@
+USE `2024_oc_p6_tomtroc` ;
 insert into book_has_author (book_id, author_id) values (3, 14);
 insert into book_has_author (book_id, author_id) values (10, 13);
 insert into book_has_author (book_id, author_id) values (4, 5);
