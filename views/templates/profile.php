@@ -34,7 +34,6 @@
 
     <?php
     if (Utils::user()) {
-
         ?>
 
         <table class="adminBook">
@@ -46,41 +45,50 @@
                 <th class="t-cell">stock</th>
                 <th class="t-cell" colspan="3">actions</th>
             </tr>
-            <?php foreach ($books as $book) {
-                ?>
-                <!--        <tr class="">-->
-                <tr class="articleLine">
-                    <td class="title"><img src="<?= $book->getThumb() ?>"></td>
-                    <td class="title"><?= $book->getTitle() ?></td>
-                    <td class="content"><?php $author = $book->getAuthor();
-                        //                        var_dump($book,$author);
-                        echo $author->getfullname() ?></td>
-                    <td class="content"><?= $book->getContent(200) ?></td>
-                    <td class="content">
-                        <?php
-                        if ($book->stock) {
-                            echo "<span class='badge rounded-pill bg-success'>disponible</span>";
 
-                        } else {
-                            echo "<span class='badge rounded-pill bg-danger'>non disponible</span>";
-                        }
+            <?php
+            if ($books) {
+                foreach ($books as $book) {
+                    ?>
+                    <!--        <tr class="">-->
+                    <tr class="articleLine">
+                        <td class="title"><img src="<?= $book->getThumb() ?>"></td>
+                        <td class="title"><?= $book->getTitle() ?></td>
+                        <td class="content"><?php $author = $book->getAuthor();
+                            //                        var_dump($book,$author);
+                            echo $author->getfullname() ?></td>
+                        <td class="content"><?= $book->getContent(200) ?></td>
+                        <td class="content">
+                            <?php
+                            if ($book->stock) {
+                                echo "<span class='badge rounded-pill bg-success'>disponible</span>";
 
-                        ?>
-                    </td>
+                            } else {
+                                echo "<span class='badge rounded-pill bg-danger'>non disponible</span>";
+                            }
 
-                    <td class="action">
-                        <span class="pill rounded-pill border-danger"></span>
-                        <a class="submit"
-                           href="index.php?action=showUpdateBookForm&id=<?= $book->getId() ?>">
-                            edit
-                        </a>
-                    </td>
-                    <td class="action">
-                        <a class="submit"
-                           href="index.php?action=deleteBook&id=<?= $book->getId() ?>" <?= Utils::askConfirmation("Êtes-vous sûr de vouloir supprimer ce livre ?") ?> >delete</a>
-                    </td>
-                </tr>
-            <?php } ?>
+                            ?>
+                        </td>
+
+                        <td class="action">
+                            <span class="pill rounded-pill border-danger"></span>
+                            <a class="submit"
+                               href="index.php?action=showUpdateBookForm&id=<?= $book->getId() ?>">
+                                edit
+                            </a>
+                        </td>
+                        <td class="action">
+                            <a class="submit"
+                               href="index.php?action=deleteBook&id=<?= $book->getId() ?>" <?= Utils::askConfirmation("Êtes-vous sûr de vouloir supprimer ce livre ?") ?> >delete</a>
+                        </td>
+                    </tr>
+                <?php }
+            } else {
+                echo "Aucun livre";
+                if (Utils::user()) {
+                    echo "<a class='btn btn-primary w-100 py-2 btn btn-success' href='#/bookNew'>échanger un livre </a>";
+                }
+            } ?>
         </table>
 
         <a class="submit" href="index.php?action=showUpdateBookForm">Ajouter un $book</a>
