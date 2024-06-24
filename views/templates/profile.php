@@ -5,7 +5,7 @@
                 Placeholder</title>
             <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
         </svg>
-        <h2 class="fw-normal"><?= $user->getUsername() ?></h2>
+        <h2 class="fw-normal"><?= $user->username ?></h2>
         <p>Membre depuis <?= Utils::dateIntervalDuration($user->getCreatedAt()) ?></p>
         <h5>bibliothèque</h5>
         <p><i class=""></i><?= count($books) ?> livres</p>
@@ -15,20 +15,22 @@
 
             <fieldset class="mb-3">
                 <label for="email">Email address</label>
-                <input type="email" class="form-control" id="email" value="<?= $user->getEmail() ?>">
+                <input type="email" class="form-control" id="email" value="<?= $user->email ?>" name="current-email" autocomplete="current-email">
             </fieldset>
-            <fieldset class="mb-3">
+            <fieldset class="mb-3 form-group">
                 <label for="password">Password</label>
-                <input type="password" class="form-control" id="password" value="<?= $user->getPassword() ?>"
+<!--                <input type="password" class="form-control" id="password" value="--><?php //= $user->password ?><!--"-->
+
+                <input type="password" id="password" class="form-control rounded" value="<?= $user->password ?>" spellcheck="false" autocorrect="off" autocapitalize="off" name="current-password" autocomplete="current-password" required>
+                <button id="toggle-password" type="button" class="d-none"
+                        aria-label="Show password as plain text. Warning: this will display your password on the screen.">
+                </button>
             </fieldset>
             <fieldset class="mb-3">
                 <label for="username">Username</label>
-                <input type="text" class="form-control" id="username" value="<?= $user->getUsername() ?>">
+                <input type="text" class="form-control" id="username" value="<?= $user->username ?>" spellcheck="false" autocorrect="off" autocapitalize="off" name="current-username" autocomplete="current-username" readonly\>
             </fieldset>
-
             <button class="btn btn-primary w-100 py-2 btn btn-success" type="submit">Modifier</button>
-            <p class="mt-5 mb-3 text-body-secondary">Déja un compte ? <a href="index.php?action=connectionForm">Connectez-vous</a>
-            </p>
         </form>
     </div>
 
@@ -52,12 +54,12 @@
                     ?>
                     <!--        <tr class="">-->
                     <tr class="articleLine">
-                        <td class="title"><img src="<?= $book->getThumb() ?>"></td>
-                        <td class="title"><?= $book->getTitle() ?></td>
-                        <td class="content"><?php $author = $book->getAuthor();
+                        <td class="title"><img src="<?= $book->thumb ?>"></td>
+                        <td class="title"><?= $book->title ?></td>
+                        <td class="content"><?php $author = $book->author();
                             //                        var_dump($book,$author);
-                            echo $author->getfullname() ?></td>
-                        <td class="content"><?= $book->getContent(200) ?></td>
+                            echo $author->fullname ?></td>
+                        <td class="content"><?= $book->content(200) ?></td>
                         <td class="content">
                             <?php
                             if ($book->stock) {
@@ -69,25 +71,28 @@
 
                             ?>
                         </td>
-
                         <td class="action">
                             <span class="pill rounded-pill border-danger"></span>
                             <a class="submit"
-                               href="index.php?action=showUpdateBookForm&id=<?= $book->getId() ?>">
+                               href="index.php?action=showUpdateBookForm&id=<?= $book->id ?>">
                                 edit
                             </a>
                         </td>
                         <td class="action">
                             <a class="submit"
-                               href="index.php?action=deleteBook&id=<?= $book->getId() ?>" <?= Utils::askConfirmation("Êtes-vous sûr de vouloir supprimer ce livre ?") ?> >delete</a>
+                               href="index.php?action=deleteBook&id=<?= $book->id ?>" <?= Utils::askConfirmation("Êtes-vous sûr de vouloir supprimer ce livre ?") ?> >delete</a>
                         </td>
                     </tr>
                 <?php }
             } else {
-                echo "Aucun livre";
+                echo "<tr class='articleLine'>";
+
+                echo "<td colspan='6'><p class='text-center'>Aucun livre</p></td></tr>";
                 if (Utils::user()) {
-                    echo "<a class='btn btn-primary w-100 py-2 btn btn-success' href='#/bookNew'>échanger un livre </a>";
+                    echo "<tr class='articleLine text-center'>
+                    <td colspan='6'><a class='btn btn-primary py-2 btn btn-success ' href='#/bookNew'>échanger un livre </a></td></tr>";
                 }
+                echo "</tr>";
             } ?>
         </table>
 

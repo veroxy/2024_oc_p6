@@ -7,7 +7,7 @@ use DateTime;
 abstract class AbstractEntity
 {
     // Par défaut l'id vaut -1, ce qui permet de vérifier facilement si l'entité est nouvelle ou pas. 
-    protected int    $id   = -1;
+    protected int $id = -1;
     protected string $slug = "";
 
     protected DateTime $createdAt;
@@ -101,17 +101,19 @@ abstract class AbstractEntity
     }
 
     /**
-     * @param string $input
+     * @param string|array $input
      * @return void
      */
-    public function setSlug(string $input): void
+    public function setSlug(string|array $input): void
     {
 
-        $textlower = isset($input) ? strtolower($input) : strtolower(isset($this->title));
+        $textlower = isset($input) ? is_array($input) ? implode(' ', $input) : $input : strtolower(isset($this->title));
+
+
         //convert special characters to normal
-        $utf8normal   = iconv('utf-8', 'ascii//TRANSLIT', $textlower);
+        $utf8normal = iconv('utf-8', 'ascii//TRANSLIT', $textlower);
         $specialchars = preg_replace("/[:']/", '', $utf8normal);
-        $this->slug   = str_replace(' ', '_', $specialchars);
+        $this->slug = str_replace(' ', '_', $specialchars);
 
     }
 

@@ -24,16 +24,16 @@
                 <div class="col">
                     <figure class="card border-0 shadow-sm rounded rounded-4">
                         <div>
-                            <img src="<?= $book->getThumb() ?>" alt="<?= $book->getThumb() ?>">
+                            <img src="<?= $book->thumb ?>" alt="<?= $book->thumb ?>">
                         </div>
                         <figcaption class="card-body">
-                            <h3 class="h3"><?= $book->getTitle() ?></h3>
+                            <h3 class="h3"><?= $book->title ?></h3>
                             <p class="card-text"><?php
-                                $author = $book->getAuthors()[0];
+                                $author = $book->authors[0];
                                 //                        var_dump($book,$author);
-                                echo $author->getfullname() ?></p>
+                                echo $author->fullname ?></p>
 
-                            <p><i><?= $book->getContent() ?></i></p>
+                            <p><i><?= $book->content ?></i></p>
                         </figcaption>
                     </figure>
                 </div>

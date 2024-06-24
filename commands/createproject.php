@@ -122,7 +122,7 @@ function generateMigrations()
     ];
     foreach ($migrations as $migration) {
         sqlMigrate($migration);
-        echo $migration . " -> done\n";
+        echo ft_colorSucces($migration.".sql -> done\n")  ;
     }
 }
 

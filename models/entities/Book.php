@@ -10,13 +10,13 @@ use models\AbstractEntity;
  */
 class Book extends AbstractEntity
 {
-public string|null  $stock   = null;
-    private int         $idUser;
-    private string      $title   = "";
-    private string      $content = "";
-    private array|int   $authors = [];
-        private string|null $thumb   = null; // TOFIXED Tomemory
-    private ?int        $views   = 0;
+    public int $stock = 0;
+    public User $user;
+    public string $title = "";
+    public string $content = "";
+    public array|int $authors = [];
+    public string|null $thumb = null; // TOFIXED Tomemory
+    public ?int $views = 0;
 
     public
     function __construct(array $data = [])
@@ -54,7 +54,7 @@ public string|null  $stock   = null;
 
     /**
      * get nombre si est en stock
-     * @return string|null
+     * @return int|null
      */
     public function getStock(): ?int
     {
@@ -66,7 +66,7 @@ public string|null  $stock   = null;
      * @param int|null $stock
      * @return void
      */
-    public function setStock(?int $stock): void
+    public function setStock(?int $stock = 0): void
     {
         $this->stock = $stock;
     }
@@ -128,22 +128,22 @@ public string|null  $stock   = null;
 
     /**
      * Getter pour l'id de l'utilisateur.
-     * @return int
+     * @return User
      */
     public
-    function getIdUser(): int
+    function getUser(): User
     {
-        return $this->idUser;
+        return $this->user;
     }
 
     /**
      * Setter pour l'id de l'utilisateur.
-     * @param int $idUser
+     * @param User $user
      */
     public
-    function setIdUser(int $idUser): void
+    function setUser(User $user): void
     {
-        $this->idUser = $idUser;
+        $this->user = $user;
     }
 
     /**

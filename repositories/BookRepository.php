@@ -3,6 +3,7 @@
 namespace repositories;
 //
 use models\entities\Book;
+use models\entities\User;
 use PDOStatement;
 
 /**
@@ -16,20 +17,45 @@ class BookRepository extends AbstractEntityRepository
      */
     public function getAllBooks(): array
     {
-        $sql        = "SELECT * FROM book ORDER BY created_at DESC";
-        $result     = $this->db->query($sql);
+        $sql = "SELECT * FROM book ORDER BY created_at DESC";
+        $result = $this->db->query($sql);
         $authorRepo = new AuthorRepository();
+        $books = [];
 
         while ($book = $result->fetch()) {
             $authors = $authorRepo->getAllAuthorsByBookId($book['id']);
-            $post    = new Book($book);
+            $users = $this->getUsersBook($book['id']);
+            $post = new Book($book);
             $post->setAuthors($authors);
+
+            // tofixed ?
+            foreach ($users as $userRepo) {
+                $user = new User($userRepo);
+                $post->setUser($user);
+            }
             $books[] = $post;
         }
         return $books;
     }
 
-    public function getBookByUser(int $userId): array
+    /**
+     * get only user(s) from refered book id
+     * @param int $bookId
+     * @return array
+     */
+    public function getUsersBook(int $bookId): array
+    {
+        $sql = "SELECT *
+                FROM user
+                         JOIN user_has_book ub
+                              ON ub.user_id = user.id
+                WHERE ub.book_id = $bookId;";
+        $result = $this->db->query($sql);
+        $users = $result->fetchAll();
+        return $users;
+
+    }
+    /*public function getBookByUser(int $userId): array
     {
         $sql        = "SELECT b.*
                         FROM user_has_book
@@ -47,7 +73,7 @@ class BookRepository extends AbstractEntityRepository
             $books[] = $post;
         }
         return $books;
-    }
+    }*/
 
     /**
      * Récupère tous les books par ordre décroissant d'ajout
@@ -55,13 +81,14 @@ class BookRepository extends AbstractEntityRepository
      */
     public function getFouthLastBooks(int $limit = 4): array
     {
-        $sql        = "SELECT * FROM book ORDER BY created_at DESC LIMIT $limit";
-        $result     = $this->db->query($sql);
+        $sql = "SELECT * FROM book ORDER BY created_at DESC LIMIT $limit";
+        $result = $this->db->query($sql);
         $authorRepo = new AuthorRepository();
+        $books = [];
 
         while ($book = $result->fetch()) {
             $authors = $authorRepo->getAllAuthorsByBookId($book['id']);
-            $post    = new Book($book);
+            $post = new Book($book);
             $post->setAuthors($authors);
             $books[] = $post;
         }
@@ -92,7 +119,7 @@ class BookRepository extends AbstractEntityRepository
     {
         $sql = "INSERT INTO book (id_user, title, content, created_at, date_update) VALUES (:id_user, :title, :content, NOW(), NOW())";
         $this->db->query($sql, [
-            'id_user' => $book->getIdUser(),
+            'id_user' => $book->getUser(),
             'title' => $book->getTitle(),
             'content' => $book->getContent()
         ]);
@@ -121,7 +148,7 @@ class BookRepository extends AbstractEntityRepository
     public function updateViewsBook(Book $book): Book
     {
         $views = $book->getViews() + 1;
-        $sql   = "UPDATE book SET views = :views WHERE id = :id";
+        $sql = "UPDATE book SET views = :views WHERE id = :id";
         $this->db->query($sql, [
             'views' => $views,
             'id' => $book->getId()
@@ -138,9 +165,9 @@ class BookRepository extends AbstractEntityRepository
      */
     public function getBookById(int $id): ?Book
     {
-        $sql    = "SELECT * FROM book WHERE id = :id";
+        $sql = "SELECT * FROM book WHERE id = :id";
         $result = $this->db->query($sql, ['id' => $id]);
-        $book   = $result->fetch();
+        $book = $result->fetch();
 
         if ($book) {
             return new Book($book);
@@ -172,14 +199,14 @@ class BookRepository extends AbstractEntityRepository
 
 
         // selectionner tous les books pocédant 0/+ comments
-        $sql    = "SELECT a.*, count(c.id_article) as comments
+        $sql = "SELECT a.*, count(c.id_article) as comments
                             FROM book a
                             LEFT JOIN comment c 
                             ON a.id = c.id_article
                             GROUP BY a.id  
                             ORDER BY $db_column $order";
         $result = $this->db->query($sql);
-        $books  = $this->getArrayObjBook($result);
+        $books = $this->getRelationToMany($result);
 
 
         return $books;
@@ -195,11 +222,11 @@ class BookRepository extends AbstractEntityRepository
     private function getComments(PDOStatement $result): array
     {
         $commentRepository = new CommentRepository();
-        $book              = [];
+        $book = [];
         while ($book = $result->fetch()) {
 
             $comments = $commentRepository->getAllCommentsByBookId($book['id']);
-            $post     = new Book($book);
+            $post = new Book($book);
             $post->setComments($comments);
             $books[] = $post;
         }

@@ -7,11 +7,10 @@ use models\AbstractEntity;
 
 class User extends AbstractEntity
 {
-    private string $username;
-    private string $email;
-    private string $password;
-
-    private string $thumb;
+    public string $username;
+    public string $email;
+    public string $password;
+    public string $thumb;
 
     public function getThumb(): string
     {

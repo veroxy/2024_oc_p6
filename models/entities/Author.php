@@ -6,7 +6,7 @@ use models\AbstractEntity;
 
 class Author extends AbstractEntity
 {
-    private string $fullname;
+    public string $fullname;
 
     /**
      * get nom prénom de l'auteur

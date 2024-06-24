@@ -82,13 +82,13 @@ DROP TABLE IF EXISTS `2024_oc_p6_tomtroc`.`message` ;
 
 CREATE TABLE IF NOT EXISTS `2024_oc_p6_tomtroc`.`message` (
                                                               `user_id_sender` BIGINT NOT NULL,
-                                                              `user_id_recever` BIGINT NOT NULL,
+                                                              `user_id_receiver` BIGINT NOT NULL,
                                                               `content` TEXT NOT NULL,
                                                               `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                                               `modified_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-                                                              PRIMARY KEY (`user_id_sender`, `user_id_recever`),
+--                                                               PRIMARY KEY (`user_id_sender`, `user_id_receiver`),
                                                               CONSTRAINT `fk_user_has_user_user1`
-                                                                  FOREIGN KEY (`user_id_recever`)
+                                                                  FOREIGN KEY (`user_id_receiver`)
                                                                       REFERENCES `2024_oc_p6_tomtroc`.`user` (`id`)
                                                                       ON DELETE NO ACTION
                                                                       ON UPDATE NO ACTION,
@@ -100,7 +100,7 @@ CREATE TABLE IF NOT EXISTS `2024_oc_p6_tomtroc`.`message` (
 
 CREATE INDEX `fk_user_has_user_user2_idx` ON `2024_oc_p6_tomtroc`.`message` (`user_id_sender` ASC);
 
-CREATE INDEX `fk_user_has_user_user1_idx` ON `2024_oc_p6_tomtroc`.`message` (`user_id_recever` ASC);
+CREATE INDEX `fk_user_has_user_user1_idx` ON `2024_oc_p6_tomtroc`.`message` (`user_id_receiver` ASC);
 
 
 -- -----------------------------------------------------

@@ -1,6 +1,7 @@
 <?php
 
 
+
 require_once 'config/_config.php';
 require_once 'config/autoload.php';
 
@@ -12,20 +13,31 @@ try {
     switch ($action) {
         // Pages accessibles à tous.
         case 'welcome':
-            $adminController = new WelcomeController();
-            $adminController->welcome();
+            $welcomeController = new WelcomeController();
+            $welcomeController->welcome();
             break;
 
         // Section admin & connexion.
-        case 'administration':
-            $adminController = new AdminController();
-            $adminController->showAdmin();
+        case 'profile':
+            $userController = new UserController();
+            $userController->showProfile();
             break;
 
-        case 'profile':
-            $adminController = new UserController();
-            $adminController->showProfile();
+        case 'updateProfile':
+            $userController = new UserController();
+            $userController->updateProfile();
             break;
+
+            case 'messenger':
+            $userController = new MessageController();
+            $userController->showMessages();
+            break;
+
+            case 'sendMessage':
+            $userController = new MessageController();
+            $userController->sendMessage();
+            break;
+
 
         case 'connectionForm':
             $adminController = new AdminController();

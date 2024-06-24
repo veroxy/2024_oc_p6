@@ -40,7 +40,8 @@ class Utils
         // activer l'extention intl_date_formater (ou intl) au niveau du serveur apache. 
         // Ca peut se faire depuis php.ini ou parfois directement depuis votre utilitaire (wamp/mamp/xamp)
         $dateFormatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::FULL, IntlDateFormatter::FULL);
-        $dateFormatter->setPattern('EEEE d MMMM Y');
+//        $dateFormatter->setPattern('EEEE d MMMM Y ');
+        $dateFormatter->setPattern('d.MM HH:mm:ss');
         return $dateFormatter->format($date);
     }
 
@@ -146,7 +147,21 @@ class Utils
         }else{
             return $interval->format('%y an(s)' );
         }
+    }
 
+    /**
+     * return a truncate sentence with limited nb words
+     * @param string $text
+     * @param int $limit
+     * @return string
+     */
+    public static function limitText(string $text,int $limit): string {
+        if (str_word_count($text, 0) > $limit) {
+            $words = str_word_count($text, 2);
+            $pos   = array_keys($words);
+            $text  = substr($text, 0, $pos[$limit]) . '...';
+        }
+        return $text;
     }
 
 }

@@ -31,7 +31,7 @@
 
                 <ul class="navbar-nav mt-auto mb-2 mb-lg-0">
 
-                    <?php if (isset($_SESSION['user'])) { ?>
+                    <?php if (Utils::user()) { ?>
                         <li class="nav-item"><a href="#" class="nav-link">messagerie</a></li>
 
                         <li class="nav-item">
@@ -40,7 +40,7 @@
                     <?php } ?>
                     <li class="nav-item">
                         <?php
-                        if (isset($_SESSION['user'])) {
+                        if (Utils::user()) {
                             echo '<a class="nav-link" href="index.php?action=disconnectUser">Déconnexion</a>';
                         } else {
                             echo '<a class="nav-link"  href="index.php?action=connectionForm">Connexion</a>';

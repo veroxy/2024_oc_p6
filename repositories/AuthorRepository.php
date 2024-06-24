@@ -42,7 +42,7 @@ class AuthorRepository extends AbstractEntityRepository
 
 
         $result  = $this->db->query($sql);
-        $authors   = $this->getArrayObjBook($result, Author::class);
+        $authors   = $this->getRelationToMany($result, Author::class);
 
 
 //        $result  = $this->db->query($sql, ['book_id' => $idBook]);

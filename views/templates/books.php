@@ -15,27 +15,27 @@
                              xmlns="http://www.w3.org/2000/svg"
                              role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
                              focusable="false">
-                            <title><?= $book->getTitle() ?></title>
+                            <title><?= $book->title ?></title>
                             <rect width="100%" height="100%" fill="#55595c"></rect>
-                            <text x="50%" y="50%" fill="#eceeef" dy=".3em"><?= $book->getTitle() ?></text>
+                            <text x="50%" y="50%" fill="#eceeef" dy=".3em"><?= $book->title ?></text>
                         </svg>
 
                         <figcaption class="card-body">
-                            <h3 class="h3"><?= $book->getTitle() ?></h3>
-                            <p class="card-text"><?php $author = $book->getAuthors()[0];
-                                //                        var_dump($book,$author);
-                                echo $author->getfullname() ?></p>
+                            <h3 class="h3"><?= $book->title ?></h3>
+                            <p class="card-text"><?php $author = $book->authors[0];
+                                echo $author->fullname ?></p>
 
-                            <p><i><?= $book->getContent() ?></i></p>
+                            <p><i><?= $book->user->username . " " . $book->user->email ?></i></p>
                         </figcaption>
                     </figure>
                 </div>
             </div>
         <?php }
     } else {
-        echo "Aucun livre";
-        if(Utils::user()){
-            echo "<a class='btn btn-primary w-100 py-2 btn btn-success' href='#/bookNew'>échanger un livre </a>";
+        echo "<p class='text-center'>Aucun livre</p>";
+        if (Utils::user()) {
+
+            echo "<p class='text-center'><a class='btn btn-primary py-2 btn btn-success' href='#/bookNew'>échanger un livre </a></p>";
         }
     }
     ?>

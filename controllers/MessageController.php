@@ -1,0 +1,62 @@
+<?php
+
+
+use controllers\AbstactController;
+use models\entities\User;
+use models\entities\Message;
+use repositories\MessageRepository;
+use repositories\UserRepository;
+
+class MessageController extends AbstactController
+{
+
+    public function showMessages(): void
+    {
+        $this->checkIfUserIsConnected();
+
+        $contacts = [];
+        $messageRepo = new MessageRepository();
+        $messages = $messageRepo->getAllMessages($_SESSION['idUser']);
+        foreach ($messages as $message) {
+            array_push($contacts, $message->sender);
+        }
+        $contacts = array_unique($contacts, SORT_REGULAR);
+
+        $view = new View("Messagerie");
+        $view->render("messenger", [
+            'contacts' => $contacts,
+            'messages' => $messages]);
+    }
+
+    public function sendMessage(): void
+    {
+        // On récupère les données du formulaire.
+        $id = Utils::request("id", -1);
+        $content = Utils::request("content");
+        $receiver = (int)Utils::request("receiver");
+
+        $userRep = new UserRepository();
+        $id_receiver = $userRep->getUserById($receiver);
+
+        // On vérifie que les données sont valides.
+        if (empty($content)) {
+            throw new Exception("Tous les champs sont obligatoires. 2");
+        }
+        // On crée l'objet Book.
+        $message = new Message([
+            'id' => $id, // Si l'id vaut -1, l'book sera ajouté. Sinon, il sera modifié.
+            'content' => $content,
+            'sender' => $_SESSION['idUser'],
+            'receiver' => $receiver
+        ]);
+
+
+        // On ajoute l'book.
+        print_r($message);
+        $messageRepo = new MessageRepository();
+        $messageRepo->sendMessage($message);
+
+        // On redirige vers la page d'profile.
+        Utils::redirect("messenger");
+    }
+}

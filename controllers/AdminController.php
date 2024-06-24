@@ -16,26 +16,6 @@ class AdminController extends \controllers\AbstactController
 {
 
 
-    /**
-     * Affiche la page d'administration.
-     * @return void
-     */
-    public
-    function showAdmin(): void
-    {
-        // On vérifie que l'utilisateur est connecté.
-        $this->checkIfUserIsConnected();
-
-        // On récupère les books.
-        $bookRepository = new BookRepository();
-        $books          = $bookRepository->getAllBooks();
-
-        // On affiche la page d'administration.
-        $view = new View("Administration");
-        $view->render("administration", [
-            'books' => $books
-        ]);
-    }
 
     /**
      * Affichage du formulaire de connexion.

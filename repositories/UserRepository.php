@@ -2,7 +2,6 @@
 
 namespace repositories;
 
-use repositories\AbstractEntityRepository;
 use models\entities\User;
 
 /**
@@ -17,9 +16,9 @@ class UserRepository extends AbstractEntityRepository
      */
     public function getUserById(?int $id): ?User
     {
-        $sql    = "SELECT * FROM user WHERE id = :id";
+        $sql = "SELECT * FROM user WHERE id = :id";
         $result = $this->db->query($sql, ['id' => $id]);
-        $user   = $result->fetch();
+        $user = $result->fetch();
         if ($user) {
             return new User($user);
         }
@@ -33,9 +32,9 @@ class UserRepository extends AbstractEntityRepository
      */
     public function getUserByLogin(string $username): ?User
     {
-        $sql    = "SELECT * FROM user WHERE username = :username";
+        $sql = "SELECT * FROM user WHERE username = :username";
         $result = $this->db->query($sql, ['username' => $username]);
-        $user   = $result->fetch();
+        $user = $result->fetch();
         if ($user) {
             return new User($user);
         }
@@ -47,13 +46,31 @@ class UserRepository extends AbstractEntityRepository
         // On hash le mot de passe
         $hashPassword = password_hash($user->getPassword(), PASSWORD_DEFAULT);
 
-        $sql    = "INSERT INTO user (username, email, password, created_at) VALUES (:username, :email, :password, NOW())";
+        $sql = "INSERT INTO user (username, email, password, created_at) VALUES (:username, :email, :password, NOW())";
         $result = $this->db->query($sql, [
             'username' => $user->getUsername(),
             'password' => $hashPassword,
             'email' => $user->getEmail()
         ]);
         return $result->rowCount() > 0;
+    }
+
+    /**
+     * get only book(s) from refered user id
+     * @param int $bookId
+     * @return array
+     */
+    public function getBooksUser(int $userId): array
+    {
+        $sql = "SELECT *
+                FROM book
+                         JOIN user_has_book ub
+                              ON ub.book_id = book.id
+                WHERE ub.user_id = $userId;";
+        $result = $this->db->query($sql);
+        $books = $result->fetchAll();
+        return $books;
+
     }
 
 

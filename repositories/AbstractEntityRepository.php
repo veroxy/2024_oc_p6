@@ -28,7 +28,7 @@ abstract class AbstractEntityRepository
      * @param PDOStatement $result
      * @return array
      */
-    protected function getArrayObjBook(PDOStatement $result, $class): array
+    protected function getRelationToMany(PDOStatement $result, $class): array
     {
         $entities = [];
         while ($book = $result->fetch()) {

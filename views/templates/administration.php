@@ -17,15 +17,15 @@
     <?php foreach ($books as$book) { ?>
         <!--        <tr class="">-->
         <tr class="articleLine">
-            <td class="title"><?=$book->getThumb() ?></td>
-            <td class="title"><?=$book->getTitle() ?></td>
-            <td class="content"><?=$book->getContent(200) ?></td>
+            <td class="title"><?=$book->thumb ?></td>
+            <td class="title"><?=$book->title ?></td>
+            <td class="content"><?=$book->content(200) ?></td>
 
             <td class="action"><span class="pill rounded-pill border-danger"></span><a class="submit"
-                                  href="index.php?action=showUpdateBookForm&id=<?=$book->getId() ?>">edit</a>
+                                  href="index.php?action=showUpdateBookForm&id=<?=$book->id ?>">edit</a>
             </td>
             <td class="action"><a class="submit"
-                                  href="index.php?action=deleteBook&id=<?=$book->getId() ?>" <?= Utils::askConfirmation("Êtes-vous sûr de vouloir supprimer cet $book ?") ?> >delete</a>
+                                  href="index.php?action=deleteBook&id=<?=$book->id ?>" <?= Utils::askConfirmation("Êtes-vous sûr de vouloir supprimer cet $book ?") ?> >delete</a>
             </td>
         </tr>
     <?php } ?>

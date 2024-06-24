@@ -1,11 +1,30 @@
 <?php
 
 namespace controllers;
+use models\entities\User;
 use Utils;
 
 abstract class AbstactController
 {
 
+
+    private static false|User $connectedUser;
+
+    /**
+     * @return false|User
+     */
+    public static function getConnectedUser(): User|bool
+    {
+        return self::$connectedUser;
+    }
+
+    /**
+     * @param false|User $connectedUser
+     */
+    public static function setConnectedUser(User|bool $connectedUser): void
+    {
+        self::$connectedUser = $connectedUser;
+    }
 
     /**
      * Vérifie que l'utilisateur est connecté.

@@ -11,9 +11,9 @@ use models\AbstractEntity;
  */
 class Comment extends AbstractEntity
 {
-    private int      $idBook;
-    private string   $pseudo;
-    private string   $content;
+    public int      $idBook;
+    public string   $pseudo;
+    public string   $content;
 
     /**
      * Getter pour l'id de l'book.
