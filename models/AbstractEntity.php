@@ -96,7 +96,6 @@ abstract class AbstractEntity
      */
     public function getSlug(): string
     {
-
         return $this->slug;
     }
 

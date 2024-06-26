@@ -37,4 +37,5 @@ abstract class AbstactController
             Utils::redirect("connectionForm");
         }
     }
+
 }

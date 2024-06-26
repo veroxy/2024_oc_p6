@@ -45,8 +45,6 @@ class MessageRepository extends AbstractEntityRepository
             $msg->setReceiver($receiver);
             $messages[] = $msg;
         }
-//        var_dump();
-
         return $messages;
     }
 

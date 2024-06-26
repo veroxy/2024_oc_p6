@@ -68,6 +68,11 @@ try {
             $articleController = new BookController();
             $articleController->all();
             break;
+        case 'book':
+            $bookId = Utils::request('id');
+            $articleController = new BookController();
+            $articleController->showBook($bookId);
+            break;
 
         default:
             throw new Exception("La page demandée n'existe pas.");

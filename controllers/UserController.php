@@ -2,6 +2,7 @@
 
 
 use controllers\AbstactController;
+use repositories\BookRepository;
 use repositories\UserRepository;
 
 class UserController extends AbstactController
@@ -18,17 +19,16 @@ class UserController extends AbstactController
 
         // On récupère les books.
         $userRepo = new UserRepository();
-        $booksRepo = new \repositories\BookRepository();
-        $books    = [];
+        $booksRepo = new BookRepository();
+        $books = [];
         if (isset($_SESSION['idUser'])) {
-            $uid  = $_SESSION['idUser'];
+            $uid = $_SESSION['idUser'];
             $user = $userRepo->getUserById($uid);
         }
 
         // TODO gere books empty
         if (Utils::user() & $_SESSION['idUser'] == $user->getId()) {
-                $books = $userRepo->getBooksUser($user->getId());
-
+            $books = $booksRepo->getBooksByUserAsc($user->getId());
         }
 
 
@@ -50,8 +50,8 @@ class UserController extends AbstactController
 
 
         // On récupère les données du formulaire.
-        $id      = Utils::request("id", -1);
-        $title   = Utils::request("title");
+        $id = Utils::request("id", -1);
+        $title = Utils::request("title");
         $content = Utils::request("content");
 
         // On vérifie que les données sont valides.

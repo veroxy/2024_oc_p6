@@ -11,6 +11,8 @@ use PDOStatement;
  */
 class BookRepository extends AbstractEntityRepository
 {
+
+//    TRAIT
     /**
      * Récupère tous les books par ordre décroissant d'ajout
      * @return array : un tableau d'objets Book.
@@ -18,21 +20,24 @@ class BookRepository extends AbstractEntityRepository
     public function getAllBooks(): array
     {
         $sql = "SELECT * FROM book ORDER BY created_at DESC";
+        return $this->baseGetBooks($sql);
+    }
+
+    public function baseGetBooks($sql)
+    {
         $result = $this->db->query($sql);
         $authorRepo = new AuthorRepository();
         $books = [];
 
         while ($book = $result->fetch()) {
-            $authors = $authorRepo->getAllAuthorsByBookId($book['id']);
-            $users = $this->getUsersBook($book['id']);
+            $arr_authors = $authorRepo->getAllAuthorsByBookId($book['id']);
+            $users = $this->getUsersByBook($book['id']);
             $post = new Book($book);
-            $post->setAuthors($authors);
-
-            // tofixed ?
-            foreach ($users as $userRepo) {
-                $user = new User($userRepo);
+            $post->setAuthors($arr_authors);
+            foreach ($users as $user) {
                 $post->setUser($user);
             }
+
             $books[] = $post;
         }
         return $books;
@@ -43,16 +48,36 @@ class BookRepository extends AbstractEntityRepository
      * @param int $bookId
      * @return array
      */
-    public function getUsersBook(int $bookId): array
+    public function getUsersByBook(int $bookId): array
     {
         $sql = "SELECT *
                 FROM user
                          JOIN user_has_book ub
                               ON ub.user_id = user.id
                 WHERE ub.book_id = $bookId;";
+
         $result = $this->db->query($sql);
-        $users = $result->fetchAll();
+        $users = $this->getRelationToMany($result, User::class);
         return $users;
+
+    }
+
+    /**
+     * get only book(s) from refered user id
+     * @param int $bookId
+     * @return array
+     */
+    public function getBooksByUserAsc(int $userId): array
+    {
+        $sql = "SELECT *
+                FROM book
+                         JOIN user_has_book ub
+                              ON ub.book_id = book.id
+                WHERE ub.user_id = $userId
+                ORDER BY book.id ASC;";
+//        $result = $this->db->query($sql);
+        $books = $this->baseGetBooks($sql);
+        return $books;
 
     }
     /*public function getBookByUser(int $userId): array
@@ -165,13 +190,17 @@ class BookRepository extends AbstractEntityRepository
      */
     public function getBookById(int $id): ?Book
     {
-        $sql = "SELECT * FROM book WHERE id = :id";
-        $result = $this->db->query($sql, ['id' => $id]);
-        $book = $result->fetch();
+        $sql = "SELECT * FROM book WHERE id = $id";
 
+
+/*        $result = $this->db->query($sql, ['id' => $id]);
+        $book = $result->fetch();
+*/
+        $book = $this->baseGetBooks($sql);
         if ($book) {
-            return new Book($book);
+            return $book[0];
         }
+
 
         return null;
     }
@@ -207,8 +236,6 @@ class BookRepository extends AbstractEntityRepository
                             ORDER BY $db_column $order";
         $result = $this->db->query($sql);
         $books = $this->getRelationToMany($result);
-
-
         return $books;
 
 
@@ -224,7 +251,6 @@ class BookRepository extends AbstractEntityRepository
         $commentRepository = new CommentRepository();
         $book = [];
         while ($book = $result->fetch()) {
-
             $comments = $commentRepository->getAllCommentsByBookId($book['id']);
             $post = new Book($book);
             $post->setComments($comments);
@@ -232,19 +258,5 @@ class BookRepository extends AbstractEntityRepository
         }
         return $books;
     }
-
-    /**
-     * Create an array object Aticle
-     * @param PDOStatement $result
-     * @return array
-     */
-    /*    private function getArrayObjBook(PDOStatement $result): array
-        {
-            $books = [];
-            while ($book = $result->fetch()) {
-                $post = new Book($book);
-                array_push($books, $post);
-            }
-            return $books;
-        }*/
 }
+

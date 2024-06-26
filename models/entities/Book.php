@@ -23,8 +23,8 @@ class Book extends AbstractEntity
     {
         parent::__construct($data);
 
-        if ($data) {
-            $this->setSlug($data['title']);
+        if ($this->title) {
+            $this->setSlug($this->title);
         }
 
         foreach ($data as $property => $value) {

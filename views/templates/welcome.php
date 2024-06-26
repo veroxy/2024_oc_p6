@@ -19,34 +19,33 @@
 
     <?php
     if (!empty($books)) {
-        foreach ($books as $book) { ?>
-            <div class="col-sm-2 col-md-4 col-lg-3">
-                <div class="col">
-                    <figure class="card border-0 shadow-sm rounded rounded-4">
-                        <div>
-                            <img src="<?= $book->thumb ?>" alt="<?= $book->thumb ?>">
-                        </div>
-                        <figcaption class="card-body">
-                            <h3 class="h3"><?= $book->title ?></h3>
-                            <p class="card-text"><?php
-                                $author = $book->authors[0];
-                                //                        var_dump($book,$author);
-                                echo $author->fullname ?></p>
+    foreach ($books
 
-                            <p><i><?= $book->content ?></i></p>
-                        </figcaption>
-                    </figure>
+    as $book) { ?>
+    <div class="col-sm-2 col-md-4 col-lg-3">
+        <div class="col">
+            <a href="index.php?action=book&id=<?= $book->getId() ?>">
+            <figure class="card border-0 shadow-sm rounded rounded-4">
+                <div>
+                    <img src="<?= $book->thumb ?>" alt="<?= $book->thumb ?>">
                 </div>
-            </div>
-            <?php
-        }
-    } else {
-
-    } ?>
-    <div class="text-center">
-        <a class="btn btn-lg btn-success" href="index.php?action=books">Nos Livres à l'échanges</a>
-
+                <figcaption class="card-body">
+                    <h3 class="h3"><?= $book->title ?></h3>
+                    <p class="card-text"><?php
+                        $author = $book->authors[0];
+                        echo $author->fullname ?></p>
+                    <p><i><?= $book->content ?></i></p>
+                </figcaption>
+            </figure>
+        </a>
     </div>
+</div>
+<?php
+}
+} ?>
+<div class="text-center">
+    <a class="btn btn-lg btn-success" href="index.php?action=books">Nos Livres à l'échanges</a>
+</div>
 </div>
 
 

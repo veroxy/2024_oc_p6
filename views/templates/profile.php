@@ -56,10 +56,9 @@
                     <tr class="articleLine">
                         <td class="title"><img src="<?= $book->thumb ?>"></td>
                         <td class="title"><?= $book->title ?></td>
-                        <td class="content"><?php $author = $book->author();
-                            //                        var_dump($book,$author);
+                        <td class="content"><?php $author = $book->authors[0];
                             echo $author->fullname ?></td>
-                        <td class="content"><?= $book->content(200) ?></td>
+                        <td class="content"><?= $book->content ?></td>
                         <td class="content">
                             <?php
                             if ($book->stock) {
@@ -68,7 +67,6 @@
                             } else {
                                 echo "<span class='badge rounded-pill bg-danger'>non disponible</span>";
                             }
-
                             ?>
                         </td>
                         <td class="action">

@@ -1,4 +1,4 @@
-<form class="d-flex">
+<form class="d-flex" xmlns="http://www.w3.org/1999/html">
     <input class="form-control me-2" type="search" placeholder="Rechercher un livre" aria-label="Search">
     <button class="btn btn-outline-success" type="submit">Search</button>
 </form>
@@ -10,6 +10,7 @@
 
             <div class="col-sm-2 col-md- col-md-4">
                 <div class="col">
+                    <a href="index.php?action=book&id=<?= $book->getId() ?>"
                     <figure class="card border-0 shadow-sm rounded rounded-4">
                         <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
                              xmlns="http://www.w3.org/2000/svg"
@@ -28,6 +29,7 @@
                             <p><i><?= $book->user->username . " " . $book->user->email ?></i></p>
                         </figcaption>
                     </figure>
+                    </a>
                 </div>
             </div>
         <?php }

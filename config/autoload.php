@@ -26,7 +26,6 @@ function autoloader($class)
     foreach ($namespaces as $prefix) {
         if (file_exists("$prefix\\$class.php")) {
             $file = "$prefix\\$class.php";
-            var_dump($file);
             die;
 //            require_once $file;
         }

@@ -46,7 +46,6 @@ class AdminController extends \controllers\AbstactController
         // On vérifie que l'utilisateur existe.
         $userRepository = new UserRepository();
         $user           = $userRepository->getUserByLogin($login);
-        var_dump($user);
 
         if (!$user) {
             throw new Exception("L'utilisateur demandé n'existe pas.");

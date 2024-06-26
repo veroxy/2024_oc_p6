@@ -55,23 +55,4 @@ class UserRepository extends AbstractEntityRepository
         return $result->rowCount() > 0;
     }
 
-    /**
-     * get only book(s) from refered user id
-     * @param int $bookId
-     * @return array
-     */
-    public function getBooksUser(int $userId): array
-    {
-        $sql = "SELECT *
-                FROM book
-                         JOIN user_has_book ub
-                              ON ub.book_id = book.id
-                WHERE ub.user_id = $userId;";
-        $result = $this->db->query($sql);
-        $books = $result->fetchAll();
-        return $books;
-
-    }
-
-
 }
