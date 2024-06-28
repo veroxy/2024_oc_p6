@@ -10,6 +10,7 @@
         <h5>bibliothèque</h5>
         <p><i class=""></i><?= count($books) ?> livres</p>
     </div>
+
     <div class="col-lg-6">
         <form action="index.php?action=suscribeUser" method="post" class="foldedCorner">
 
@@ -72,13 +73,13 @@
                         <td class="action">
                             <span class="pill rounded-pill border-danger"></span>
                             <a class="submit"
-                               href="index.php?action=showUpdateBookForm&id=<?= $book->id ?>">
+                               href="index.php?action=showUpdateBookForm&id=<?= $book->getId() ?>">
                                 edit
                             </a>
                         </td>
                         <td class="action">
                             <a class="submit"
-                               href="index.php?action=deleteBook&id=<?= $book->id ?>" <?= Utils::askConfirmation("Êtes-vous sûr de vouloir supprimer ce livre ?") ?> >delete</a>
+                               href="index.php?action=deleteBook&id=<?= $book->getId() ?>" <?= Utils::askConfirmation("Êtes-vous sûr de vouloir supprimer ce livre ?") ?> >delete</a>
                         </td>
                     </tr>
                 <?php }

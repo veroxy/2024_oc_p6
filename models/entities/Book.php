@@ -27,10 +27,6 @@ class Book extends AbstractEntity
             $this->setSlug($this->title);
         }
 
-        foreach ($data as $property => $value) {
-            if (property_exists($this, $property)) {
-            }
-        }
     }
 
     /**

@@ -24,6 +24,13 @@ abstract class AbstractEntity
         if (!empty($data)) {
             $this->hydrate($data);
         }
+
+        foreach ($data as $property => $value) {
+            if (property_exists($this, $property)) {
+            \Utils::format($this->$property);
+//                print_r($property."=".$this->$property."\n")
+            }
+        }
     }
 
     /**
