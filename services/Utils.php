@@ -79,8 +79,10 @@ class Utils
     public static function redirect(string $action, array $params = []): void
     {
         $url = "index.php?action=$action";
+
         foreach ($params as $paramName => $paramValue) {
-            $url .= "&$paramName=$paramValue";
+            $extends =  is_string($paramName) ? "&$paramName=$paramValue" : $paramValue;
+            $url .= $extends;
         }
         header("Location: $url");
         exit();
@@ -122,9 +124,9 @@ class Utils
     public static function addClassActive(string $refOrder, string $refCol, string $col, string $order): string
     {
         $refOrder = strtolower($refOrder);
-        $order    = strtolower($order);
-        $refCol   = strtolower($refCol);
-        $col      = strtolower($col);
+        $order = strtolower($order);
+        $refCol = strtolower($refCol);
+        $col = strtolower($col);
 
         if ($refOrder == $order && $refCol == $col) {
             $refOrder .= " active";
@@ -139,13 +141,13 @@ class Utils
      */
     public static function dateIntervalDuration($dateOrigin)
     {
-        $dateEnd   = new DateTime(); // 'now' default
-        $interval  = $dateEnd->diff($dateOrigin);
+        $dateEnd = new DateTime(); // 'now' default
+        $interval = $dateEnd->diff($dateOrigin);
         // params accepte par format '%y years, %d days, %H hours, %I minutes, %S seconds';
-        if($interval->y < 1){
+        if ($interval->y < 1) {
             return $interval->format('%d jour(s)');
-        }else{
-            return $interval->format('%y an(s)' );
+        } else {
+            return $interval->format('%y an(s)');
         }
     }
 
@@ -155,11 +157,12 @@ class Utils
      * @param int $limit
      * @return string
      */
-    public static function limitText(string $text,int $limit): string {
+    public static function limitText(string $text, int $limit): string
+    {
         if (str_word_count($text, 0) > $limit) {
             $words = str_word_count($text, 2);
-            $pos   = array_keys($words);
-            $text  = substr($text, 0, $pos[$limit]) . '...';
+            $pos = array_keys($words);
+            $text = substr($text, 0, $pos[$limit]) . '...';
         }
         return $text;
     }

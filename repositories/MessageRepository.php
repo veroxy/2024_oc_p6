@@ -39,7 +39,6 @@ class MessageRepository extends AbstractEntityRepository
             $sender = $sender->getUserById($message['user_id_sender']);
 
             $receiver = $receiver->getUserById($message['user_id_receiver']);
-            var_dump($receiver->getUsername());
             $msg = new Message($message);
             $msg->setSender($sender);
             $msg->setReceiver($receiver);

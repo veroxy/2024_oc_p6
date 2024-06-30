@@ -43,7 +43,7 @@
                                 </a>
                             </div>
                             <div class="col">
-                                <a href="<?= $book->user->getId() ?>" class="btn btn-success"><?php ?>envoyer un message</a>
+                                <a href="index.php?action=messenger&id=<?= $book->user->getId() ?>" class="btn btn-success"><?php ?>envoyer un message</a>
                             </div>
                         </footer>
                     </figcaption>

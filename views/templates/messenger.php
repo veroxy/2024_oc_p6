@@ -10,7 +10,12 @@
                 ?>
 
                 <a href="#"
-                   class="list-group-item list-group-item-action py-3 lh-tight <?= $loop !== 0 ? '' : 'active' ?>" <?= $loop !== 0 ? '' : 'aria-current="true"' ?> >
+                   class="list-group-item list-group-item-action py-3 lh-tight
+                                     <?= isset($senderId) && $contact->getId() == $senderId ? 'active" aria-current="true': '' ?>"
+
+                <?= $loop !== 0 ?'': 'active" aria-current="true' ?>"
+                >
+
                     <div class="d-flex w-100 align-items-center justify-content-between">
                         <img src="<?= $contact->thumb ?>" alt="" width="32" height="32" class="rounded-circle me-2">
                         <strong class="mb-1"><?= $contact->username ?></strong>
@@ -42,7 +47,6 @@
             <div class="d-flex flex-column">
 
                 <?php foreach ($messages as $loop => $message) {
-
 
                     if ($message->receiver->getId() == $_SESSION['idUser'] & $message->sender->getId() == $contact->getId()) {
                         ?>
@@ -81,20 +85,16 @@
                     }
 
                 } ?>
-                <form method="post" name="message-form" action="index.php?action=sendMessage">
+                <form method="post" name="message-form" action="index.php?action=sendMessage" id="newMsg">
                     <div class="d-flex align-items-stretch">
-                        <!--                        <fieldset class="input-group">-->
-
                         <label class="input-group">
                             <input type="text" class="invisible" name="receiver" value="<?= $contact->getId() ?>">
                             <textarea name="content" class="form-control px-0"
                                       placeholder="Type your message..." rows="1"
                                       data-emoji-input="" data-autosize="true"
                                       style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 47px;">
-
                             </textarea>
                         </label>
-                        <!--                        </fieldset>-->
                         <button class="btn btn-icon btn-primary">
                             envoyer
                         </button>

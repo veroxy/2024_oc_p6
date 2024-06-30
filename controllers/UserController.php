@@ -11,32 +11,42 @@ class UserController extends AbstactController
      * Affiche le profile utilisateur Connecté
      * @return void
      */
-    public function showProfile()
+    public function showProfile(?int $profileId)
     {
 
         // On vérifie que l'utilisateur est connecté.
-        $this->checkIfUserIsConnected();
+//        $this->checkIfUserIsConnected();
 
         // On récupère les books.
         $userRepo = new UserRepository();
         $booksRepo = new BookRepository();
         $books = [];
+
+        if (isset($profileId)) {
+            $user = $userRepo->getUserById($profileId);
+
+        }
+
         if (isset($_SESSION['idUser'])) {
             $uid = $_SESSION['idUser'];
-            $user = $userRepo->getUserById($uid);
-        }
-
-        // TODO gere books empty
-        if (Utils::user() & $_SESSION['idUser'] == $user->getId()) {
+            $currentUser = $userRepo->getUserById($uid);
+            // TODO gere books empty
+            if (Utils::user() & $_SESSION['idUser'] == $currentUser->getId()) {
+                $books = $booksRepo->getBooksByUserAsc($currentUser->getId());
+            }
+        } else {
             $books = $booksRepo->getBooksByUserAsc($user->getId());
         }
+        $datas = ['user' => $user,
+            'books' => $books];
 
-
+        if (isset($currentUser)) {
+            $datas['currentUser'] = $currentUser;
+        }
         $view = new View('Profile');
-        $view->render('profile', [
-            'user' => $user,
-            'books' => $books
-        ]);
+        $view->render('profile',
+            $datas
+        );
     }
 
     /**

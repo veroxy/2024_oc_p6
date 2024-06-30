@@ -2,7 +2,6 @@
 
 
 use controllers\AbstactController;
-use models\entities\User;
 use models\entities\Message;
 use repositories\MessageRepository;
 use repositories\UserRepository;
@@ -10,7 +9,11 @@ use repositories\UserRepository;
 class MessageController extends AbstactController
 {
 
-    public function showMessages(): void
+    /**
+     * @param int|null $senderId
+     * @return void
+     */
+    public function showMessages(?int $senderId = null): void
     {
         $this->checkIfUserIsConnected();
 
@@ -28,6 +31,10 @@ class MessageController extends AbstactController
             'messages' => $messages]);
     }
 
+    /**
+     * @return void
+     * @throws Exception
+     */
     public function sendMessage(): void
     {
         // On récupère les données du formulaire.
@@ -51,12 +58,29 @@ class MessageController extends AbstactController
         ]);
 
 
-        // On ajoute l'book.
-        print_r($message);
+
         $messageRepo = new MessageRepository();
         $messageRepo->sendMessage($message);
 
         // On redirige vers la page d'profile.
-        Utils::redirect("messenger");
+        Utils::redirect("messenger",['#newMsg'] );
+    }
+
+    public function getCurrentSender(?int $senderId)
+    {
+        $userRepo = new UserRepository();
+        $sender = $userRepo->getUserById($senderId);
+        $msgRepo = new MessageRepository();
+        $messages = $msgRepo->getAllMessages($senderId);
+
+        $datas = [
+            'sender' => $senderId,
+            'messages' => $messages
+        ];
+        $view = new View("Messagerie");
+        $view->render("messenger",
+            $datas);
+        return $datas;
+
     }
 }

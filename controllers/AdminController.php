@@ -122,6 +122,7 @@ class AdminController extends \controllers\AbstactController
     {
         // On déconnecte l'utilisateur.
         unset($_SESSION['user']);
+        unset($_SESSION['idUser']);
 
         // On redirige vers la page d'accueil.
         Utils::redirect("welcome");

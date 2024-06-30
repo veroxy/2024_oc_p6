@@ -1,7 +1,6 @@
 <?php
 
 
-
 require_once 'config/_config.php';
 require_once 'config/autoload.php';
 
@@ -19,8 +18,10 @@ try {
 
         // Section admin & connexion.
         case 'profile':
+            $profileId = Utils::request('id');
+
             $userController = new UserController();
-            $userController->showProfile();
+            $userController->showProfile(isset($profileId) ? $profileId : isset($_SESSION['idUser']));
             break;
 
         case 'updateProfile':
@@ -28,16 +29,19 @@ try {
             $userController->updateProfile();
             break;
 
-            case 'messenger':
+        case 'messenger':
             $userController = new MessageController();
             $userController->showMessages();
             break;
 
-            case 'sendMessage':
+        case 'sendMessage':
             $userController = new MessageController();
             $userController->sendMessage();
             break;
-
+        case 'getCurrentSender':
+            $senderId = Utils::request('senderId');
+            $userController = new MessageController();
+            $userController->getCurrentSender($senderId);
 
         case 'connectionForm':
             $adminController = new AdminController();
