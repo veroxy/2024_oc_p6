@@ -10,11 +10,8 @@
                 ?>
 
                 <a href="#"
-                   class="list-group-item list-group-item-action py-3 lh-tight
-                                     <?= isset($senderId) && $contact->getId() == $senderId ? 'active" aria-current="true': '' ?>"
-
-                <?= $loop !== 0 ?'': 'active" aria-current="true' ?>"
-                >
+                   class="contact-item list-group-item list-group-item-action py-3 lh-tight
+                             <?= isset($senderId) && $contact->getId() == $senderId ? 'active" aria-current="true' : '' ?><?= $loop === 0 ? 'active" aria-current="true' : '' ?>">
 
                     <div class="d-flex w-100 align-items-center justify-content-between">
                         <img src="<?= $contact->thumb ?>" alt="" width="32" height="32" class="rounded-circle me-2">
