@@ -58,7 +58,6 @@ class UserController extends AbstactController
     {
         $this->checkIfUserIsConnected();
 
-
         // On récupère les données du formulaire.
         $id = Utils::request("id", -1);
         $title = Utils::request("title");

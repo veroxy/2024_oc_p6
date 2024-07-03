@@ -26,7 +26,7 @@
                             <p class="card-text"><?php $author = $book->authors[0];
                                 echo $author->fullname ?></p>
 
-                            <p><i><?= $book->user->username . " " . $book->user->email ?></i></p>
+<!--                TOFIXED            <p><i>--><?php //= $book->user->username . " " . $book->user->email ?><!--</i></p>-->
                         </figcaption>
                     </figure>
                     </a>

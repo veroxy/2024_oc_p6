@@ -22,8 +22,13 @@ class BookController extends AbstactController
         $book = $bookRepo->getBookById($bookId);
         $view = new View($book->title);
         $view->render('book', ['book' => $book]);
+    }
 
-
+    public function deleteBook(int $bookId)
+    {
+        $bookRepo = new BookRepository();
+        $book = $bookRepo->deleteBook($bookId);
+        Utils::redirect('profile');
     }
 
 }

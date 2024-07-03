@@ -21,7 +21,7 @@ try {
             $profileId = Utils::request('id');
 
             $userController = new UserController();
-            $userController->showProfile(isset($profileId) ? $profileId : isset($_SESSION['idUser']));
+            $userController->showProfile(isset($profileId) ? $profileId : $_SESSION['idUser']);
             break;
 
         case 'updateProfile':
@@ -76,6 +76,11 @@ try {
             $bookId = Utils::request('id');
             $articleController = new BookController();
             $articleController->showBook($bookId);
+            break;
+        case 'deleteBook':
+            $bookId = Utils::request('id');
+            $articleController = new BookController();
+            $articleController->deleteBook($bookId);
             break;
 
         default:

@@ -1,6 +1,6 @@
 <div class="d-flex flex-column">
     <div class="d-flex">
-        <div class="col-lg-6 text-center bg-white rounded p-5">
+        <div class="col-md-6 text-center bg-white rounded p-5">
             <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg"
                  role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false"><title>
                     Placeholder</title>
@@ -11,16 +11,18 @@
             <h5>bibliothèque</h5>
             <p><i class=""></i><?= is_int($books) ? $books : count($books) ?> livres</p>
 
-                       <?php if (Utils::user() && $user->getId() !== $currentUser->getId()) { ?>
+            <?php if (Utils::user() && $user->getId() !== $currentUser->getId()) { ?>
 
 
-                <a href="index.php?action=messenger&id=<?= $user->getId() ?>" class="btn btn-success"><?php ?>envoyer un message</a>
+                <a href="index.php?action=messenger&id=<?= $user->getId() ?>" class="btn btn-success"><?php ?>envoyer un
+                    message</a>
                 <?php
             }
             ?>
         </div>
-        <div class="col-lg-6 bg-white rounded">
-            <?php if (Utils::user() && $user->getId() == $currentUser->getId()) { ?>
+        <?php if (Utils::user() && $user->getId() == $currentUser->getId()) {
+          ?>
+            <div class="col-md-6 bg-white rounded">
                 <form action="index.php?action=suscribeUser" method="post" class="foldedCorner">
 
                     <fieldset class="mb-3">
@@ -51,11 +53,23 @@
                     </fieldset>
                     <button class="btn btn-primary w-100 py-2 btn btn-success" type="submit">Modifier</button>
                 </form>
-            <?php } ?>
-        </div>
-    </div>
+            </div>
+            <?php
+        }
+        ?>
 
+    </div>
+    <?php
+    if (Utils::user() && $user->getId() == $currentUser->getId()) {
+        echo '<table class="adminBook col">';
+    } else {
+    ?>
     <table class="adminBook col-lg-6">
+
+        <?php
+        }
+        ?>
+
         <tr class="articleHeaderLine">
             <th class="t-cell ">photo</th>
             <th class="t-cell ">title</th>
@@ -64,8 +78,8 @@
             <th class="t-cell">stock</th>
             <?php if (Utils::user() && $user->getId() == $currentUser->getId()) { ?>
 
-            <th class="t-cell" colspan="3">actions</th>
-            <?php }?>
+                <th class="t-cell" colspan="3">actions</th>
+            <?php } ?>
         </tr>
 
         <?php
@@ -116,6 +130,7 @@
             echo "</tr>";
         } ?>
     </table>
+
 
     <?php
     if (Utils::user()) {
