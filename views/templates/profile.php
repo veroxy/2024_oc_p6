@@ -23,7 +23,7 @@
         <?php if (Utils::user() && $user->getId() == $currentUser->getId()) {
           ?>
             <div class="col-md-6 bg-white rounded">
-                <form action="index.php?action=suscribeUser" method="post" class="foldedCorner">
+                <form action="index.php?action=updateProfile" method="post" class="foldedCorner">
 
                     <fieldset class="mb-3">
                         <label for="email">Email address</label>

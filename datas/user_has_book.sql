@@ -49,3 +49,8 @@ insert into user_has_book (book_id, user_id) values (4, 15);
 insert into user_has_book (book_id, user_id) values (13, 7);
 insert into user_has_book (book_id, user_id) values (6, 10);
 insert into user_has_book (book_id, user_id) values (1, 4);
+insert into user_has_book (book_id, user_id) values (1, 21);
+insert into user_has_book (book_id, user_id) values (6, 21);
+insert into user_has_book (book_id, user_id) values (17, 21);
+insert into user_has_book (book_id, user_id) values (8, 21);
+insert into user_has_book (book_id, user_id) values (10, 21);

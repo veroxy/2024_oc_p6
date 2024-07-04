@@ -55,4 +55,20 @@ class UserRepository extends AbstractEntityRepository
         return $result->rowCount() > 0;
     }
 
+
+    /**
+     * Modifie un user.
+     * @param User $user : l'user à modifier.
+     * @return void
+     */
+    public function updateUser(User $user): void
+    {
+        $sql = "UPDATE user SET email = :email, password = :password, modified_at = NOW() WHERE id = :id";
+        $this->db->query($sql, [
+            'email' => $user->getEmail(),
+            'password' => $user->getPassword(),
+            'id' => $user->getId()
+        ]);
+    }
+
 }
