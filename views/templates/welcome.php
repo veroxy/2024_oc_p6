@@ -27,14 +27,15 @@
             <a href="index.php?action=book&id=<?= $book->getId() ?>">
             <figure class="card border-0 shadow-sm rounded rounded-4">
                 <div>
-                    <img src="<?= $book->thumb ?>" alt="<?= $book->thumb ?>">
+                    <img src="<?= $book->getThumb() ?>" alt="<?= $book->getThumb() ?>">
                 </div>
                 <figcaption class="card-body">
-                    <h3 class="h3"><?= $book->title ?></h3>
+                    <h3 class="h3"><?= $book->getTitle() ?></h3>
                     <p class="card-text"><?php
-                        $author = $book->authors[0];
-                        echo $author->fullname ?></p>
-                    <p><i><?= $book->content ?></i></p>
+                        $author = $book->getAuthors()[0];
+//                        echo $author->getFullname()
+                        ?></p>
+                    <p><i><?= $book->getContent() ?></i></p>
                 </figcaption>
             </figure>
         </a>

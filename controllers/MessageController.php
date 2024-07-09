@@ -10,25 +10,33 @@ class MessageController extends AbstactController
 {
 
     /**
-     * @param int|null $senderId
+//     * @param int|null $senderId
      * @return void
      */
-    public function showMessages(?int $senderId = null): void
+    public function showMessages(): void
     {
-        $this->checkIfUserIsConnected();
 
+        $this->checkIfUserIsConnected();
+        $senderId =  Utils::request('sender') ? : null;
         $contacts = [];
+        $sender = null;
+        if ($senderId) {
+            $senderRepo = new UserRepository();
+            $sender = $senderRepo->getUserById($senderId);
+        }
+
         $messageRepo = new MessageRepository();
         $messages = $messageRepo->getAllMessages($_SESSION['idUser']);
         foreach ($messages as $message) {
-            array_push($contacts, $message->sender);
+            array_push($contacts, $message->getSender());
         }
         $contacts = array_unique($contacts, SORT_REGULAR);
 
         $view = new View("Messagerie");
         $view->render("messenger", [
             'contacts' => $contacts,
-            'messages' => $messages]);
+            'messages' => $messages,
+            'sender' => $sender,]);
     }
 
     /**

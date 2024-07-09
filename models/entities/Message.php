@@ -6,9 +6,9 @@ use models\AbstractEntity;
 
 class Message extends AbstractEntity
 {
-    public string $content = "";
-    public User|int $sender;
-    public User|int $receiver;
+    private string $content = "";
+    private User|int $sender;
+    private User|int $receiver;
 
     /**
      * @return User|int

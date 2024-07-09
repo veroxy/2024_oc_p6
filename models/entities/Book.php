@@ -6,17 +6,17 @@ use models\AbstractEntity;
 
 /**
  * Entité Book, un book est défini par les champs
- * id, id_user, title, content, date_creation, date_update
+ * id, id_user, title, content, date_creation, modifiedat
  */
 class Book extends AbstractEntity
 {
-    public int $stock = 0;
-    public User $user;
-    public string $title = "";
-    public string $content = "";
-    public array|int $authors = [];
-    public string|null $thumb = null; // TOFIXED Tomemory
-    public ?int $views = 0;
+    private int $stock = 0;
+    private User $user;
+    private string $title = "";
+    private string $content = "";
+    private array|int $authors = [];
+    private string|null $thumb = null; // TOFIXED Tomemory
+    private ?int $views = 0;
 
     public
     function __construct(array $data = [])

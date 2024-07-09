@@ -20,15 +20,30 @@ class BookController extends AbstactController
     {
         $bookRepo = new BookRepository();
         $book = $bookRepo->getBookById($bookId);
-        $view = new View($book->title);
+        $view = new View($book->getTitle());
         $view->render('book', ['book' => $book]);
     }
 
     public function deleteBook(int $bookId)
     {
         $bookRepo = new BookRepository();
-        $book = $bookRepo->deleteBook($bookId);
+        $bookRepo->deleteBook($bookId);
         Utils::redirect('profile');
+    }
+
+    public function updateBook(int $bookId){
+        $bookRepo = new BookRepository();
+        $book =  $bookRepo->getBookById($bookId);
+        $view = new View('update '.$book->getTitle());
+        $view->render('updateBookForm', ['book' => $book]);
+    }
+    public function updateBookScript(int $bookId)
+    {
+        $bookRepo = new BookRepository();
+        $book =  $bookRepo->getBookById($bookId);
+        $bookRepo->updateBook($book);
+
+        Utils::redirect('updateBookForm',  ['id' => $book->getId()]);
     }
 
 }

@@ -3,6 +3,7 @@
 namespace models;
 
 use DateTime;
+use Utils;
 
 abstract class AbstractEntity
 {
@@ -26,9 +27,10 @@ abstract class AbstractEntity
         }
 
         foreach ($data as $property => $value) {
-            if (property_exists($this, $property)) {
-            \Utils::format($this->$property);
-//                print_r($property."=".$this->$property."\n")
+            $method = "get" . ucfirst($property);
+//            if (property_exists($this, $property)) {Utils::format($this->$property);}
+            if ($method_exists = method_exists($this, $method)) {
+                Utils::format($this->{$method}());
             }
         }
     }
@@ -112,8 +114,9 @@ abstract class AbstractEntity
      */
     public function setSlug(string|array $input): void
     {
+        $title = $this->getTitle();
 
-        $textlower = isset($input) ? is_array($input) ? implode(' ', $input) : $input : strtolower(isset($this->title));
+        $textlower = isset($input) ? is_array($input) ? implode(' ', $input) : $input : strtolower(isset($title));
 
 
         //convert special characters to normal

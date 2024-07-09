@@ -5,45 +5,46 @@
             <article class="card">
                 <figure class="row g-0">
                     <div class="col-md-6">
-                        <img src="<?= $book->thumb ?>" alt="<?= $book->title ?>">
+                        <img src="<?= $book->getThumb() ?>" alt="<?= $book->getTitle() ?>">
                     </div>
                     <figcaption class="col-md-6">
                         <div class="card-body">
-                            <h5 class="card-title"><?= $book->title ?></h5>
-                            <?php if (isset($book->authors)) {
+                            <h5 class="card-title"><?= $book->getTitle() ?></h5>
+                            <?php $authors = $book->getAuthors() ;
+                            if (isset($authors)) {
                                 ?>
                                 <div>
-                                    <?php if (count($book->authors) > 1) {
-                                        foreach ($book->authors as $author) { ?>
+                                    <?php if (count($book->getAuthors()) > 1) {
+                                        foreach ($book->getAuthors() as $author) { ?>
 
                                             <p class="card-text"><small
-                                                        class="text-muted"><?= $author->fullname ?></small></p>
+                                                        class="text-muted"><?= $author->getFullname() ?></small></p>
                                         <?php }
                                     } else {
-                                        $author = $book->authors[0];
+                                        $author = $book->getAuthors()[0];
                                         ?>
-                                        <p class="card-text"><small class="text-muted"><?= $author->fullname ?></small>
+                                        <p class="card-text"><small class="text-muted"><?= $author->getFullname() ?></small>
                                         </p>
 
 
                                     <?php } ?>
                                 </div>
                             <?php } ?>
-                            <p class="card-text"><?= $book->content ?></p>
+                            <p class="card-text"><?= $book->getContent() ?></p>
                         </div>
                         <footer class="col">
                             <h5>proprietaire</h5>
                             <div>
-                                <a href="index.php?action=profile&id=<?= $book->user->getId() ?>"
+                                <a href="index.php?action=profile&id=<?= $book->getUser()->getId() ?>"
                                 <span class="badge align-items-center rounded">
-                                    <img src="<?= $book->user->thumb ?>" alt="" width="32" height="32"
+                                    <img src="<?= $book->getUser()->getThumb() ?>" alt="" width="32" height="32"
                                          class="rounded-circle me-2">=
-                                <?= $book->user->username ?>
+                                <?= $book->getUser()->getUsername() ?>
                                 </span>
                                 </a>
                             </div>
                             <div class="col">
-                                <a href="index.php?action=messenger&id=<?= $book->user->getId() ?>" class="btn btn-success"><?php ?>envoyer un message</a>
+                                <a href="index.php?action=messenger&sender=<?= $book->getUser()->getId() ?>" class="btn btn-success"><?php ?>envoyer un message</a>
                             </div>
                         </footer>
                     </figcaption>

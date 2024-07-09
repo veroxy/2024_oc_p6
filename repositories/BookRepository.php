@@ -37,7 +37,6 @@ class BookRepository extends AbstractEntityRepository
             foreach ($users as $user) {
                 $post->setUser($user);
             }
-
             $books[] = $post;
         }
         return $books;
@@ -55,7 +54,6 @@ class BookRepository extends AbstractEntityRepository
                          JOIN user_has_book ub
                               ON ub.user_id = user.id
                 WHERE ub.book_id = $bookId;";
-
         $result = $this->db->query($sql);
         $users = $this->getRelationToMany($result, User::class);
         return $users;
@@ -142,7 +140,8 @@ class BookRepository extends AbstractEntityRepository
      */
     public function addBook(Book $book): void
     {
-        $sql = "INSERT INTO book (id_user, title, content, created_at, date_update) VALUES (:id_user, :title, :content, NOW(), NOW())";
+        $sql = "INSERT INTO book (id_user, title, content, created_at, modified_at) VALUES (:id_user, :title, :content, NOW(), NOW())";
+
         $this->db->query($sql, [
             'id_user' => $book->getUser(),
             'title' => $book->getTitle(),
@@ -153,16 +152,18 @@ class BookRepository extends AbstractEntityRepository
     /**
      * Modifie un book.
      * @param Book $book : l'book à modifier.
-     * @return void
+     * @return Book
      */
-    public function updateBook(Book $book): void
+    public function updateBook(Book $book): Book
     {
-        $sql = "UPDATE book SET title = :title, content = :content, date_update = NOW() WHERE id = :id";
+        $sql = "UPDATE book SET title = :title, content = :content, modified_at = NOW() WHERE id = :id";
         $this->db->query($sql, [
             'title' => $book->getTitle(),
             'content' => $book->getContent(),
             'id' => $book->getId()
         ]);
+        $book = $this->getBookById($book->getId());
+        return $book;
     }
 
     /**

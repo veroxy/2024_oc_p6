@@ -6,7 +6,7 @@
                     Placeholder</title>
                 <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
             </svg>
-            <h2 class="fw-normal"><?= $user->username ?></h2>
+            <h2 class="fw-normal"><?= $user->getUsername() ?></h2>
             <p>Membre depuis <?= Utils::dateIntervalDuration($user->getCreatedAt()) ?></p>
             <h5>bibliothèque</h5>
             <p><i class=""></i><?= is_int($books) ? $books : count($books) ?> livres</p>
@@ -14,7 +14,7 @@
             <?php if (Utils::user() && $user->getId() !== $currentUser->getId()) { ?>
 
 
-                <a href="index.php?action=messenger&id=<?= $user->getId() ?>" class="btn btn-success"><?php ?>envoyer un
+                <a href="index.php?action=messenger&sender=<?= $user->getId() ?>" class="btn btn-success"><?php ?>envoyer un
                     message</a>
                 <?php
             }
@@ -27,7 +27,7 @@
 
                     <fieldset class="mb-3">
                         <label for="email">Email address</label>
-                        <input type="email" class="form-control" id="email" value="<?= $user->email ?>"
+                        <input type="email" class="form-control" id="email" value="<?= $user->getEmail() ?>"
                                name="current-email"
                                autocomplete="current-email">
                     </fieldset>
@@ -36,7 +36,7 @@
                         <!--                <input type="password" class="form-control" id="password" value="-->
                         <?php //= $user->password ?><!--"-->
 
-                        <input type="password" id="password" class="form-control rounded" value="<?= $user->password ?>"
+                        <input type="password" id="password" class="form-control rounded" value="<?= $user->getPassword() ?>"
                                spellcheck="false" autocorrect="off" autocapitalize="off" name="current-password"
                                autocomplete="current-password" required>
                         <button id="toggle-password" type="button" class="d-none"
@@ -45,7 +45,7 @@
                     </fieldset>
                     <fieldset class="mb-3">
                         <label for="username">Username</label>
-                        <input type="text" class="form-control" id="username" value="<?= $user->username ?>"
+                        <input type="text" class="form-control" id="username" value="<?= $user->getUsername() ?>"
                                spellcheck="false"
                                autocorrect="off" autocapitalize="off" name="current-username"
                                autocomplete="current-username"
@@ -88,14 +88,14 @@
                 ?>
                 <!--        <tr class="">-->
                 <tr class="articleLine">
-                    <td class="title"><img src="<?= $book->thumb ?>"></td>
-                    <td class="title"><?= $book->title ?></td>
-                    <td class="content"><?php $author = $book->authors[0];
-                        echo $author->fullname ?></td>
-                    <td class="content"><?= $book->content ?></td>
+                    <td class="title"><img src="<?= $book->getThumb() ?>"></td>
+                    <td class="title"><?= $book->getTitle() ?></td>
+                    <td class="content"><?php $author = $book->getAuthors()[0];
+                        echo $author->getFullname() ?></td>
+                    <td class="content"><?= $book->getContent() ?></td>
                     <td class="content">
                         <?php
-                        if ($book->stock) {
+                        if ($book->getStock()) {
                             echo "<span class='badge rounded-pill bg-success'>disponible</span>";
 
                         } else {
@@ -108,7 +108,7 @@
                         <td class="action">
                             <span class="pill rounded-pill border-danger"></span>
                             <a class="submit"
-                               href="index.php?action=showUpdateBookForm&id=<?= $book->getId() ?>">
+                               href="index.php?action=updateBookForm&id=<?= $book->getId() ?>">
                                 edit
                             </a>
                         </td>

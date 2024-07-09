@@ -5,17 +5,47 @@
         </a>
         <div class="list-group list-group-flush border-bottom scrollarea">
 
-            <?php foreach ($contacts as $loop => $contact) {
-//            if (in_array($message->sender, $contacts)) {
+            <?php
+            if (isset($sender) && !in_array($sender, $contacts)) {
+                ?>
+                <a href="#"
+                   class="contact-item list-group-item list-group-item-action py-3 lh-tight
+                             <?= isset($sender) && $sender->getId() ? 'active" aria-current="true' : '' ?>">
+
+                    <div class="d-flex w-100 align-items-center justify-content-between">
+                        <img src="<?= $sender->getThumb() ?>" alt="" width="32" height="32"
+                             class="rounded-circle me-2">
+                        <strong class="mb-1"><?= $sender->getUsername() ?></strong>
+                        <small>$message->created_at</small>
+                    </div>
+                    <!--                    <div class="col-10 mb-1 small">-->
+                    <?php //= Utils::limitText( $message->content,5) ?><!--</div>-->
+                </a>
+
+                <?php
+            }
+            ?>
+
+            <?php
+
+            foreach ($contacts as $loop => $contact) {
+
+
+                if (isset($sender) && in_array($sender, $contacts) && $sender->getId()== $contact->getId()) {
+                    $senderActive = true;
+                    var_dump($sender->getId());
+                }
                 ?>
 
                 <a href="#"
                    class="contact-item list-group-item list-group-item-action py-3 lh-tight
-                             <?= isset($senderId) && $contact->getId() == $senderId ? 'active" aria-current="true' : '' ?><?= $loop === 0 ? 'active" aria-current="true' : '' ?>">
+<!--                             --><?php //= isset($senderId) && $contact->getId() == $senderId ? 'active" aria-current="true' : '' ?><!----><?php //= $loop === 0 ? 'active" aria-current="true' : '' ?><!--">-->
+                    <?= isset($senderId) && $contact->getId() == $senderId ? 'active" aria-current="true' : '' ?>">
 
                     <div class="d-flex w-100 align-items-center justify-content-between">
-                        <img src="<?= $contact->thumb ?>" alt="" width="32" height="32" class="rounded-circle me-2">
-                        <strong class="mb-1"><?= $contact->username ?></strong>
+                        <img src="<?= $contact->getThumb() ?>" alt="" width="32" height="32"
+                             class="rounded-circle me-2">
+                        <strong class="mb-1"><?= $contact->getUsername() ?></strong>
                         <small>$message->created_at</small>
                     </div>
                     <!--                    <div class="col-10 mb-1 small">-->
@@ -36,8 +66,8 @@
                 <a class=""> GoBack</a>
             </div>
             <header>
-                <img src="<?= $contact->thumb ?>" alt="" width="32" height="32" class="rounded-circle me-2">
-                <strong> <?= $contact->username ?></strong>
+                <img src="<?= $contact->getThumb() ?>" alt="" width="32" height="32" class="rounded-circle me-2">
+                <strong> <?= $contact->getUsername() ?></strong>
             </header>
 
 
@@ -45,7 +75,7 @@
 
                 <?php foreach ($messages as $loop => $message) {
 
-                    if ($message->receiver->getId() == $_SESSION['idUser'] & $message->sender->getId() == $contact->getId()) {
+                    if ($message->getReceiver()->getId() == $_SESSION['idUser'] & $message->getSender()->getId() == $contact->getId()) {
                         ?>
                         <div class="message d-flex">
                             <figure class="d-flex flex-column col-6">
@@ -54,7 +84,7 @@
                                 </div>
                                 <figcaption>
                                     <p class="message-content p-3 rounded-2">
-                                        <?= $message->content ?>
+                                        <?= $message->getContent() ?>
                                     </p>
                                 </figcaption>
                             </figure>
@@ -63,7 +93,7 @@
                         <?php
                     }
 
-                    if ($message->sender->getId() == $_SESSION['idUser'] & $message->receiver->getId() == $contact->getId()) {
+                    if ($message->getSender()->getId() == $_SESSION['idUser'] & $message->getReceiver()->getId() == $contact->getId()) {
                         ?>
                         <div class="message message-outer d-flex justify-content-end">
                             <figure class="d-flex flex-column col-6">
@@ -72,7 +102,7 @@
                                 </div>
                                 <figcaption>
                                     <p class="message-content p-3 rounded-2">
-                                        <?= $message->content ?>
+                                        <?= $message->getContent() ?>
                                     </p>
                                 </figcaption>
                             </figure>

@@ -17,8 +17,8 @@
     <?php foreach ($books as$book) { ?>
         <!--        <tr class="">-->
         <tr class="articleLine">
-            <td class="title"><?=$book->thumb ?></td>
-            <td class="title"><?=$book->title ?></td>
+            <td class="title"><?=$book->getThumb() ?></td>
+            <td class="title"><?=$book->getTitle() ?></td>
             <td class="content"><?=$book->content(200) ?></td>
 
             <td class="action"><span class="pill rounded-pill border-danger"></span><a class="submit"

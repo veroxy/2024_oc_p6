@@ -9,6 +9,8 @@ use models\entities\User;
  */
 class UserRepository extends AbstractEntityRepository
 {
+
+
     /**
      * Récupère un user connecté
      * @param int $id

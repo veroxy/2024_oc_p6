@@ -77,6 +77,11 @@ try {
             $articleController = new BookController();
             $articleController->showBook($bookId);
             break;
+        case 'updateBookForm':
+            $bookId = Utils::request('id');
+            $articleController = new BookController();
+            $articleController->updateBook($bookId);
+            break;
         case 'deleteBook':
             $bookId = Utils::request('id');
             $articleController = new BookController();
