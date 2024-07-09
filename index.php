@@ -39,7 +39,7 @@ try {
             $userController->sendMessage();
             break;
         case 'getCurrentSender':
-            $senderId = Utils::request('senderId');
+            $senderId = Utils::request('sender');
             $userController = new MessageController();
             $userController->getCurrentSender($senderId);
 

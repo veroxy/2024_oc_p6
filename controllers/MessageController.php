@@ -74,6 +74,11 @@ class MessageController extends AbstactController
         Utils::redirect("messenger",['#newMsg'] );
     }
 
+    /**
+     * // AJAX function
+     * @param int|null $senderId
+     * @return array
+     */
     public function getCurrentSender(?int $senderId)
     {
         $userRepo = new UserRepository();

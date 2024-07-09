@@ -175,7 +175,7 @@
                         }
                     }
                 };
-                xmlhttp.open("GET", "index.php?action=getCurrentSender&senderId=" + senderId, true);
+                xmlhttp.open("GET", "index.php?action=getCurrentSender&sender=" + senderId, true);
                 xmlhttp.send();
             }
         }*/
