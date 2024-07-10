@@ -1,13 +1,12 @@
 <div class="container">
     <div class="row">
-
         <div class="col">
-            <article class="card">
+            <article class="card border-0 bg-none">
                 <figure class="row g-0">
                     <div class="col-md-6">
-                        <img src="<?= $book->getThumb() ?>" alt="<?= $book->getTitle() ?>">
+                        <img src="<?= $book->getThumb() ?>" alt="<?= $book->getTitle() ?>" class="img-fluid w-100">
                     </div>
-                    <figcaption class="col-md-6">
+                    <figcaption class="col-md-6 p-2 d-flex  align-items-start flex-column ">
                         <div class="card-body">
                             <h5 class="card-title"><?= $book->getTitle() ?></h5>
                             <?php $authors = $book->getAuthors() ;
@@ -35,10 +34,10 @@
                         <footer class="col">
                             <h5>proprietaire</h5>
                             <div>
-                                <a href="index.php?action=profile&id=<?= $book->getUser()->getId() ?>"
-                                <span class="badge align-items-center rounded">
+                                <a href="index.php?action=profile&id=<?= $book->getUser()->getId() ?>" class="text-decoration-none">
+                                <span class="badge align-items-center rounded text-black">
                                     <img src="<?= $book->getUser()->getThumb() ?>" alt="" width="32" height="32"
-                                         class="rounded-circle me-2">=
+                                         class="rounded-circle me-2">
                                 <?= $book->getUser()->getUsername() ?>
                                 </span>
                                 </a>
@@ -52,7 +51,5 @@
                 </figure>
             </article>
         </div>
-
-
     </div>
 </div>

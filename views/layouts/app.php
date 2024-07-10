@@ -88,9 +88,10 @@
 
     <main class="d-flex align-items-center py-4 bg-body-tertiary">
         <div class="container">
-            <h1><?= $title ?> </h1>
-
-            <?= $content /* Ici est affiché le contenu réel de la page. */ ?>
+            <div class="d-flex flex-wrap">
+                <h1 class="col-md-6"><?= $title ?> </h1>
+                <?= $content /* Ici est affiché le contenu réel de la page. */ ?>
+            </div>
         </div>
     </main>
 
@@ -159,9 +160,9 @@
 
         // onclick="getSender(this.id)"
 
-        function getSender(senderId) {
-            if (senderId > 0) {
-                console.log(senderId)
+        function getSender(senderIdAx) {
+            if (senderIdAx > 0) {
+                console.log(senderIdAx)
 
                 var xmlhttp = new XMLHttpRequest();
                 xmlhttp.onreadystatechange = function () {
@@ -175,7 +176,7 @@
                         }
                     }
                 };
-                xmlhttp.open("GET", "index.php?action=getCurrentSender&sender=" + senderId, true);
+                xmlhttp.open("GET", "index.php?action=getCurrentSender&sender=" + senderIdAx, true);
                 xmlhttp.send();
             }
         }*/
@@ -183,32 +184,41 @@
 </script>
 <script type="application/javascript" src="./views/assets/js/ajax.js"></script>
 <script type="application/javascript">
+    senderIdAx = null;
 
-    aside = document.getElementById("aside-message");
-    listContacts = aside.getElementsByClassName('contact-item')
-    for (var i = 0; i < listContacts.length; i++) {
+    function ftx_getContact(sendenIdAx = null) {
+        aside = document.getElementById("aside-message");
+        listContacts = aside.getElementsByClassName('contact-item')
 
-        if (listContacts[i].classList.contains('active')){
-            console.log('celui la: ' + i)
-            var curr =  listContacts[i];
-        }
 
-        listContacts[i].addEventListener("click", function (e) {
-            var current = document.getElementsByClassName(",active");
-            console.log(this, e, current)
-            if (current.length > 0) {
-                current[0].className = current[0].classList.remove("active");
-                current[0].removeAttribute("aria-current")
-
+        for (var i = 0; i < listContacts.length; i++) {
+            if (listContacts[i].classList.contains('active')) {
+                // console.log('celui la: ' + i, listContacts[i].getElementsByTagName('strong')[0].textContent)
+                var currActived = listContacts[i];
+                senderIdAx = listContacts[i].id; // TOFIXED V2 supprimer dans le html la valeur de l'id $contact->getId() par getUsername qui est unique aussi et ne permet pas cibler un emplacement
             }
 
-            this.classList.add("active");
-            this.setAttribute("aria-current", true)
-        });
+            listContacts[i].addEventListener("click", function (e) {
+                currActived.classList.remove("active")
+                currActived.removeAttribute("aria-current")
+                this.classList.add("active");
+                this.setAttribute("aria-current", true)
+
+                currActived = this
+                senderIdAx = this.id;
+
+
+                console.log(this, e, currActived, senderIdAx)
+            });
+        }
+        return senderIdAx;
     }
-    // inspect
-    console.log(el.onclick);
-    ajax.get('index.php?action=getCurrentSender&sender=', {senderId: 'bar'}, function () {
+
+
+
+
+    ftx_getContact()
+    ajax.get('index.php?action=getCurrentSender&sender=', {senderIdAx: 'bar'}, function () {
     });
 </script>
 </body>

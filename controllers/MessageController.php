@@ -76,18 +76,18 @@ class MessageController extends AbstactController
 
     /**
      * // AJAX function
-     * @param int|null $senderId
+     * @param int|null $senderIdAx
      * @return array
      */
-    public function getCurrentSender(?int $senderId)
+    public function getCurrentSender(?int $senderIdAx)
     {
         $userRepo = new UserRepository();
-        $sender = $userRepo->getUserById($senderId);
+        $sender = $userRepo->getUserById($senderIdAx);
         $msgRepo = new MessageRepository();
-        $messages = $msgRepo->getAllMessages($senderId);
+        $messages = $msgRepo->getAllMessages($senderIdAx);
 
         $datas = [
-            'sender' => $senderId,
+            'sender' => $senderIdAx,
             'messages' => $messages
         ];
         $view = new View("Messagerie");
