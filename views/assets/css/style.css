@@ -3,8 +3,8 @@
 #aside-message{
     /*width: 380px;*/
 }
-#content-message{
-
+.content-message{
+/*display: none;*/
 }
 .message-outer .message-content{
     background-color: #EDF2F6;
