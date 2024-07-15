@@ -3,7 +3,7 @@
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="index.php">
-                <img src="./..//assets/vendors/5.0/assets/brand/bootstrap-logo.svg" alt="" width="30" height="24"
+                <img src="./..//assets/vendors/5.0/assets/brand/bootstrap-logo.svg" alt="logo" width="30" height="24"
                      class="d-inline-block align-text-top">
                 Tom Troc
             </a>

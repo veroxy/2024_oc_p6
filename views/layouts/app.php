@@ -183,96 +183,20 @@
 
 </script>
 <script type="application/javascript" src="./views/assets/js/ajax.js"></script>
+<script type="application/javascript" src="./views/assets/js/messenger.js"></script>
 <script type="application/javascript">
-    senderIdAx = null;
-
-    function ftx_getContact(senderIdAx = null) {
-        aside = document.getElementById("aside-message");
-        listContacts = aside.getElementsByClassName('contact-item')
-        listMsg = aside.getElementsByClassName('contact-message')
-
-
-        for (var i = 0; i < listContacts.length; i++) {
-            if (listContacts[i].classList.contains('active')) {
-                // console.log('celui la: ' + i, listContacts[i].getElementsByTagName('strong')[0].textContent)
-                var currActived = listContacts[i];
-                senderIdAx = listContacts[i].id; // TOFIXED V2 supprimer dans le html la valeur de l'id $contact->getId() par getUsername qui est unique aussi et ne permet pas cibler un emplacement
-            }
-            messageContainer = document.getElementById("contact-message-" + senderIdAx);
-            messageContainer.classList.remove("d-none")
-            messageContainer.classList.add('active')
-            messageContainer.setAttribute("aria-current", true)
-
-
-            listContacts[i].addEventListener("click", function (e) {
-                currActived.classList.remove("active")
-                currActived.removeAttribute("aria-current")
-
-                this.classList.add("active");
-                this.setAttribute("aria-current", true)
-
-                currActived = this
-                senderIdAx = this.id;
-                var currMsgActived = document.getElementById("contact-message-" + senderIdAx);
-
-                console.info('clicked:',currMsgActived, '',senderIdAx)
-
-                if (messageContainer.classList.contains('active')) {
-                    var tester = document.getElementById("contact-message-5");
-                    // var currMsgActived = document.getElementsByClassName('contact-message')[i];
-                    console.info('clicked:',currMsgActived, tester,senderIdAx)
-                    currMsgActived.classList.remove("d-none")
-                    currMsgActived.classList.add("active")
-                    currMsgActived.setAttribute("aria-current", true)
-
-                    messageContainer.classList.remove("active")
-                    messageContainer.classList.add("d-none")
-                    messageContainer.removeAttribute("aria-current", true)
-
-                }else{
-
-                    console.info('avant: ', messageContainer, currMsgActived, senderIdAx)
-                    // currMsgActived.classList.remove("d-none")
-                    // currMsgActived.classList.add("active")
-                    // currMsgActived.setAttribute("aria-current", true)
-
-                    // messageContainer.classList.remove("active")
-                    // messageContainer.classList.add("d-none")
-                    // messageContainer.removeAttribute("aria-current", true)
-
-                    messageContainer.classList.remove("d-none")
-                    messageContainer.classList.add("active")
-                    messageContainer.setAttribute("aria-current", true)
-
-                    currMsgActived.classList.remove("active")
-                    currMsgActived.classList.add("d-none")
-                    currMsgActived.removeAttribute("aria-current", true)
-
-                    messageContainer = currMsgActived
-                    console.info('apres: ', messageContainer, currMsgActived, senderIdAx)
-                }
-
-
-
-
-                // messageContainer.removeAttribute("aria-current")
-            });
-        }
-        return senderIdAx;
-    }
-
 
     ftx_getContact();
 
     /* ajax.get('index.php?action=getCurrentSender&sender=', {senderIdAx: 'bar'}, function () {
-     });
- */
+    });
+    */
 
-    url = 'index.php?action=getCurrentSender&sender='.<?= isset($contact) ? $contact->getId() : 'null' ?>;
-    data = {}
-    callback = null;
+    let url = 'index.php?action=getCurrentSender&sender='.<?= isset($contact) ? $contact->getId() : 'null' ?>;
+    let data = {}
+    let callback = null;
     ajax.get = function (url, data, callback, async) {
-        var query = [];
+        let query = [];
         for (var key in data) {
             query.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
         }
@@ -280,7 +204,7 @@
     };
 
     ajax.post = function (url, data, callback, async) {
-        var query = [];
+        let query = [];
         for (var key in data) {
             query.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
         }
@@ -288,5 +212,6 @@
     };
 
 </script>
+
 </body>
 </html>

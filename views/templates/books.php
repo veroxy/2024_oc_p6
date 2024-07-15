@@ -17,7 +17,7 @@
                         <div class="card_img" style=" width:200px; height:200px">
                             <svg class="bd-placeholder-img card-img-top" width="200px" height="200px"
                                  xmlns="http://www.w3.org/2000/svg"
-                                 role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
+alt                                 role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice"
                                  focusable="false">
                                 <title><?= $book->getTitle() ?></title>
                                 <rect width="100%" height="100%" fill="#55595c"></rect>

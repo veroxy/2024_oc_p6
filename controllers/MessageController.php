@@ -10,29 +10,29 @@ class MessageController extends AbstactController
 {
 
     /**
-//     * @param int|null $senderId
+     * //     * @param int|null $senderId
      * @return void
      */
     public function showMessages(): void
     {
 
         $this->checkIfUserIsConnected();
-        $senderId =  Utils::request('sender') ? : null;
+        $senderId = Utils::request('sender') ?: null;
         $contacts = [];
-        $sender = null;
+        $sender   = null;
         if ($senderId) {
             $senderRepo = new UserRepository();
-            $sender = $senderRepo->getUserById($senderId);
+            $sender     = $senderRepo->getUserById($senderId);
         }
 
         $messageRepo = new MessageRepository();
-        $messages = $messageRepo->getAllMessages($_SESSION['idUser']);
+        $messages    = $messageRepo->getAllMessages($_SESSION['idUser']);
+
         foreach ($messages as $message) {
             array_push($contacts, $message->getSender());
         }
         $contacts = array_unique($contacts, SORT_REGULAR);
-
-        $view = new View("Messagerie");
+        $view     = new View("Messagerie");
         $view->render("messenger", [
             'contacts' => $contacts,
             'messages' => $messages,
@@ -46,11 +46,11 @@ class MessageController extends AbstactController
     public function sendMessage(): void
     {
         // On récupère les données du formulaire.
-        $id = Utils::request("id", -1);
-        $content = Utils::request("content");
+        $id       = Utils::request("id", -1);
+        $content  = Utils::request("content");
         $receiver = (int)Utils::request("receiver");
 
-        $userRep = new UserRepository();
+        $userRep     = new UserRepository();
         $id_receiver = $userRep->getUserById($receiver);
 
         // On vérifie que les données sont valides.
@@ -66,12 +66,11 @@ class MessageController extends AbstactController
         ]);
 
 
-
         $messageRepo = new MessageRepository();
         $messageRepo->sendMessage($message);
 
         // On redirige vers la page d'profile.
-        Utils::redirect("messenger",['#newMsg'] );
+        Utils::redirect("messenger", ['#newMsg']);
     }
 
     /**
@@ -82,15 +81,16 @@ class MessageController extends AbstactController
     public function getCurrentSender(?int $senderIdAx)
     {
         $userRepo = new UserRepository();
-        $sender = $userRepo->getUserById($senderIdAx);
-        $msgRepo = new MessageRepository();
+        $sender   = $userRepo->getUserById($senderIdAx);
+        $msgRepo  = new MessageRepository();
         $messages = $msgRepo->getAllMessages($senderIdAx);
+
 
         $datas = [
             'sender' => $senderIdAx,
             'messages' => $messages
         ];
-        $view = new View("Messagerie");
+        $view  = new View("Messagerie");
         $view->render("messenger",
             $datas);
         return $datas;

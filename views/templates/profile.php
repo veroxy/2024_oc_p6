@@ -88,7 +88,7 @@
                 ?>
                 <!--        <tr class="">-->
                 <tr class="articleLine">
-                    <td class="title"><img src="<?= $book->getThumb() ?>"></td>
+                    <td class="title"><img src="<?= $book->getThumb() ?>" alt="<?= $book->getTitle() ?>"></td>
                     <td class="title"><?= $book->getTitle() ?></td>
                     <td class="content"><?php $author = $book->getAuthors()[0];
                         echo $author->getFullname() ?></td>
