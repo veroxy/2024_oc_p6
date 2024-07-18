@@ -24,7 +24,7 @@ class MessageController extends AbstactController
             $senderRepo = new UserRepository();
             $sender     = $senderRepo->getUserById($senderId);
         }
-
+//        var_dump('senderId', 'sender => ', $sender->getId());
         $messageRepo = new MessageRepository();
         $messages    = $messageRepo->getAllMessages($_SESSION['idUser']);
 

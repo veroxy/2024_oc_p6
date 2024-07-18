@@ -6,17 +6,12 @@
         <div class="list-group list-group-flush border-bottom scrollarea">
 
             <?php
-            $senderActive = false;
-            $senderIsset  = isset($sender);
-
-
-            if ($senderIsset && !in_array($sender, $contacts)) {
-                $senderNew = true;
-                $senderActive = true;
+            if (isset($sender) && !in_array($sender, $contacts)) {
                 ?>
-                <a href="#"
+                <a href="#" id="<?= $sender->getId() ?>"
                    class="contact-item list-group-item list-group-item-action py-3 lh-tight
-                             <?= $senderActive && $sender->getId() ? 'active" aria-current="true' : '' ?>">
+                             <?= isset($sender) && $sender->getId() ? 'active" aria-current="true' : '' ?>
+">
 
                     <div class="d-flex w-100 align-items-center justify-content-between">
                         <img src="<?= $sender->getThumb() ?>" alt="<?= $sender->getUsername() ?>" width="32" height="32"
@@ -35,16 +30,21 @@
             <?php
             foreach ($contacts as $loop => $contact) {
 
-                if (in_array($sender, $contacts)) {
-                    if ($contact->getId() == $sender->getId()) {
-                        $senderActive = true;
-                    }
+                if (isset($sender) && in_array($sender, $contacts) && $contact->getId() == $sender->getId()) {
+                    $senderActive = true;
                 }
+                /*  if (isset($sender)) {
+                      if ($contact->getId() == $sender->getId()) {
+                          if (in_array($sender, $contacts)) {
+                              $senderActive = true;
+                          }
+                      }
+                  }*/
                 ?>
 
                 <a id="<?= $contact->getId() ?>" href="#"
                    class="contact-item list-group-item list-group-item-action py-3 lh-tight
-                    <?= $senderActive && $contact->getId() == $sender->getId() ? ' active" aria-current="true' : '' ?>
+                    <?= isset($senderActive) && $contact->getId() == $sender->getId() ? ' active" aria-current="true' : '' ?>
                     <?= !isset($sender) && $loop === 0 ? 'active" aria-current="true' : '' ?>
                     ">
 
@@ -68,23 +68,56 @@
 
     <div class="d-flex list-group">
         <?php
+        if (isset($sender) && !in_array($sender, $contacts)) {
+            $senderActive = true;
+            var_dump("fucker");
+            ?>
+            <div  id="contact-message-<?= $sender->getId() ?>"
+                  class="content-message list-group-item
+              <?= isset($senderActive) ? ' active' : '' ?>
+                    ">
+                <div class="container h-100">
+                    <div>
+                        <a class=""> GoBack</a>
+                    </div>
+                    <header>
+                        <img src="<?= $sender->getThumb() ?>" alt="" width="32" height="32" class="rounded-circle me-2">
+                        <strong> <?= $sender->getUsername() ?></strong>
+                    </header>
+
+
+                    <div class="d-flex flex-column">
+
+                        <form method="post" name="message-form" action="index.php?action=sendMessage" id="newMsg">
+                            <div class="d-flex align-items-stretch">
+                                <label class="input-group">
+                                    <input type="text" class="invisible" name="receiver" value="<?= $contact->getId() ?>">
+                                    <textarea name="content" class="form-control px-0"
+                                              placeholder="Type your message..." rows="1"
+                                              data-emoji-input="" data-autosize="true"
+                                              style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 47px;"></textarea>
+                                </label>
+                                <button class="btn btn-icon btn-primary">
+                                    envoyer
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <?php
+        }
         foreach ($contacts as $loop => $contact) {
-            if (in_array($sender, $contacts)) {
-                if ($contact->getId() == $sender->getId()) {
-                    $senderActive = true;
-                    var_dump("$loop");
-                }
-            } else {
-                $senderNew = true;
+            if (isset($sender) && in_array($sender, $contacts) && $contact->getId() == $sender->getId()) {
                 $senderActive = true;
-                var_dump(true);
             }
             ?>
             <!--    POUR LE TEST LE CONTACTE EST valeur 0-->
             <div id="contact-message-<?= $contact->getId() ?>"
                  class="content-message d-none list-group-item
-              <?= $senderActive &&  $senderIsset ? ' active' : '' ?>
-              <?= !isset($sender)  && $loop === 0 ? 'active' : '' ?>
+              <?= isset($senderActive) && $contact->getId() == $sender->getId() ? ' active' : '' ?>
+                    <?= !isset($sender) && $loop === 0 ? 'active' : '' ?>
                     ">
                 <div class="container h-100">
                     <div>
@@ -144,8 +177,7 @@
                                     <textarea name="content" class="form-control px-0"
                                               placeholder="Type your message..." rows="1"
                                               data-emoji-input="" data-autosize="true"
-                                              style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 47px;">
-                            </textarea>
+                                              style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 47px;"></textarea>
                                 </label>
                                 <button class="btn btn-icon btn-primary">
                                     envoyer

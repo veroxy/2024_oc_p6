@@ -110,108 +110,121 @@
 
 <script type="application/javascript">
     /*
-        $(document).ready(function () {
-            displayResult();
-            /!* Send Message	*!/
+     $(document).ready(function () {
+     displayResult();
+     /!* Send Message	*!/
 
-            $('#send_msg').on('click',
-                function () {
-                    if ($('#msg').val() == "") {
-                        alert('Please write message first');
-                    } else {
-                        $msg = $('#msg').val();
-                        $id = $('#id').val();
-                        $.ajax({
-                            type: "POST",
-                            url: "send_message.php",
-                            data: {
-                                msg: $msg,
-                                id: $id,
-                            },
-                            success: function () {
-                                displayResult();
-                            }
-                        });
-                    }
-                }
-            );
-            /!*****    *****!/
-        });
+     $('#send_msg').on('click',
+     function () {
+     if ($('#msg').val() == "") {
+     alert('Please write message first');
+     } else {
+     $msg = $('#msg').val();
+     $id = $('#id').val();
+     $.ajax({
+     type: "POST",
+     url: "send_message.php",
+     data: {
+     msg: $msg,
+     id: $id,
+     },
+     success: function () {
+     displayResult();
+     }
+     });
+     }
+     }
+     );
+     /!*****    *****!/
+     });
 
-        function displayResult() {
+     function displayResult() {
 
-            id = document.getElementById('('
-            id
-            ').val();
-            $.ajax({
-                url: 'index.php?action=getCurrentSender&sender=',
-                type: 'POST',
-                async: false,
-                data: {
-                    id: id,
-                    res: 1,
-                },
-                success: function (response) {
-                    document.getElementById('result').html(response);
-                }
-            });
-        }
+     id = document.getElementById('('
+     id
+     ').val();
+     $.ajax({
+     url: 'index.php?action=getCurrentSender&sender=',
+     type: 'POST',
+     async: false,
+     data: {
+     id: id,
+     res: 1,
+     },
+     success: function (response) {
+     document.getElementById('result').html(response);
+     }
+     });
+     }
 
 
-        // onclick="getSender(this.id)"
+     // onclick="getSender(this.id)"
 
-        function getSender(senderIdAx) {
-            if (senderIdAx > 0) {
-                console.log(senderIdAx)
+     function getSender(senderIdAx) {
+     if (senderIdAx > 0) {
+     console.log(senderIdAx)
 
-                var xmlhttp = new XMLHttpRequest();
-                xmlhttp.onreadystatechange = function () {
-                    if (xmlhttp.readyState == XMLHttpRequest.DONE) { // XMLHttpRequest.DONE == 4
-                        if (xmlhttp.status == 200) {
-                            document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
-                        } else if (xmlhttp.status == 400) {
-                            alert('There was an error 400');
-                        } else {
-                            alert('something else other than 200 was returned erro ' + xmlhttp.status);
-                        }
-                    }
-                };
-                xmlhttp.open("GET", "index.php?action=getCurrentSender&sender=" + senderIdAx, true);
-                xmlhttp.send();
-            }
-        }*/
+     var xmlhttp = new XMLHttpRequest();
+     xmlhttp.onreadystatechange = function () {
+     if (xmlhttp.readyState == XMLHttpRequest.DONE) { // XMLHttpRequest.DONE == 4
+     if (xmlhttp.status == 200) {
+     document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
+     } else if (xmlhttp.status == 400) {
+     alert('There was an error 400');
+     } else {
+     alert('something else other than 200 was returned erro ' + xmlhttp.status);
+     }
+     }
+     };
+     xmlhttp.open("GET", "index.php?action=getCurrentSender&sender=" + senderIdAx, true);
+     xmlhttp.send();
+     }
+     }*/
 
 </script>
 <script type="application/javascript" src="./views/assets/js/ajax.js"></script>
 <script type="application/javascript" src="./views/assets/js/messenger.js"></script>
-<script type="application/javascript">
+<?php
+// uniquement pour la page messagerie
+$action = Utils::request('action');
+if ($action == "messenger") {
+    ?>
+    <script type="application/javascript">
 
-    ftx_getContact();
-
-    /* ajax.get('index.php?action=getCurrentSender&sender=', {senderIdAx: 'bar'}, function () {
-    });
-    */
-
-    let url = 'index.php?action=getCurrentSender&sender='.<?= isset($contact) ? $contact->getId() : 'null' ?>;
-    let data = {}
-    let callback = null;
-    ajax.get = function (url, data, callback, async) {
-        let query = [];
-        for (var key in data) {
-            query.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
+        if (document.readyState === "loading") {
+            document.addEventListener(("DOMContentLoaded"), ftx_getContact);
+        } else {
+            ftx_getContact();
         }
-        ajax.send(url + (query.length ? '?' + query.join('&') : ''), callback, 'GET', null, async)
-    };
 
-    ajax.post = function (url, data, callback, async) {
-        let query = [];
-        for (var key in data) {
-            query.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
-        }
-        ajax.send(url, callback, 'POST', query.join('&'), async)
-    };
+        ftx_getContact();
 
-</script>
+        /* ajax.get('index.php?action=getCurrentSender&sender=', {senderIdAx: 'bar'}, function () {
+         });
+         */
 
+        let url      = 'index.php?action=getCurrentSender&sender='.<?= isset($contact) ? $contact->getId() : 'null' ?>;
+        let data     = {}
+        let callback = null;
+        ajax.get     = function (url, data, callback, async) {
+            let query = [];
+            for (var key in data) {
+                query.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
+            }
+            ajax.send(url + (query.length ? '?' + query.join('&') : ''), callback, 'GET', null, async)
+        };
+
+        ajax.post = function (url, data, callback, async) {
+            let query = [];
+            for (var key in data) {
+                query.push(encodeURIComponent(key) + '=' + encodeURIComponent(data[key]));
+            }
+            ajax.send(url, callback, 'POST', query.join('&'), async)
+        };
+
+    </script>
+    <?php
+}
+?>
 </body>
 </html>
