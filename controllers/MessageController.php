@@ -24,18 +24,12 @@ class MessageController extends AbstactController
             $senderRepo = new UserRepository();
             $sender     = $senderRepo->getUserById($senderId);
         }
-//        var_dump('senderId', 'sender => ', $sender->getId());
-        $messageRepo = new MessageRepository();
-        $messages    = $messageRepo->getAllMessages($_SESSION['idUser']);
-
-        foreach ($messages as $message) {
-            array_push($contacts, $message->getSender());
-        }
-        $contacts = array_unique($contacts, SORT_REGULAR);
-        $view     = new View("Messagerie");
+        $messageRepo      = new MessageRepository();
+        $messagesContacts = $messageRepo->getAllMessages($_SESSION['idUser']);
+        $view             = new View("Messagerie");
         $view->render("messenger", [
-            'contacts' => $contacts,
-            'messages' => $messages,
+            'contacts' => $messagesContacts['contacts'],
+            'messages' => $messagesContacts['messages'],
             'sender' => $sender,]);
     }
 
@@ -52,14 +46,16 @@ class MessageController extends AbstactController
 
         $userRep     = new UserRepository();
         $id_receiver = $userRep->getUserById($receiver);
+//        var_dump($id, $receiver, $id_receiver);
 
         // On vérifie que les données sont valides.
         if (empty($content)) {
             throw new Exception("Tous les champs sont obligatoires. 2");
         }
-        // On crée l'objet Book.
+
+        // On crée l'objet Message.
         $message = new Message([
-            'id' => $id, // Si l'id vaut -1, l'book sera ajouté. Sinon, il sera modifié.
+            'id' => $id, // Si l'id vaut -1, le ;essqge sera ajouté. Sinon, il sera modifié.
             'content' => $content,
             'sender' => $_SESSION['idUser'],
             'receiver' => $receiver
@@ -68,8 +64,9 @@ class MessageController extends AbstactController
 
         $messageRepo = new MessageRepository();
         $messageRepo->sendMessage($message);
-
-        // On redirige vers la page d'profile.
+        var_dump('sortie repo', $messageRepo);
+        // On redirige vers la page du profile.
+        //  TOFIXED ["&sender=$receiver#newMsg"] parametre a mettre
         Utils::redirect("messenger", ['#newMsg']);
     }
 

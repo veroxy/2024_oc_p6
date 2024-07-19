@@ -91,7 +91,7 @@
                         <form method="post" name="message-form" action="index.php?action=sendMessage" id="newMsg">
                             <div class="d-flex align-items-stretch">
                                 <label class="input-group">
-                                    <input type="text" class="invisible" name="receiver" value="<?= $contact->getId() ?>">
+                                    <input type="text" class="invisible" name="receiver" value="<?= $sender->getId() ?>">
                                     <textarea name="content" class="form-control px-0"
                                               placeholder="Type your message..." rows="1"
                                               data-emoji-input="" data-autosize="true"
