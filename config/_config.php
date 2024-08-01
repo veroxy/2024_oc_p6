@@ -1,7 +1,8 @@
 <?php
 
 session_start();
-
+$_SESSION['redirect_url'] = $_SERVER['REQUEST_URI'];
+define('DEV', true); // si nous somme encore en mode dev == true sinon mettre a false pour PRODUCTION
 define('TEMPLATES_VIEWS', './views/'); // base chemin vers les views
 
 define('TEMPLATE_LAYOUTS', TEMPLATES_VIEWS . 'layouts/'); // Le chemin vers les layer, partials et composants

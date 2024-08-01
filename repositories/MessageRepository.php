@@ -6,7 +6,7 @@ use models\entities\Message;
 
 class MessageRepository extends AbstractEntityRepository
 {
-    public function getAllMessages(int $idUser)
+    public function getAllMessages(int $uid)
     {
 
         $sql      = "SELECT m.*,current_receiver.*
@@ -17,14 +17,13 @@ class MessageRepository extends AbstractEntityRepository
                               ON sender.id = m.user_id_sender
                          join user as_receiver
                               ON m.user_id_sender = as_receiver.id
-                WHERE current_receiver.id = $idUser
-                   OR as_receiver.id = $idUser
+                WHERE current_receiver.id = $uid
+                   OR as_receiver.id = $uid
                 ORDER BY m.created_at ASC ;";
         $result   = $this->db->query($sql);
         $contacts = [];
 
         while ($message = $result->fetch()) {
-//            var_dump($message);
             $sender   = new UserRepository();
             $receiver = new UserRepository();
             $sender   = $sender->getUserById($message['user_id_sender']);
@@ -34,6 +33,8 @@ class MessageRepository extends AbstractEntityRepository
             $msg->setReceiver($receiver);
             $messages[] = $msg;
         }
+
+        // tofixed remettre ctrl
         foreach ($messages as $message) {
             array_push($contacts, $message->getSender());
             array_push($contacts, $message->getReceiver());
@@ -58,14 +59,12 @@ class MessageRepository extends AbstractEntityRepository
                             NOW(),
                             NOW()
                     )";
-//            var_dump($message);
             $datas = [
                 'user_id_sender' => $message->getSender(),
                 'user_id_receiver' => $message->getReceiver(),
                 'content' => $message->getContent(),
             ];
             var_dump($datas, $message);
-//            die();
 
             $this->db->query($sql, $datas);
         }

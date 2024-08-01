@@ -1,11 +1,27 @@
-/* viewport DESKPORT*/
+.card-img-top {
+  min-height: 160px !important;
+}
 
-#aside-message{
-    /*width: 380px;*/
+.message-outer .message-content {
+  background-color: #EDF2F6;
 }
-.content-message{
-/*display: none;*/
+
+#aside-message .list-group-item {
+  border: none;
+  background-color: var(--bs-beige-light) !important;
 }
-.message-outer .message-content{
-    background-color: #EDF2F6;
+#aside-message .list-group-item:active {
+  background-color: var(--bg-white) !important;
 }
+
+#content-message .list-group-item {
+  border: none;
+  background-color: var(--bs-beige-light) !important;
+}
+#newMsg textarea {
+  overflow-wrap: break-word;
+  resize: none;
+  height: 47px;
+}
+
+/*# sourceMappingURL=style.css.map */

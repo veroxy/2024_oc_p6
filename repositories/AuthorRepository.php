@@ -26,6 +26,33 @@ class AuthorRepository extends AbstractEntityRepository
     }
 
     /**
+     * @param int $idBook
+     * @return array
+     */
+    public function getFirstAuthorsBookId(int|string $idBook):?Author
+    {
+        if (is_int($idBook)) {
+            $sql = "SELECT a.*
+                FROM book_has_author
+                RIGHT JOIN author a 
+                ON book_has_author.author_id = a.id
+                WHERE book_id = $idBook
+                ORDER by a.created_at DESC
+                LIMIT 1";
+        }
+        if (is_string($idBook)) {
+        $sql = "SELECT a.* FROM author as a WHERE a.fullname='$idBook';";
+        }
+
+        $result = $this->db->query($sql);
+        $author = $result->fetch();
+        if ($author) {
+            return new Author($author);
+        }
+        return null;
+    }
+
+    /**
      * Récupère tous les commentaires d'un book.
      * @param int $idBook : l'id de l'book.
      * @return array : un tableau d'objets Comment.
@@ -40,17 +67,8 @@ class AuthorRepository extends AbstractEntityRepository
                 ON book_has_author.author_id = a.id
                 WHERE book_id = $idBook";
 
-
         $result  = $this->db->query($sql);
-        $authors   = $this->getRelationToMany($result, Author::class);
-
-
-//        $result  = $this->db->query($sql, ['book_id' => $idBook]);
-//        $authors = [];
-
-//        while ($author = $result->fetch()) {
-//            $authors[] = new Author($author);
-//        }
+        $authors = $this->getRelationToMany($result, Author::class);
         return $authors;
     }
 
@@ -70,6 +88,10 @@ class AuthorRepository extends AbstractEntityRepository
         return null;
     }
 
+    /**
+     * @param Author $author
+     * @return bool
+     */
     public function addUser(Author $author)
     {
         $sql    = "INSERT INTO author (fullname, created_at, modified_at) VALUES (:fullname, NOW(), NOW())";

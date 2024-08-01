@@ -7,7 +7,7 @@
  * @var $title string : page title
  * @var $conten string : page content
  */
-
+$page = $title === 'Messagerie' ? true : false;
 ?>
 
 <!DOCTYPE html>
@@ -17,18 +17,19 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $title ?></title>
-    <link rel="stylesheet" href="./views/assets/vendors/bootstrap-5.0.2-src/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./views/assets/css/mybs-5.css">
     <link rel="stylesheet" href="./views/assets/vendors/bootstrap-5.0.2-src/dist/css/show-password-toggle.css">
     <link rel="stylesheet" href="./views/assets/css/style.css">
 </head>
 
-<body>
-<div class="" style="background-color:#FAF9F7; ">
+<body class="<?= $page ? 'bg-beige' : 'bg-beige-light' ?>">
+<?= $title !== "Messagerie" ?>
+<div class="">
     <!--<div class="container py-3">-->
     <!--   TOFIXED  --><?php //include_once "./views/layouts/partials/header.php"; ?>
 
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #F5F3EF;">
+        <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
             <div class="container">
                 <a class="navbar-brand" href="index.php">
                     <img src="./views/assets/img/noun-book.png" alt="" width="30" height="24"
@@ -70,7 +71,6 @@
                         <li class="nav-item">
                             <?php
                             if (Utils::user()) {
-                                // var_dump($_SESSION['user'])// tofixed : doit etre reteste lorsqu il ny a de user en db mais connecte la fois precedente -- ne doit pas s'afficher si meme si il y a une session d'ouverte;
                                 echo '<a class="nav-link" href="index.php?action=disconnectUser">Déconnexion</a>';
                             } else {
                                 echo '<a class="nav-link"  href="index.php?action=connectionForm">Connexion</a>';
@@ -83,22 +83,27 @@
             </div>
         </nav>
 
-
     </header>
 
-    <main class="d-flex align-items-center py-4 bg-body-tertiary">
+    <main class="d-flex align-items-center py-4 <?= $page ? 'bg-beige' : 'bg-beige-light' ?>">
         <div class="container">
             <div class="d-flex flex-wrap">
-                <h1 class="col-md-6"><?= $title ?> </h1>
+                <?php if ($title !== "Messagerie") { ?>
+                    <h1 class="col-md-6 link-dark"><?= $title ?></h1>
+                <?php } ?>
                 <?= $content /* Ici est affiché le contenu réel de la page. */ ?>
             </div>
         </div>
     </main>
 
-    <footer>
-        <nav>
-            <ul>
-                li*4>a[href="#" class=""]A générer
+    <footer class="d-flex align-items-center py-4 bg-secondary position-fixed bottom-0 text-body-secondary py-3 w-100">
+        <nav class="container align-content-end justify-content-end">
+            <ul class="d-sm-flex justify-content-end list-group-item list-unstyled g-2">
+                <li class="d-flex justify-content-center"><a href="#" class="link-dark">Politique de confidentialité</a>
+                </li>
+                <li class="d-flex justify-content-center"><a href="#" class="link-dark">Mentions légales</a></li>
+                <li class="d-flex justify-content-center"><a href="#" class="link-dark">Tom Troc©</a></li>
+                <li class="d-flex justify-content-center"><a href="#" class="link-dark">LOGO</a></li>
             </ul>
         </nav>
     </footer>
@@ -193,11 +198,12 @@ if ($action == "messenger") {
 
         if (document.readyState === "loading") {
             document.addEventListener(("DOMContentLoaded"), ftx_getContact);
+            console.log('ON LOAD')
         } else {
             ftx_getContact();
-        }
+            console.log('LOADED')
 
-        ftx_getContact();
+        }
 
         /* ajax.get('index.php?action=getCurrentSender&sender=', {senderIdAx: 'bar'}, function () {
          });

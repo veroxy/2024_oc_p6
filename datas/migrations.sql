@@ -6,7 +6,7 @@
 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-
+SET  sql_mode=(SELECT REPLACE(@@sql_mode,'ONLY_FULL_GROUP_BY',''));
 -- -----------------------------------------------------
 -- Schema 2024_oc_p6_tomtroc
 -- -----------------------------------------------------
@@ -51,7 +51,7 @@ CREATE TABLE IF NOT EXISTS `2024_oc_p6_tomtroc`.`book` (
                                                            `thumb` VARCHAR(255) NOT NULL,
                                                            `title` VARCHAR(255) NOT NULL,
                                                            `content` LONGTEXT NOT NULL,
-                                                           `stock` INT NOT NULL DEFAULT 0,
+#                                                            `stock` INT NOT NULL DEFAULT 0,
                                                            `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                                            `modified_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                                            PRIMARY KEY (`id`));
@@ -111,6 +111,7 @@ DROP TABLE IF EXISTS `2024_oc_p6_tomtroc`.`user_has_book` ;
 CREATE TABLE IF NOT EXISTS `2024_oc_p6_tomtroc`.`user_has_book` (
                                                                     `user_id` BIGINT NOT NULL,
                                                                     `book_id` INT UNSIGNED NOT NULL,
+                                                                    `stock` INT DEFAULT 0,
                                                                     PRIMARY KEY (`user_id`, `book_id`),
                                                                     CONSTRAINT `fk_user_has_book_user1`
                                                                         FOREIGN KEY (`user_id`)

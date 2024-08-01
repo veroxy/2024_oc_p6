@@ -23,16 +23,21 @@ class BookRepository extends AbstractEntityRepository
         return $this->baseGetBooks($sql);
     }
 
+    /**
+     * @param $sql
+     * @return array
+     */
     public function baseGetBooks($sql)
     {
-        $result = $this->db->query($sql);
+        $result     = $this->db->query($sql);
         $authorRepo = new AuthorRepository();
-        $books = [];
+        $books      = [];
 
         while ($book = $result->fetch()) {
+
             $arr_authors = $authorRepo->getAllAuthorsByBookId($book['id']);
-            $users = $this->getUsersByBook($book['id']);
-            $post = new Book($book);
+            $users       = $this->getUsersByBook($book['id']);
+            $post        = new Book($book);
             $post->setAuthors($arr_authors);
             foreach ($users as $user) {
                 $post->setUser($user);
@@ -49,13 +54,13 @@ class BookRepository extends AbstractEntityRepository
      */
     public function getUsersByBook(int $bookId): array
     {
-        $sql = "SELECT *
+        $sql    = "SELECT *
                 FROM user
                          JOIN user_has_book ub
                               ON ub.user_id = user.id
                 WHERE ub.book_id = $bookId;";
         $result = $this->db->query($sql);
-        $users = $this->getRelationToMany($result, User::class);
+        $users  = $this->getRelationToMany($result, User::class);
         return $users;
 
     }
@@ -67,7 +72,7 @@ class BookRepository extends AbstractEntityRepository
      */
     public function getBooksByUserAsc(int $userId): array
     {
-        $sql = "SELECT *
+        $sql = "SELECT *, ub.stock
                 FROM book
                          JOIN user_has_book ub
                               ON ub.book_id = book.id
@@ -104,15 +109,32 @@ class BookRepository extends AbstractEntityRepository
      */
     public function getFouthLastBooks(int $limit = 4): array
     {
-        $sql = "SELECT * FROM book ORDER BY created_at DESC LIMIT $limit";
-        $result = $this->db->query($sql);
+        $sql = "SELECT DISTINCT book.*,
+               (SELECT author.fullname
+                 FROM book_has_author ba
+                          JOIN author ON ba.author_id = author.id
+                 WHERE ba.book_id = book.id limit 1) AS fullname,
+
+                (SELECT user.username
+                 FROM user_has_book ub
+                          JOIN user ON ub.user_id = user.id
+                 WHERE ub.book_id = book.id limit 1) AS username
+                 
+            FROM book
+            ORDER BY book.created_at DESC
+            LIMIT 4;";
+
+        $result     = $this->db->query($sql);
         $authorRepo = new AuthorRepository();
-        $books = [];
+        $userRepo   = new UserRepository();
+        $books      = [];
 
         while ($book = $result->fetch()) {
-            $authors = $authorRepo->getAllAuthorsByBookId($book['id']);
-            $post = new Book($book);
-            $post->setAuthors($authors);
+            $author = $authorRepo->getFirstAuthorsBookId($book['fullname']);
+            $user   = $userRepo->getUserByBookId($book['username']);
+            $post   = new Book($book);
+            $post->setUser($user);
+            $post->setAuthor($author);
             $books[] = $post;
         }
         return $books;
@@ -154,16 +176,97 @@ class BookRepository extends AbstractEntityRepository
      * @param Book $book : l'book à modifier.
      * @return Book
      */
-    public function updateBook(Book $book): Book
+    public function updateBook(Book|array $bookDatas): ?Book
     {
-        $sql = "UPDATE book SET title = :title, content = :content, modified_at = NOW() WHERE id = :id";
-        $this->db->query($sql, [
-            'title' => $book->getTitle(),
-            'content' => $book->getContent(),
-            'id' => $book->getId()
-        ]);
-        $book = $this->getBookById($book->getId());
-        return $book;
+        $datas = [];
+        if (is_object($bookDatas)) {
+            $datas = [
+                'title' => $bookDatas->getTitle(),
+                'content' => $bookDatas->getContent(),
+                'stock' => $bookDatas->getStock(),
+                'id' => $bookDatas->getId()
+            ];
+        }
+        if (is_array($bookDatas)) {
+            $book = $this->getBookByTitle($bookDatas['current-title']);
+            if ($bookDatas['current-stock'] !== $book->getStock()) {
+                $d          = [];
+                $d['stock'] = $bookDatas['current-stock'];
+                $d['uid']   = $book->getUser()->getId();
+                $d['id']    = $book->getId();
+                $sql        = "UPDATE user_has_book SET stock= :stock where user_id= :uid and book_id= :id";
+                $result     = $this->db->query($sql, $d);
+            }
+            $datas = [
+                'title' => $bookDatas['current-title'],
+                'content' => $bookDatas['current-content'],
+                'id' => $book->getId()];
+        }
+
+        $sql = "UPDATE book SET thumb='test', title= :title, content= :content, modified_at=NOW() WHERE id= :id";
+        $this->db->query($sql, $datas);
+
+        if ($book) {
+            return $this->getBookById($book->getId());
+        }
+        return null;
+    }
+
+    /**
+     * @param string $title
+     * @return Book | null
+     */
+    public function getBookByTitle(string $title): ?Book
+    {
+        $uid  = $_SESSION["uid"];
+        $sql  = "SELECT *
+        FROM user
+                 JOIN user_has_book ub
+                      ON ub.user_id = user.id
+                 JOIN book
+                      ON book.id = ub.book_id
+        WHERE ub.user_id = $uid 
+        AND book.title= '$title'";
+        $r    = $this->db->query($sql);
+        $book = $this->baseGetBooks($sql);
+
+        if ($book) {
+            return $book[0];
+        }
+
+        return null;
+    }
+
+    /**
+     * Récupère un book par son id.
+     * @param int $id : l'id de l'book.
+     * @return Book|null : un objet Book ou null si l'book n'existe pas.
+     */
+    public function getBookById(int $id): ?Book
+    {
+
+
+        $vendorId = $_REQUEST["vendor"]?: $_SESSION['uid'] ;
+        $sql = "SELECT *
+                FROM user
+                         JOIN user_has_book ub
+                              ON ub.user_id = user.id
+                         JOIN book
+                              ON book.id = ub.book_id
+                WHERE book.id = $id
+                  AND ub.user_id = $vendorId";
+
+
+        /*        $result = $this->db->query($sql, ['id' => $id]);
+                $book = $result->fetch();
+        */
+        $book = $this->baseGetBooks($sql);
+        if ($book) {
+            return $book[0];
+        }
+
+
+        return null;
     }
 
     /**
@@ -174,7 +277,7 @@ class BookRepository extends AbstractEntityRepository
     public function updateViewsBook(Book $book): Book
     {
         $views = $book->getViews() + 1;
-        $sql = "UPDATE book SET views = :views WHERE id = :id";
+        $sql   = "UPDATE book SET views = :views WHERE id = :id";
         $this->db->query($sql, [
             'views' => $views,
             'id' => $book->getId()
@@ -182,28 +285,6 @@ class BookRepository extends AbstractEntityRepository
         $book = $this->getBookById($book->getId());
         return $book;
 
-    }
-
-    /**
-     * Récupère un book par son id.
-     * @param int $id : l'id de l'book.
-     * @return Book|null : un objet Book ou null si l'book n'existe pas.
-     */
-    public function getBookById(int $id): ?Book
-    {
-        $sql = "SELECT * FROM book WHERE id = $id";
-
-
-/*        $result = $this->db->query($sql, ['id' => $id]);
-        $book = $result->fetch();
-*/
-        $book = $this->baseGetBooks($sql);
-        if ($book) {
-            return $book[0];
-        }
-
-
-        return null;
     }
 
     /**
@@ -229,17 +310,31 @@ class BookRepository extends AbstractEntityRepository
 
 
         // selectionner tous les books pocédant 0/+ comments
-        $sql = "SELECT a.*, count(c.id_article) as comments
+        $sql    = "SELECT a.*, count(c.id_article) as comments
                             FROM book a
                             LEFT JOIN comment c 
                             ON a.id = c.id_article
                             GROUP BY a.id  
                             ORDER BY $db_column $order";
         $result = $this->db->query($sql);
-        $books = $this->getRelationToMany($result);
+        $books  = $this->getRelationToMany($result);
         return $books;
 
 
+    }
+
+    public function searchBookBytitle($search)
+    {
+        $sql = "SELECT * FROM book WHERE title LIKE '%$search%'";
+        $result = $this->db->query($sql);
+
+        if ($result->num_rows > 0) {
+            while($row = $result->fetch_assoc()) {
+                echo "Result: " . $row["title"] . "<br>";
+            }
+        } else {
+            echo "RIEN TROUVE";
+        }
     }
 
     /**
@@ -250,10 +345,10 @@ class BookRepository extends AbstractEntityRepository
     private function getComments(PDOStatement $result): array
     {
         $commentRepository = new CommentRepository();
-        $book = [];
+        $book              = [];
         while ($book = $result->fetch()) {
             $comments = $commentRepository->getAllCommentsByBookId($book['id']);
-            $post = new Book($book);
+            $post     = new Book($book);
             $post->setComments($comments);
             $books[] = $post;
         }

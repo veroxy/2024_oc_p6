@@ -12,6 +12,7 @@ class Book extends AbstractEntity
 {
     private int $stock = 0;
     private User $user;
+    private Author $author;
     private string $title = "";
     private string $content = "";
     private array|int $authors = [];
@@ -97,7 +98,19 @@ class Book extends AbstractEntity
     public
     function getAuthor(): Author
     {
-        return $this->authors[0];
+        if (is_array($this->authors) && isset($this->authors) && !empty($this->authors)) {
+            return $this->authors[0];
+        } else {
+            return $this->author;
+        }
+    }
+
+    /**
+     * @param Author $author
+     */
+    public function setAuthor(Author $author): void
+    {
+        $this->author = $author;
     }
 
     /**

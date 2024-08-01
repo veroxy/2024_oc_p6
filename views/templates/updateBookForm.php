@@ -13,13 +13,13 @@
             <?php //= $book->getContent() ?><!--"-->
 
             <label for="content"></label>
-            <textarea id="content" class="form-control rounded" value="<?= $book->getContent() ?>"
+            <textarea id="content" class="form-control rounded"
                       spellcheck="false" autocorrect="off" autocapitalize="off" name="current-content"
-                      autocomplete="current-content" required></textarea>
+                      autocomplete="current-content" required><?= $book->getContent() ?></textarea>
         </fieldset>
         <fieldset class="mb-3">
             <label for="stock">stock</label>
-            <input type="number" class="form-control" id="stock" min="1" value="<?= $book->getStock() ?>"
+            <input type="number" class="form-control" id="stock" min="0" value="<?= $book->getStock() ?>"
                    spellcheck="false"
                    autocorrect="off" autocapitalize="off" name="current-stock"
                    autocomplete="current-stock"

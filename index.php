@@ -21,7 +21,7 @@ try {
             $profileId = Utils::request('id');
 
             $userController = new UserController();
-            $userController->showProfile(isset($profileId) ? $profileId : $_SESSION['idUser']);
+            $userController->showProfile(isset($profileId) ? $profileId : $_SESSION['uid']);
             break;
 
         case 'updateProfile':
@@ -39,7 +39,7 @@ try {
             $userController->sendMessage();
             break;
         case 'getCurrentSender':
-            $senderId = Utils::request('sender');
+            $senderId       = Utils::request('sender');
             $userController = new MessageController();
             $userController->getCurrentSender($senderId);
 
@@ -73,20 +73,27 @@ try {
             $articleController->all();
             break;
         case 'book':
-            $bookId = Utils::request('id');
+            $bookId            = Utils::request('id');
             $articleController = new BookController();
             $articleController->showBook($bookId);
             break;
         case 'updateBookForm':
-            $bookId = Utils::request('id');
+            $bookId            = Utils::request('id');
             $articleController = new BookController();
             $articleController->updateBook($bookId);
             break;
+        case 'updateFormScript':
+            $bookUpdated       = $_REQUEST;
+            $articleController = new BookController();
+            $articleController->updateBookScript($bookUpdated);
+            break;
         case 'deleteBook':
-            $bookId = Utils::request('id');
+            $bookId            = Utils::request('id');
             $articleController = new BookController();
             $articleController->deleteBook($bookId);
             break;
+
+        case 'searchBook':
 
         default:
             throw new Exception("La page demandée n'existe pas.");
@@ -94,5 +101,13 @@ try {
 } catch (Exception $e) {
     // En cas d'erreur, on affiche la page d'erreur.
     $errorView = new View('Erreur');
-    $errorView->render('errorPage', ['errorMessage' => $e->getMessage()]);
+    if (DEV) {
+        $errorView->render('errorPage',
+            ['errorMessage' => $e->getMessage(),
+                'errorFile' => $e->getFile(),
+                'errorLine' => $e->getLine()
+            ]);
+    } else {
+        $errorView->render('errorPage', ['errorMessage' => $e->getMessage()]);
+    }
 }

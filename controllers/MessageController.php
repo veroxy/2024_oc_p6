@@ -25,7 +25,8 @@ class MessageController extends AbstactController
             $sender     = $senderRepo->getUserById($senderId);
         }
         $messageRepo      = new MessageRepository();
-        $messagesContacts = $messageRepo->getAllMessages($_SESSION['idUser']);
+        $messagesContacts = $messageRepo->getAllMessages($_SESSION['uid']);
+
         $view             = new View("Messagerie");
         $view->render("messenger", [
             'contacts' => $messagesContacts['contacts'],
@@ -46,8 +47,6 @@ class MessageController extends AbstactController
 
         $userRep     = new UserRepository();
         $id_receiver = $userRep->getUserById($receiver);
-//        var_dump($id, $receiver, $id_receiver);
-
         // On vérifie que les données sont valides.
         if (empty($content)) {
             throw new Exception("Tous les champs sont obligatoires. 2");
@@ -57,7 +56,7 @@ class MessageController extends AbstactController
         $message = new Message([
             'id' => $id, // Si l'id vaut -1, le ;essqge sera ajouté. Sinon, il sera modifié.
             'content' => $content,
-            'sender' => $_SESSION['idUser'],
+            'sender' => $_SESSION['uid'],
             'receiver' => $receiver
         ]);
 

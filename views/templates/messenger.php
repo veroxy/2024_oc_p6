@@ -1,6 +1,7 @@
 <div class="d-flex container-fluid">
-    <aside class="d-flex flex-column align-items-stretch flex-shrink-0 bg-white col-md-4" id="aside-message">
-        <a href="/" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
+    <aside class="align-items-stretch flex-shrink-0 bg-light col-md-4" id="aside-message">
+       <div>
+        <a href="#" class="d-flex align-items-center flex-shrink-0 p-3 link-dark text-decoration-none border-bottom">
             <span class="fs-5 fw-semibold">Messagerie </span>
         </a>
         <div class="list-group list-group-flush border-bottom scrollarea">
@@ -9,7 +10,7 @@
             if (isset($sender) && !in_array($sender, $contacts)) {
                 ?>
                 <a href="#" id="<?= $sender->getId() ?>"
-                   class="contact-item list-group-item list-group-item-action py-3 lh-tight
+                   class="contact-item list-group-item list-group-item-action py-3 lh-tight bg-light
                              <?= isset($sender) && $sender->getId() ? 'active" aria-current="true' : '' ?>
 ">
 
@@ -64,38 +65,37 @@
             } ?>
 
         </div>
+       </div>
     </aside>
-
-    <div class="d-flex list-group">
+    <div class="d-flex list-group col-md-8" id="content-message">
         <?php
         if (isset($sender) && !in_array($sender, $contacts)) {
             $senderActive = true;
-            var_dump("fucker");
             ?>
-            <div  id="contact-message-<?= $sender->getId() ?>"
-                  class="content-message list-group-item
+            <div id="contact-message-<?= $sender->getId() ?>"
+                 class="content-message list-group-item
               <?= isset($senderActive) ? ' active' : '' ?>
                     ">
                 <div class="container h-100">
-                    <div>
-                        <a class=""> GoBack</a>
+                    <div class="d-md-none">
+                        <a href="#aside-message"> GoBack</a>
                     </div>
                     <header>
                         <img src="<?= $sender->getThumb() ?>" alt="" width="32" height="32" class="rounded-circle me-2">
                         <strong> <?= $sender->getUsername() ?></strong>
                     </header>
 
-
                     <div class="d-flex flex-column">
 
                         <form method="post" name="message-form" action="index.php?action=sendMessage" id="newMsg">
                             <div class="d-flex align-items-stretch">
                                 <label class="input-group">
-                                    <input type="text" class="invisible" name="receiver" value="<?= $sender->getId() ?>">
-                                    <textarea name="content" class="form-control px-0"
+                                    <input type="text" class="invisible d-none"
+                                           name="receiver"
+                                           value="<?= $sender->getId() ?>">
+                                    <textarea name="content" class="form-control px-0 overflow-hidden rounded-2 px-2 "
                                               placeholder="Type your message..." rows="1"
-                                              data-emoji-input="" data-autosize="true"
-                                              style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 47px;"></textarea>
+                                              data-emoji-input="" data-autosize="true"></textarea>
                                 </label>
                                 <button class="btn btn-icon btn-primary">
                                     envoyer
@@ -116,12 +116,12 @@
             <!--    POUR LE TEST LE CONTACTE EST valeur 0-->
             <div id="contact-message-<?= $contact->getId() ?>"
                  class="content-message d-none list-group-item
-              <?= isset($senderActive) && $contact->getId() == $sender->getId() ? ' active' : '' ?>
-                    <?= !isset($sender) && $loop === 0 ? 'active' : '' ?>
+              <?= isset($senderActive) && $contact->getId() == $sender->getId() ? ' active bg-secondary' : '' ?>
+                    <?= !isset($sender) && $loop === 0 ? ' active' : '' ?>
                     ">
                 <div class="container h-100">
-                    <div>
-                        <a class=""> GoBack</a>
+                    <div class="d-md-none">
+                        <a href="#aside-message"> GoBack</a>
                     </div>
                     <header>
                         <img src="<?= $contact->getThumb() ?>" alt="" width="32" height="32"
@@ -133,7 +133,7 @@
                     <div class="d-flex flex-column">
 
                         <?php foreach ($messages as $loop => $message) {
-                            if ($message->getReceiver()->getId() == $_SESSION['idUser'] & $message->getSender()->getId() == $contact->getId()) { ?>
+                            if ($message->getReceiver()->getId() == $_SESSION['uid'] & $message->getSender()->getId() == $contact->getId()) { ?>
                                 <div class="message d-flex">
                                     <figure class="d-flex flex-column col-6">
                                         <div class="d-flex pb-2">
@@ -150,7 +150,7 @@
                                 <?php
                             }
 
-                            if ($message->getSender()->getId() == $_SESSION['idUser'] & $message->getReceiver()->getId() == $contact->getId()) {
+                            if ($message->getSender()->getId() == $_SESSION['uid'] & $message->getReceiver()->getId() == $contact->getId()) {
                                 ?>
                                 <div class="message message-outer d-flex justify-content-end">
                                     <figure class="d-flex flex-column col-6">
@@ -170,16 +170,19 @@
 
                         } ?>
                         <form method="post" name="message-form" action="index.php?action=sendMessage" id="newMsg">
-                            <div class="d-flex align-items-stretch">
-                                <label class="input-group">
-                                    <input type="text" class="invisible" name="receiver"
-                                           value="<?= $contact->getId() ?>">
-                                    <textarea name="content" class="form-control px-0"
-                                              placeholder="Type your message..." rows="1"
-                                              data-emoji-input="" data-autosize="true"
-                                              style="overflow: hidden; overflow-wrap: break-word; resize: none; height: 47px;"></textarea>
-                                </label>
-                                <button class="btn btn-icon btn-primary">
+                            <div class="row align-items-stretch g-4">
+                                <fieldset class="col-md-10">
+                                    <label class="input-group" for="content">
+                                        <input type="text" class="invisible d-none"
+                                               name="receiver"
+                                               value="<?= $contact->getId() ?>">
+                                        <textarea name="content"
+                                                  class="form-control px-0 overflow-hidden rounded-2 px-2"
+                                                  placeholder="Type your message..." rows="1"
+                                                  data-emoji-input="" data-autosize="true">Kiss Me - I make Music for my people </textarea>
+                                    </label>
+                                </fieldset>
+                                <button class="col-md-2 btn btn-icon btn-primary">
                                     envoyer
                                 </button>
                             </div>

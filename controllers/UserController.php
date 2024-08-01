@@ -22,16 +22,16 @@ class UserController extends AbstactController
         $booksRepo = new BookRepository();
         $books = [];
 
+
         if (isset($profileId)) {
             $user = $userRepo->getUserById($profileId);
 
         }
-
-        if (isset($_SESSION['idUser'])) {
-            $uid = $_SESSION['idUser'];
+        if (isset($_SESSION['uid'])) {
+            $uid = $_SESSION['uid'];
             $currentUser = $userRepo->getUserById($uid);
             // TODO gere books empty
-            if (Utils::user() & $_SESSION['idUser'] == $currentUser->getId()) {
+            if (Utils::user() & $_SESSION['uid'] == $currentUser->getId()) {
                 $books = $booksRepo->getBooksByUserAsc($currentUser->getId());
             }
         } else {
@@ -73,7 +73,7 @@ class UserController extends AbstactController
             'id' => $id, // Si l'id vaut -1, l'book sera ajouté. Sinon, il sera modifié.
             'title' => $title,
             'content' => $content,
-            'id_user' => $_SESSION['idUser']
+            'id_user' => $_SESSION['uid']
         ]);
 
         // On ajoute l'book.

@@ -20,13 +20,7 @@ class Utils
     {
         // On vérifie que l'utilisateur est connecté.
         $userConnected = isset($_SESSION['user']) ? true : false;
-
-
-        /*     $userRepo = new \repositories\UserRepository();
-             $user = $userRepo->getUserById($_SESSION['user']['id']);
-             var_dump($user);*/
-
-        return $userConnected;
+                return $userConnected;
     }
 
     /**

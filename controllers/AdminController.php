@@ -37,7 +37,6 @@ class AdminController extends \controllers\AbstactController
         $login    = Utils::request("username");
         $password = Utils::request("password");
 
-        var_dump($login, $password);
         // On vérifie que les données sont valides.
         if (empty($login) || empty($password)) {
             throw new Exception("Tous les champs sont obligatoires. 1");
@@ -48,7 +47,7 @@ class AdminController extends \controllers\AbstactController
         $user           = $userRepository->getUserByLogin($login);
 
         if (!$user) {
-            throw new Exception("L'utilisateur demandé n'existe pas.");
+            throw new Exception("L'utilisateur demandé n'existe pas : ". $login);
         }
 
         // On vérifie que le mot de passe est correct.
@@ -59,7 +58,7 @@ class AdminController extends \controllers\AbstactController
 
         // On connecte l'utilisateur.
         $_SESSION['user']   = $user;
-        $_SESSION['idUser'] = $user->getId();
+        $_SESSION['uid'] = $user->getId();
 
         // On redirige vers la page de profile.
         Utils::redirect("profile");
@@ -108,7 +107,7 @@ class AdminController extends \controllers\AbstactController
 
         // On connecte l'utilisateur.
         $_SESSION['user']   = $user;
-        $_SESSION['idUser'] = $entity->getId();
+        $_SESSION['uid'] = $entity->getId();
 
         // On redirige vers la page d'profile.
         Utils::redirect("profile");
@@ -122,7 +121,7 @@ class AdminController extends \controllers\AbstactController
     {
         // On déconnecte l'utilisateur.
         unset($_SESSION['user']);
-        unset($_SESSION['idUser']);
+        unset($_SESSION['uid']);
 
         // On redirige vers la page d'accueil.
         Utils::redirect("welcome");
@@ -182,7 +181,7 @@ class AdminController extends \controllers\AbstactController
             'id' => $id, // Si l'id vaut -1, l'book sera ajouté. Sinon, il sera modifié.
             'title' => $title,
             'content' => $content,
-            'id_user' => $_SESSION['idUser']
+            'id_user' => $_SESSION['uid']
         ]);
 
         // On ajoute l'book.

@@ -1,5 +1,6 @@
 <div class="d-flex flex-column">
-    <div class="d-flex">
+    <div class="d-flex ">
+
         <div class="col-md-6 text-center bg-white rounded p-5">
             <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg"
                  role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false"><title>
@@ -10,10 +11,7 @@
             <p>Membre depuis <?= Utils::dateIntervalDuration($user->getCreatedAt()) ?></p>
             <h5>bibliothèque</h5>
             <p><i class=""></i><?= is_int($books) ? $books : count($books) ?> livres</p>
-
             <?php if (Utils::user() && $user->getId() !== $currentUser->getId()) { ?>
-
-
                 <a href="index.php?action=messenger&sender=<?= $user->getId() ?>" class="btn btn-success"><?php ?>envoyer un
                     message</a>
                 <?php
@@ -77,7 +75,6 @@
             <th class="t-cell">content</th>
             <th class="t-cell">stock</th>
             <?php if (Utils::user() && $user->getId() == $currentUser->getId()) { ?>
-
                 <th class="t-cell" colspan="3">actions</th>
             <?php } ?>
         </tr>
@@ -108,7 +105,7 @@
                         <td class="action">
                             <span class="pill rounded-pill border-danger"></span>
                             <a class="submit"
-                               href="index.php?action=updateBookForm&id=<?= $book->getId() ?>">
+                               href="index.php?action=updateBookForm&id=<?= $book->getId() ?>&vendor=<?= $user->getId() ?>">
                                 edit
                             </a>
                         </td>

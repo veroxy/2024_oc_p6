@@ -10,6 +10,7 @@ abstract class AbstactController
 
     private static false|User $connectedUser;
 
+
     /**
      * @return false|User
      */
@@ -36,6 +37,18 @@ abstract class AbstactController
         if (!isset($_SESSION['user'])) {
             Utils::redirect("connectionForm");
         }
+
+/*        if (isset($_SESSION['redirect_url'])) {
+            $redirect_url = $_SESSION['redirect_url'];
+            unset($_SESSION['redirect_url']); // Clear the stored URL
+            header("Location: $redirect_url");
+            exit();
+        } else {
+            // If no stored URL, redirect to a default page
+//            header("Location: dashboard.php");
+            Utils::redirect("connectionForm");
+            exit();
+        }*/
     }
 
 }

@@ -31,19 +31,19 @@
                             <?php } ?>
                             <p class="card-text"><?= $book->getContent() ?></p>
                         </div>
-                        <footer class="col">
+                        <footer class="col-12">
                             <h5>proprietaire</h5>
                             <div>
                                 <a href="index.php?action=profile&id=<?= $book->getUser()->getId() ?>" class="text-decoration-none">
-                                <span class="badge align-items-center rounded text-black">
+                                <span class="badge  align-items-center rounded text-black">
                                     <img src="<?= $book->getUser()->getThumb() ?>" alt="" width="32" height="32"
                                          class="rounded-circle me-2">
                                 <?= $book->getUser()->getUsername() ?>
                                 </span>
                                 </a>
                             </div>
-                            <div class="col">
-                                <a href="index.php?action=messenger&sender=<?= $book->getUser()->getId() ?>" class="btn btn-success"><?php ?>envoyer un message</a>
+                            <div class="col py-5">
+                                <a href="index.php?action=messenger&sender=<?= $book->getUser()->getId() ?>" class="col-8 btn btn-success"><?php ?>envoyer un message</a>
                             </div>
                         </footer>
                     </figcaption>
