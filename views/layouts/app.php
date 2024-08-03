@@ -50,11 +50,6 @@ $page = $title === 'Messagerie' ? true : false;
                         <li class="nav-item">
                             <a class="nav-link" href="index.php?action=books">Nos Livres à l'échanges</a>
                         </li>
-
-                        <!--    <li class="nav-item">
-                                <a class="nav-link" href="index.php?action=administration">administration</a>
-                            </li>-->
-
                     </ul>
 
 
@@ -86,7 +81,7 @@ $page = $title === 'Messagerie' ? true : false;
     </header>
 
     <main class="d-flex align-items-center py-4 <?= $page ? 'bg-beige' : 'bg-beige-light' ?>">
-        <div class="container">
+        <div class="container col-md-8">
             <div class="d-flex flex-wrap">
                 <?php if ($title !== "Messagerie") { ?>
                     <h1 class="col-md-6 link-dark"><?= $title ?></h1>

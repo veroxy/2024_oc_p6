@@ -1,7 +1,7 @@
-<div class="d-flex flex-column">
-    <div class="d-flex ">
+<div class="d-flex w-100 <?= Utils::user() && $user->getId() == $currentUser->getId() ? 'flex-column' : '' ?>">
+    <div class="d-flex <?= Utils::user() && $user->getId() == $currentUser->getId() ? '' : 'col-md-6'?> ">
 
-        <div class="col-md-6 text-center bg-white rounded p-5">
+        <div class="text-center bg-white rounded p-5 <?= Utils::user() && $user->getId() == $currentUser->getId() ? 'col-md-6' : 'col-md-12'?>">
             <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg"
                  role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false"><title>
                     Placeholder</title>
@@ -11,7 +11,7 @@
             <p>Membre depuis <?= Utils::dateIntervalDuration($user->getCreatedAt()) ?></p>
             <h5>bibliothèque</h5>
             <p><i class=""></i><?= is_int($books) ? $books : count($books) ?> livres</p>
-            <?php if (Utils::user() && $user->getId() !== $currentUser->getId()) { ?>
+            <?php if (Utils::user() && $user->getId() !== $currentUser->getId() || !Utils::user()) { ?>
                 <a href="index.php?action=messenger&sender=<?= $user->getId() ?>" class="btn btn-success"><?php ?>envoyer un
                     message</a>
                 <?php
@@ -62,7 +62,7 @@
         echo '<table class="adminBook col">';
     } else {
     ?>
-    <table class="adminBook col-lg-6">
+    <table class="adminBook <?= Utils::user() && $user->getId() == $currentUser->getId() ? 'col-lg-6' : ''?>">
 
         <?php
         }

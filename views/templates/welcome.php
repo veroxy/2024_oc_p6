@@ -1,4 +1,4 @@
-<article class="d-flex align-items-center vh-100 pe-auto">
+<article class="d-flex align-items-center pe-auto pb-3">
     <div class="container">
         <figure class="card-body d-flex g-0 flex-md-row mb-4 position-relative">
             <figcaption class="col-6 p-5 d-flex flex-column position-static align-self-end">
@@ -15,8 +15,8 @@
         </figure>
     </div>
 </article>
-<div class="d-flex align-items-center vh-100 pe-auto">
-    <div class="col-md-8 container">
+<div class="d-flex align-items-center pe-auto pb-3">
+    <div class="container">
         <div class="row mb-2">
 
             <?php
@@ -52,8 +52,8 @@
     </div>
 </div>
 
-<div class="d-flex align-items-center vh-100 pe-auto">
-    <div class="col-md-8 container">
+<div class="d-flex align-items-center pe-auto">
+    <div class="container">
         <div class="row mb-2">
 
             <img src="https://picsum.photos/200" alt="">
