@@ -18,28 +18,26 @@
 <div class="d-flex align-items-center pe-auto pb-3">
     <div class="container">
         <div class="row mb-2">
-
             <?php
             if (!empty($books)) {
                 foreach ($books
-
                          as $book) { ?>
                     <article class="col-6 col-lg-3">
                         <div class="col">
-                            <figure class="card border-0 shadow-sm rounded rounded-4">
+                            <div class="card border-0 shadow-sm rounded rounded-4">
                                 <div>
-                                    <a href="index.php?action=book&id=<?= $book->getId() ?>">
-                                        <img src="" alt="<?= $book->getTitle() ?>" class="placeholder card-img-top" alt>
+                                    <a href="index.php?action=book&id=<?= $book->getId()?>">
+                                        <img src="<?= $book->getThumb() ?>" alt="<?= $book->getTitle() ?>" class="placeholder card-img-top" alt>
                                     </a>
                                 </div>
-                                <figcaption class="card-body">
+                                <div class="card-body">
                                     <a href="index.php?action=book&id=<?= $book->getId() ?>&vendor=<?= $book->getUser()->getId() ?>">
                                         <h3 class="h3"><?= $book->getTitle() ?></h3>
                                         <p class="card-text"><?= $book->getAuthor()->getFullname() ?></p>
                                         <p><i>Vendu par : <?= $book->getUser()->getUsername() ?></i></p>
                                     </a>
-                                </figcaption>
-                            </figure>
+                                </div>
+                            </div>
                         </div>
                     </article>
                     <?php

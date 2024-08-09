@@ -126,13 +126,16 @@ class BookRepository extends AbstractEntityRepository
             LIMIT 4;";
 
         $result     = $this->db->query($sql);
+
         $authorRepo = new AuthorRepository();
         $userRepo   = new UserRepository();
         $books      = [];
 
         while ($book = $result->fetch()) {
 //            $fullname = $book['firstname'].''.$book['lastname'];
+
             $author = $authorRepo->getFirstAuthorsBookId($book['fullname']);
+
             $user   = $userRepo->getUserByBookId($book['username']);
             $post   = new Book($book);
             $post->setUser($user);

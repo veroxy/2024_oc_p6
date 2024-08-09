@@ -2,6 +2,8 @@
 
 session_start();
 $_SESSION['redirect_url'] = $_SERVER['REQUEST_URI'];
+
+$_SESSION['show-title'] = false; // defini si le titre doit $etre afficher non
 define('DEV', true); // si nous somme encore en mode dev == true sinon mettre a false pour PRODUCTION
 define('TEMPLATES_VIEWS', './views/'); // base chemin vers les views
 

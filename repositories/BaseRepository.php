@@ -58,8 +58,11 @@ class BaseRepository
      */
     public function query(string $sql, ?array $params = null) : PDOStatement
     {
+
         if ($params == null) {
             $query = $this->db->query($sql);
+//            die( $query);
+
         } else {
             $query = $this->db->prepare($sql);
             $query->execute($params);

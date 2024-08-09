@@ -3,6 +3,7 @@
   font-weight: 400;
 }
 
+
 #page-title{
   font-family: "Playfair Display", serif !important;
   font-size: 2.25rem !important;
@@ -19,6 +20,15 @@
 }
 .card-img-top {
   min-height: 160px !important;
+}
+.book-card{
+  $width : 200px;
+  //max-width: $width;
+  //overflow: hidden;
+  .card-img{
+    max-height: $width;
+overflow: hidden;
+  }
 }
 
 .message-outer {

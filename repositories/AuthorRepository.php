@@ -11,7 +11,7 @@ class AuthorRepository extends AbstractEntityRepository
 {
     public function retriveFistLastName(string $fullname)
     {
-        $fullname  = preg_split("/[\s]+/", $fullname);
+        $fullname = preg_split("/[\s]+/", $fullname);
 //        $firstname = $fullname[0];
 //        $lastname  = $fullname[1];
     }
@@ -46,16 +46,19 @@ class AuthorRepository extends AbstractEntityRepository
                 WHERE book_id = $idBook
                 ORDER by a.created_at DESC
                 LIMIT 1";
+            $result = $this->db->query($sql);
+
         }
         if (is_string($idBook)) {
-            $fullname  = preg_split("/[\s]+/", $idBook);
+            $fullname = preg_split("/[\s]+/", $idBook);
             $firstname = $fullname[0];
             $lastname  = $fullname[1];
-            $sql       = "SELECT a.* FROM author as a WHERE a.firstname='$firstname' AND a.lastname='$lastname';";
+            $sql       = "SELECT a.* FROM author as a WHERE a.firstname=:firstname AND a.lastname=:lastname;";
+            $result = $this->db->query($sql, ["firstname"=> $firstname, "lastname"=>$lastname]);
         }
 
-        $result = $this->db->query($sql);
         $author = $result->fetch();
+
         if ($author) {
             return new Author($author);
         }

@@ -50,12 +50,12 @@ insert into user_has_book (book_id, user_id, stock) values (13, 7, 0);
 insert into user_has_book (book_id, user_id, stock) values (6, 10, 0);
 insert into user_has_book (book_id, user_id, stock) values (1, 4, 1);
 insert into user_has_book (book_id, user_id, stock)
-values (11, 21, 2);
+values (11, 17, 2);
 insert into user_has_book (book_id, user_id, stock)
-values (4, 21, 0);
+values (4, 17, 0);
 insert into user_has_book (book_id, user_id, stock)
-values (13, 21, 1);
+values (13, 17, 1);
 insert into user_has_book (book_id, user_id, stock)
-values (6, 21, 0);
+values (6, 17, 0);
 insert into user_has_book (book_id, user_id, stock)
-values (1, 21, 1);
+values (1, 17, 1);

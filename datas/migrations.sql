@@ -84,7 +84,7 @@ DROP TABLE IF EXISTS `2024_oc_p6_tomtroc`.`message` ;
 CREATE TABLE IF NOT EXISTS `2024_oc_p6_tomtroc`.`message` (
                                                               `user_id_sender` BIGINT NOT NULL,
                                                               `user_id_receiver` BIGINT NOT NULL,
-                                                              `content` TEXT NOT NULL,
+                                                              `content` LONGTEXT NOT NULL,
                                                               `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                                               `modified_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
 --                                                               PRIMARY KEY (`user_id_sender`, `user_id_receiver`),

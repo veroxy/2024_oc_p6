@@ -7,7 +7,7 @@
  * @var $title string : page title
  * @var $conten string : page content
  */
-$page = $title === 'Messagerie' ? true : false;
+$showTitle = $_SESSION['show-title'] ;
 ?>
 
 <!DOCTYPE html>
@@ -25,8 +25,7 @@ $page = $title === 'Messagerie' ? true : false;
     <link rel="stylesheet" href="./views/assets/css/style.css">
 </head>
 
-<body class="<?= $page ? 'bg-beige' : 'bg-beige-light' ?>">
-<?= $title !== "Messagerie" ?>
+<body class="<?= $showTitle ? 'bg-beige' : 'bg-beige-light' ?>">
 <div class="">
     <!--<div class="container py-3">-->
     <!--   TOFIXED  --><?php //include_once "./views/layouts/partials/header.php"; ?>
@@ -85,10 +84,10 @@ $page = $title === 'Messagerie' ? true : false;
 
     </header>
 
-    <main class="d-flex align-items-center py-4 <?= $page ? 'bg-beige' : 'bg-beige-light' ?>">
+    <main class="d-flex align-items-center py-4 <?= $showTitle ? 'bg-beige' : 'bg-beige-light' ?>">
         <div class="container col-md-8">
             <div class="d-flex flex-wrap">
-                <?php if ($title !== "Messagerie") { ?>
+                <?php if (!$showTitle) { ?>
                     <h1 class="col-md-6 link-dark" id="page-title"><?= $title ?></h1>
                 <?php } ?>
                 <?= $content /* Ici est affiché le contenu réel de la page. */ ?>

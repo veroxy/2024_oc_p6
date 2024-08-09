@@ -12,15 +12,17 @@ try {
     switch ($action) {
         // Pages accessibles à tous.
         case 'welcome':
-            $welcomeController = new WelcomeController();
+            $_SESSION['show-title'] = true;
+            $welcomeController      = new WelcomeController();
             $welcomeController->welcome();
             break;
 
         // Section admin & connexion.
         case 'profile':
-            $profileId = Utils::request('id');
 
-            $userController = new UserController();
+            $_SESSION['show-title'] = true;
+            $profileId              = Utils::request('id');
+            $userController         = new UserController();
             $userController->showProfile(isset($profileId) ? $profileId : $_SESSION['uid']);
             break;
 
@@ -30,7 +32,8 @@ try {
             break;
 
         case 'messenger':
-            $userController = new MessageController();
+            $_SESSION['show-title'] = true;
+            $userController         = new MessageController();
             $userController->showMessages();
             break;
 
@@ -62,7 +65,7 @@ try {
             $adminController = new AdminController();
             $adminController->suscribeUser();
             break;
- case 'updateUser':
+        case 'updateUser':
             $adminController = new AdminController();
             $adminController->updateUser();
             break;
@@ -77,8 +80,9 @@ try {
             $articleController->all();
             break;
         case 'book':
-            $bookId            = Utils::request('id');
-            $articleController = new BookController();
+            $_SESSION['show-title'] = true;
+            $bookId                 = Utils::request('id');
+            $articleController      = new BookController();
             $articleController->showBook($bookId);
             break;
         case 'updateBookForm':
@@ -100,11 +104,11 @@ try {
             break;
 
         case 'searchBook':
-            $bookSearch      = isset($_POST['search']) ? $_POST['search'] : null;
+            $bookSearch        = isset($_POST['search']) ? $_POST['search'] : null;
             $articleController = new BookController();
             if (isset($bookSearch)) {
                 $articleController->searchBook($bookSearch);
-            }else{
+            } else {
                 $articleController->all();
             }
             break;

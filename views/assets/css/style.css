@@ -24,6 +24,11 @@
   min-height: 160px !important;
 }
 
+.book-card .card-img {
+  max-height: 200px;
+  overflow: hidden;
+}
+
 .message-outer .message-content {
   background-color: #EDF2F6;
 }

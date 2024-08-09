@@ -16,12 +16,12 @@
     if (!empty($books)) {
         foreach ($books as $book) { ?>
 
-            <div class="col-xs-2 col-sm-6 col-md-4 col-lg-3 px-2 py-4 align-content-center align-self-center">
+            <div class="book-card col-xs-2 col-sm-3 col-md-3 g-5 align-content-center align-self-center">
                 <div class="d-block">
                     <a href="index.php?action=book&id=<?= $book->getId() ?>&vendor=<?= $book->getUser()->getId() ?>" class="m-auto text-decoration-none">
                     <figure class="card border-0 shadow-sm rounded rounded-4">
-                        <div class="card_img">
-                            <img src="./views/assets/img/200x200.svg" alt="place holder img" class="w-100">
+                        <div class="card-img">
+                            <img src="<?= $book->getThumb() ?>" alt="place holder img" class="w-100">
                         </div>
                         <figcaption class="card-body">
                             <h3 class="h3"><?= $book->getTitle() ?></h3>
