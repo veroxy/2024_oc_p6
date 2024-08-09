@@ -18,7 +18,6 @@
                         <img src="<?= $sender->getThumb() ?>" alt="<?= $sender->getUsername() ?>" width="32" height="32"
                              class="rounded-circle me-2">
                         <strong class="mb-1"><?= $sender->getUsername() ?></strong>
-                        <!--                        <small>$message->created_at</small>-->
                     </div>
                     <!--                    <div class="col-10 mb-1 small">-->
                     <?php //= Utils::limitText( $message->content,5) ?><!--</div>-->
@@ -157,11 +156,11 @@
                                         <div class="d-flex align-content-end justify-content-end pb-2">
                                             <small class="text-muted"><?= Utils::convertDateToFrenchFormat($message->getCreatedAt()) ?></small>
                                         </div>
-                                        <figcaption>
+                                        <figccaption>
                                             <p class="message-content p-3 rounded-2">
                                                 <?= $message->getContent() ?>
                                             </p>
-                                        </figcaption>
+                                        </figccaption>
                                     </figure>
                                 </div>
 

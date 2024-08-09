@@ -9,7 +9,7 @@
             </svg>
             <h2 class="fw-normal"><?= $user->getUsername() ?></h2>
             <p>Membre depuis <?= Utils::dateIntervalDuration($user->getCreatedAt()) ?></p>
-            <h5>bibliothèque</h5>
+            <h5 class="t-8">bibliothèque</h5>
             <p><i class=""></i><?= is_int($books) ? $books : count($books) ?> livres</p>
             <?php if (Utils::user() && $user->getId() !== $currentUser->getId() || !Utils::user()) { ?>
                 <a href="index.php?action=messenger&sender=<?= $user->getId() ?>" class="btn btn-success"><?php ?>envoyer un
@@ -21,7 +21,7 @@
         <?php if (Utils::user() && $user->getId() == $currentUser->getId()) {
           ?>
             <div class="col-md-6 bg-white rounded">
-                <form action="index.php?action=suscribeUser" method="post" class="foldedCorner">
+                <form action="index.php?action=updateUser" method="post" class="foldedCorner">
 
                     <fieldset class="mb-3">
                         <label for="email">Email address</label>
@@ -69,13 +69,13 @@
         ?>
 
         <tr class="articleHeaderLine">
-            <th class="t-cell ">photo</th>
-            <th class="t-cell ">title</th>
-            <th class="t-cell ">auteur</th>
-            <th class="t-cell">content</th>
-            <th class="t-cell">stock</th>
+            <th class="t-cell text-center text-uppercase">photo</th>
+            <th class="t-cell text-center text-uppercase">title</th>
+            <th class="t-cell text-center text-uppercase">auteur</th>
+            <th class="t-cell text-center text-uppercase">content</th>
+            <th class="t-cell text-center text-uppercase">stock</th>
             <?php if (Utils::user() && $user->getId() == $currentUser->getId()) { ?>
-                <th class="t-cell" colspan="3">actions</th>
+                <th class="t-cell text-center text-uppercase" colspan="3">actions</th>
             <?php } ?>
         </tr>
 

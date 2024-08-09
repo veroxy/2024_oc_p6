@@ -325,16 +325,18 @@ class BookRepository extends AbstractEntityRepository
 
     public function searchBookBytitle($search)
     {
-        $sql = "SELECT * FROM book WHERE title LIKE '%$search%'";
-        $result = $this->db->query($sql);
 
-        if ($result->num_rows > 0) {
-            while($row = $result->fetch_assoc()) {
-                echo "Result: " . $row["title"] . "<br>";
-            }
-        } else {
-            echo "RIEN TROUVE";
-        }
+        $sql = "SELECT * FROM book WHERE title LIKE '%$search%'";
+
+            $books = $this->baseGetBooks($sql);
+//
+//            if (!isset($books)){
+//                return "RIEN TROUVE";
+//            }
+
+//        var_dump($search, "repo search", $books);die();
+
+            return $books;
     }
 
     /**

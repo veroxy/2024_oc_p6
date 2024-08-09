@@ -35,7 +35,7 @@ class Utils
         // Ca peut se faire depuis php.ini ou parfois directement depuis votre utilitaire (wamp/mamp/xamp)
         $dateFormatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::FULL, IntlDateFormatter::FULL);
 //        $dateFormatter->setPattern('EEEE d MMMM Y ');
-        $dateFormatter->setPattern('d.MM HH:mm:ss');
+        $dateFormatter->setPattern('dd.MM HH:mm:ss');
         return $dateFormatter->format($date);
     }
 

@@ -75,7 +75,21 @@ class UserRepository extends AbstractEntityRepository
             'password' => $hashPassword,
             'email' => $user->getEmail()
         ]);
+
         return $result->rowCount() > 0;
     }
 
+    public function updateUser(User $user)
+    {
+
+        $hashPassword = password_hash($user->getPassword(), PASSWORD_DEFAULT);
+        $sql          = "UPDATE user SET  (username, email, password, created_at) VALUES (:username, :email, :password, NOW()) where id= :id";
+
+        $result       = $this->db->query($sql, [
+            'username' => $user->getUsername(),
+            'password' => $hashPassword,
+            'email' => $user->getEmail(),
+            'id' => $user->getId()
+        ]);
+    }
 }

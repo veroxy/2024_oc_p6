@@ -26,7 +26,6 @@ class MessageController extends AbstactController
         }
         $messageRepo      = new MessageRepository();
         $messagesContacts = $messageRepo->getAllMessages($_SESSION['uid']);
-
         $view             = new View("Messagerie");
         $view->render("messenger", [
             'contacts' => $messagesContacts['contacts'],

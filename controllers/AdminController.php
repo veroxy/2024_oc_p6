@@ -112,6 +112,47 @@ class AdminController extends \controllers\AbstactController
         // On redirige vers la page d'profile.
         Utils::redirect("profile");
     }
+    /**
+     * Update de l'utilisateur.
+     * @return void
+     */
+    public function updateUser(): void
+    {
+
+        // On récupère les données du formulaire.
+        $username = Utils::request("current-username");
+        $email    = Utils::request("current-email");
+        $password = Utils::request("current-password");
+        // On vérifie que les données sont valides.
+//        var_dump($_REQUEST);
+        if (empty($username) || empty($email) || empty($password)) {
+            throw new Exception("Tous les champs sont obligatoires. 1");
+        }
+
+        // On crée l'objet User.
+
+        var_dump($_SESSION['uid']);
+        $user = new User([
+            'username' => $username,
+            'email' => $email,
+            'password' => $password,
+            'id' => $_SESSION['uid']
+        ]);
+
+        // On vérifie que le mp est different ?
+        $userRepository = new UserRepository();
+        $entity         = $userRepository->updateUser($user);
+        if (!$entity) {
+            throw new Exception("Une erreur est survenue lors de l'ajout de l'uilisateur ");
+        }
+
+        // On connecte l'utilisateur.
+        $_SESSION['user']   = $user;
+        $_SESSION['uid'] = $entity->getId();
+
+        // On redirige vers la page d'profile.
+        Utils::redirect("profile");
+    }
 
     /**
      * Déconnexion de l'utilisateur.

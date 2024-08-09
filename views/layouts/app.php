@@ -17,6 +17,9 @@ $page = $title === 'Messagerie' ? true : false;
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $title ?></title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./views/assets/css/mybs-5.css">
     <link rel="stylesheet" href="./views/assets/vendors/bootstrap-5.0.2-src/dist/css/show-password-toggle.css">
     <link rel="stylesheet" href="./views/assets/css/style.css">
@@ -36,6 +39,7 @@ $page = $title === 'Messagerie' ? true : false;
                          class="d-inline-block align-text-top">
                     Tom Troc
                 </a>
+
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
                         data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
@@ -63,6 +67,7 @@ $page = $title === 'Messagerie' ? true : false;
                                 <a class="nav-link" href="index.php?action=profile">mon compte</a>
                             </li>
                         <?php } ?>
+
                         <li class="nav-item">
                             <?php
                             if (Utils::user()) {
@@ -84,7 +89,7 @@ $page = $title === 'Messagerie' ? true : false;
         <div class="container col-md-8">
             <div class="d-flex flex-wrap">
                 <?php if ($title !== "Messagerie") { ?>
-                    <h1 class="col-md-6 link-dark"><?= $title ?></h1>
+                    <h1 class="col-md-6 link-dark" id="page-title"><?= $title ?></h1>
                 <?php } ?>
                 <?= $content /* Ici est affiché le contenu réel de la page. */ ?>
             </div>
@@ -109,79 +114,6 @@ $page = $title === 'Messagerie' ? true : false;
 <script src="./views/assets/vendors/bootstrap-5.0.2src/dist/js/bootstrap.js" type="application/javascript"></script>
 
 <script type="application/javascript">
-    /*
-     $(document).ready(function () {
-     displayResult();
-     /!* Send Message	*!/
-
-     $('#send_msg').on('click',
-     function () {
-     if ($('#msg').val() == "") {
-     alert('Please write message first');
-     } else {
-     $msg = $('#msg').val();
-     $id = $('#id').val();
-     $.ajax({
-     type: "POST",
-     url: "send_message.php",
-     data: {
-     msg: $msg,
-     id: $id,
-     },
-     success: function () {
-     displayResult();
-     }
-     });
-     }
-     }
-     );
-     /!*****    *****!/
-     });
-
-     function displayResult() {
-
-     id = document.getElementById('('
-     id
-     ').val();
-     $.ajax({
-     url: 'index.php?action=getCurrentSender&sender=',
-     type: 'POST',
-     async: false,
-     data: {
-     id: id,
-     res: 1,
-     },
-     success: function (response) {
-     document.getElementById('result').html(response);
-     }
-     });
-     }
-
-
-     // onclick="getSender(this.id)"
-
-     function getSender(senderIdAx) {
-     if (senderIdAx > 0) {
-     console.log(senderIdAx)
-
-     var xmlhttp = new XMLHttpRequest();
-     xmlhttp.onreadystatechange = function () {
-     if (xmlhttp.readyState == XMLHttpRequest.DONE) { // XMLHttpRequest.DONE == 4
-     if (xmlhttp.status == 200) {
-     document.getElementById("myDiv").innerHTML = xmlhttp.responseText;
-     } else if (xmlhttp.status == 400) {
-     alert('There was an error 400');
-     } else {
-     alert('something else other than 200 was returned erro ' + xmlhttp.status);
-     }
-     }
-     };
-     xmlhttp.open("GET", "index.php?action=getCurrentSender&sender=" + senderIdAx, true);
-     xmlhttp.send();
-     }
-     }*/
-
-</script>
 <script type="application/javascript" src="./views/assets/js/ajax.js"></script>
 <script type="application/javascript" src="./views/assets/js/messenger.js"></script>
 <?php
@@ -190,14 +122,12 @@ $action = Utils::request('action');
 if ($action == "messenger") {
     ?>
     <script type="application/javascript">
-
         if (document.readyState === "loading") {
             document.addEventListener(("DOMContentLoaded"), ftx_getContact);
             console.log('ON LOAD')
         } else {
             ftx_getContact();
             console.log('LOADED')
-
         }
 
         /* ajax.get('index.php?action=getCurrentSender&sender=', {senderIdAx: 'bar'}, function () {
@@ -222,6 +152,23 @@ if ($action == "messenger") {
             }
             ajax.send(url, callback, 'POST', query.join('&'), async)
         };
+
+    </script>
+    <?php
+}
+
+if ($action == "books"){
+    ?>
+    <script type="application/javascript">
+        if (document.readyState === "loading") {
+            document.addEventListener(("DOMContentLoaded"), ftx_getContact);
+            console.log('ON LOAD')
+        } else {
+            ftx_getContact();
+            console.log('LOADED')
+        }
+
+
 
     </script>
     <?php

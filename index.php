@@ -62,6 +62,10 @@ try {
             $adminController = new AdminController();
             $adminController->suscribeUser();
             break;
+ case 'updateUser':
+            $adminController = new AdminController();
+            $adminController->updateUser();
+            break;
 
         case 'disconnectUser':
             $adminController = new AdminController();
@@ -82,11 +86,13 @@ try {
             $articleController = new BookController();
             $articleController->updateBook($bookId);
             break;
+
         case 'updateFormScript':
             $bookUpdated       = $_REQUEST;
             $articleController = new BookController();
             $articleController->updateBookScript($bookUpdated);
             break;
+
         case 'deleteBook':
             $bookId            = Utils::request('id');
             $articleController = new BookController();
@@ -94,7 +100,14 @@ try {
             break;
 
         case 'searchBook':
-
+            $bookSearch      = isset($_POST['search']) ? $_POST['search'] : null;
+            $articleController = new BookController();
+            if (isset($bookSearch)) {
+                $articleController->searchBook($bookSearch);
+            }else{
+                $articleController->all();
+            }
+            break;
         default:
             throw new Exception("La page demandée n'existe pas.");
     }

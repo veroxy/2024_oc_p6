@@ -1,0 +1,59 @@
+* {
+  font-family: "Inter", sans-serif !important;
+  font-weight: 400;
+}
+
+#page-title{
+  font-family: "Playfair Display", serif !important;
+  font-size: 2.25rem !important;
+  font-weight: 400;
+}
+.navbar-brand{
+  font-family: "Playfair Display", serif !important;
+  font-size: 1.25rem !important;
+  color: var(--bs-success);
+}
+.t-8{
+  font-size: 0.5rem;
+  text-transform: uppercase;
+}
+.card-img-top {
+  min-height: 160px !important;
+}
+
+.message-outer {
+  .message-content {
+    background-color: #EDF2F6;
+  }
+}
+
+#aside-message {
+  .list-group-item {
+    border: none;
+    background-color: var(--bs-beige-light) !important;
+
+    //background-color: var(--bs-beige-light) !important;
+    &:active {
+      background-color: var(--bg-white) !important;
+    }
+
+  }
+}
+
+#content-message {
+  .list-group-item {
+    border: none;
+    background-color: var(--bs-beige-light) !important;
+
+    &:active {
+    }
+  }
+}
+
+#newMsg {
+  textarea {
+    overflow-wrap: break-word;
+    resize: none;
+    height: 47px;
+  }
+}
