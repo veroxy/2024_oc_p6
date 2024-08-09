@@ -2,11 +2,10 @@
     <div class="d-flex <?= Utils::user() && $user->getId() == $currentUser->getId() ? '' : 'col-md-6'?> ">
 
         <div class="text-center bg-white rounded p-5 <?= Utils::user() && $user->getId() == $currentUser->getId() ? 'col-md-6' : 'col-md-12'?>">
-            <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg"
-                 role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false"><title>
-                    Placeholder</title>
-                <rect width="100%" height="100%" fill="var(--bs-secondary-color)"></rect>
-            </svg>
+
+            <div>
+                <img class="bd-placeholder-img rounded-circle" src="<?= $user->getThumb() ?>">
+            </div>
             <h2 class="fw-normal"><?= $user->getUsername() ?></h2>
             <p>Membre depuis <?= Utils::dateIntervalDuration($user->getCreatedAt()) ?></p>
             <h5 class="t-8">bibliothèque</h5>
@@ -85,7 +84,9 @@
                 ?>
                 <!--        <tr class="">-->
                 <tr class="articleLine">
-                    <td class="title"><img src="<?= $book->getThumb() ?>" alt="<?= $book->getTitle() ?>"></td>
+                    <td class="title book-card">
+                        <img src="<?= $book->getThumb() ?>" alt="<?= $book->getTitle() ?>" class="card-img">
+                    </td>
                     <td class="title"><?= $book->getTitle() ?></td>
                     <td class="content"><?php $author = $book->getAuthors()[0];
                         echo $author->getFullname() ?></td>

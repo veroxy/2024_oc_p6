@@ -1,8 +1,8 @@
 <div class="col-md-6 bg-white rounded">
-    <form action="index.php?action=updateFormScript" method="post" class="foldedCorner">
+    <form action="index.php?action=updateFormScript" method="post" class="foldedCorner p-4">
 
         <fieldset class="mb-3">
-            <label for="title">title address</label>
+            <label for="title">title</label>
             <input type="title" class="form-control" id="title" value="<?= $book->getTitle() ?>"
                    name="current-title"
                    autocomplete="current-title">

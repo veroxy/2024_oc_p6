@@ -8,25 +8,26 @@
                     </div>
                     <figcaption class="col-md-6 p-2 d-flex  align-items-start flex-column ">
                         <div class="card-body">
-                            <h5 class="card-title"><?= $book->getTitle() ?></h5>
+                            <h3 class="card-title "><?= $book->getTitle() ?></h3>
                             <?php $authors = $book->getAuthors() ;
                             if (isset($authors)) {
                                 ?>
                                 <div>
-                                    <?php if (count($book->getAuthors()) > 1) {
-                                        foreach ($book->getAuthors() as $author) { ?>
+                                    <?php
+                                   /* if (count($book->getAuthors()) > 1) {
+                                        foreach ($book->getAuthors() as $author) { */?><!--
 
                                             <p class="card-text"><small
-                                                        class="text-muted"><?= $author->getFullname() ?></small></p>
-                                        <?php }
-                                    } else {
+                                                        class="text-muted"><?php /*= $author->getFullname() */?></small></p>
+                                        --><?php /*}
+                                    } else {*/
                                         $author = $book->getAuthors()[0];
-                                        ?>
+//                                        ?>
                                         <p class="card-text"><small class="text-muted"><?= $author->getFullname() ?></small>
                                         </p>
 
 
-                                    <?php } ?>
+<!--                                    --><?php //} ?>
                                 </div>
                             <?php } ?>
                             <p class="card-text"><?= $book->getContent() ?></p>

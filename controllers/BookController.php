@@ -31,22 +31,18 @@ class BookController extends AbstactController
     {
         $bookRepo = new BookRepository();
         $book     = $bookRepo->getBookById($bookId);
-        $view     = new View('update ' . $book->getTitle());
+        $view     = new View('Modifier les informations');
         $view->render('updateBookForm', ['book' => $book]);
     }
 
     public function searchBook(?string $search = null)
     {
-        var_dump('avant');
         if (isset($search)) {
             $repo  = new BookRepository();
             $books = $repo->searchBookBytitle($search);
         }else{
-            var_dump('cca');
             $books = $search;
         }
-//        var_dump('apres');
-        die('49');
 //
 
 //        $view = new View("Nos Livres à l'échanges");
