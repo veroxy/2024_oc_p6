@@ -73,8 +73,8 @@
             <th class="t-cell text-center text-uppercase">title</th>
             <th class="t-cell text-center text-uppercase">auteur</th>
             <th class="t-cell text-center text-uppercase">content</th>
-            <th class="t-cell text-center text-uppercase">stock</th>
             <?php if (Utils::user() && $user->getId() == $currentUser->getId()) { ?>
+                <th class="t-cell text-center text-uppercase">stock</th>
                 <th class="t-cell text-center text-uppercase" colspan="3">actions</th>
             <?php } ?>
         </tr>
@@ -90,18 +90,20 @@
                     <td class="content"><?php $author = $book->getAuthors()[0];
                         echo $author->getFullname() ?></td>
                     <td class="content"><?= $book->getContent() ?></td>
-                    <td class="content">
-                        <?php
-                        if ($book->getStock()) {
-                            echo "<span class='badge rounded-pill bg-success'>disponible</span>";
 
-                        } else {
-                            echo "<span class='badge rounded-pill bg-danger'>non disponible</span>";
-                        }
-                        ?>
-                    </td>
+
                     <?php if (Utils::user() && $user->getId() == $currentUser->getId()) { ?>
 
+                        <td class="content">
+                            <?php
+                            if ($book->getStock()) {
+                                echo "<span class='badge rounded-pill bg-success'>disponible</span>";
+
+                            } else {
+                                echo "<span class='badge rounded-pill bg-danger'>non disponible</span>";
+                            }
+                            ?>
+                        </td>
                         <td class="action">
                             <span class="pill rounded-pill border-danger"></span>
                             <a class="submit"
@@ -130,12 +132,9 @@
 
 
     <?php
-    if (Utils::user()) {
+    if (Utils::user() && $user->getId() == $currentUser->getId()) {
         ?>
-
         <a class="submit" href="index.php?action=showUpdateBookForm">Ajouter un $book</a>
-
-
         <?php
     }
     ?>
