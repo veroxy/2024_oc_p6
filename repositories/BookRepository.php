@@ -110,10 +110,11 @@ class BookRepository extends AbstractEntityRepository
     public function getFouthLastBooks(int $limit = 4): array
     {
         $sql = "SELECT DISTINCT book.*,
-               (SELECT author.fullname
+               (SELECT CONCAT(author.firstname,' ',author.lastname) AS fullname
                  FROM book_has_author ba
                           JOIN author ON ba.author_id = author.id
-                 WHERE ba.book_id = book.id limit 1) AS fullname,
+                 WHERE ba.book_id = book.id
+                 limit 1) AS fullname, 
 
                 (SELECT user.username
                  FROM user_has_book ub
@@ -130,6 +131,7 @@ class BookRepository extends AbstractEntityRepository
         $books      = [];
 
         while ($book = $result->fetch()) {
+//            $fullname = $book['firstname'].''.$book['lastname'];
             $author = $authorRepo->getFirstAuthorsBookId($book['fullname']);
             $user   = $userRepo->getUserByBookId($book['username']);
             $post   = new Book($book);

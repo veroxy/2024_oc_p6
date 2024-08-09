@@ -64,7 +64,6 @@ class MessageRepository extends AbstractEntityRepository
                 'user_id_receiver' => $message->getReceiver(),
                 'content' => $message->getContent(),
             ];
-            var_dump($datas, $message);
 
             $this->db->query($sql, $datas);
         }

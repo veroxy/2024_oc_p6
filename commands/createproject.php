@@ -120,9 +120,10 @@ function generateMigrations()
         "book_has_author",
         "user_has_book"
     ];
+
     foreach ($migrations as $migration) {
         sqlMigrate($migration);
-        echo ft_colorSucces($migration.".sql -> done\n")  ;
+        echo ft_colorSucces($migration . ".sql -> done\n");
     }
 }
 

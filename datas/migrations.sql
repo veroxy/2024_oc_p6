@@ -66,7 +66,8 @@ DROP TABLE IF EXISTS `2024_oc_p6_tomtroc`.`author` ;
 
 CREATE TABLE IF NOT EXISTS `2024_oc_p6_tomtroc`.`author` (
                                                              `id` INT UNSIGNED NOT NULL AUTO_INCREMENT,
-                                                             `fullname` VARCHAR(255) NOT NULL,
+                                                             `firstname` VARCHAR(255) NOT NULL,
+                                                             `lastname` VARCHAR(255) NOT NULL,
                                                              `created_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                                              `modified_at` DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
                                                              PRIMARY KEY (`id`))

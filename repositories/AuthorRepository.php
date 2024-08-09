@@ -9,6 +9,13 @@ use models\entities\Author;
  */
 class AuthorRepository extends AbstractEntityRepository
 {
+    public function retriveFistLastName(string $fullname)
+    {
+        $fullname  = preg_split("/[\s]+/", $fullname);
+//        $firstname = $fullname[0];
+//        $lastname  = $fullname[1];
+    }
+
     /**
      * Récupère un author connecté
      * @param int $id
@@ -29,7 +36,7 @@ class AuthorRepository extends AbstractEntityRepository
      * @param int $idBook
      * @return array
      */
-    public function getFirstAuthorsBookId(int|string $idBook):?Author
+    public function getFirstAuthorsBookId(int|string $idBook): ?Author
     {
         if (is_int($idBook)) {
             $sql = "SELECT a.*
@@ -41,7 +48,10 @@ class AuthorRepository extends AbstractEntityRepository
                 LIMIT 1";
         }
         if (is_string($idBook)) {
-        $sql = "SELECT a.* FROM author as a WHERE a.fullname='$idBook';";
+            $fullname  = preg_split("/[\s]+/", $idBook);
+            $firstname = $fullname[0];
+            $lastname  = $fullname[1];
+            $sql       = "SELECT a.* FROM author as a WHERE a.firstname='$firstname' AND a.lastname='$lastname';";
         }
 
         $result = $this->db->query($sql);
@@ -61,7 +71,7 @@ class AuthorRepository extends AbstractEntityRepository
     {
 //        $sql = "SELECT * FROM book_has_author WHERE book_id = :idBook";
 
-        $sql = "SELECT a.fullname
+        $sql = "SELECT a.firstname, a.lastname
                 FROM book_has_author
                 RIGHT JOIN author a 
                 ON book_has_author.author_id = a.id
@@ -79,9 +89,12 @@ class AuthorRepository extends AbstractEntityRepository
      */
     public function getUserByFullname(string $fullname): ?Author
     {
-        $sql    = "SELECT * FROM author WHERE fullname = :fullname";
-        $result = $this->db->query($sql, ['fullname' => $fullname]);
-        $author = $result->fetch();
+        $fullname  = preg_split("/[\s]+/", $fullname);
+        $firstname = $fullname[0];
+        $lastname  = $fullname[1];
+        $sql       = "SELECT * FROM author WHERE firsname = :firstname AND lastname = :lastname";
+        $result    = $this->db->query($sql, ['firstname' => $firstname, 'lastname' => $lastname]);
+        $author    = $result->fetch();
         if ($author) {
             return new Author($author);
         }
@@ -94,9 +107,14 @@ class AuthorRepository extends AbstractEntityRepository
      */
     public function addUser(Author $author)
     {
-        $sql    = "INSERT INTO author (fullname, created_at, modified_at) VALUES (:fullname, NOW(), NOW())";
+//        $fullname  = preg_split("/[\s]+/", $author->getFullname());
+//        $firstname = $fullname[0];
+//        $lastname  = $fullname[1];
+
+        $sql    = "INSERT INTO author (firstname,lastname, created_at, modified_at) VALUES (:firstname,:lastname, NOW(), NOW())";
         $result = $this->db->query($sql, [
-            'fullname' => $author->getFullname(),
+            'firstname' => $author->getFirstName(),
+            'lastname' => $author->getLastName(),
         ]);
         return $result->rowCount() > 0;
     }

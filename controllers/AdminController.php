@@ -124,14 +124,12 @@ class AdminController extends \controllers\AbstactController
         $email    = Utils::request("current-email");
         $password = Utils::request("current-password");
         // On vérifie que les données sont valides.
-//        var_dump($_REQUEST);
         if (empty($username) || empty($email) || empty($password)) {
             throw new Exception("Tous les champs sont obligatoires. 1");
         }
 
         // On crée l'objet User.
 
-        var_dump($_SESSION['uid']);
         $user = new User([
             'username' => $username,
             'email' => $email,

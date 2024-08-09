@@ -95,7 +95,6 @@ class UserController extends AbstactController
         $email   = Utils::request("current-email");
         $password = Utils::request("current-password");
 
-        var_dump($email,$password, $_REQUEST);
         // On vérifie que les données sont valides.
         if (empty($email) || empty($password)) {
             throw new Exception("Tous les champs sont obligatoires. 2");
