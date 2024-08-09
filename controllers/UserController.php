@@ -87,9 +87,32 @@ class UserController extends AbstactController
     /**
      * @return void
      */
-    public function updateProfile()
+    public function updateProfile(): void
     {
         $this->checkIfUserIsConnected();
+        // On récupère les données du formulaire.
+        $id      = Utils::request("id", -1);
+        $email   = Utils::request("current-email");
+        $password = Utils::request("current-password");
+
+        var_dump($email,$password, $_REQUEST);
+        // On vérifie que les données sont valides.
+        if (empty($email) || empty($password)) {
+            throw new Exception("Tous les champs sont obligatoires. 2");
+        }
+
+
+        // On crée l'objet Book.
+        $user = new \models\entities\User([
+            'email' => $email,
+            'password' => $password,
+            'id_user' => $_SESSION['idUser']
+        ]);
+
+        // On ajoute l'book.
+        $bookRepository = new UserRepository();
+        $bookRepository->updateUser($user);
+
     }
 
 

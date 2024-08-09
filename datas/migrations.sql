@@ -116,13 +116,13 @@ CREATE TABLE IF NOT EXISTS `2024_oc_p6_tomtroc`.`user_has_book` (
                                                                     CONSTRAINT `fk_user_has_book_user1`
                                                                         FOREIGN KEY (`user_id`)
                                                                             REFERENCES `2024_oc_p6_tomtroc`.`user` (`id`)
-                                                                            ON DELETE NO ACTION
-                                                                            ON UPDATE NO ACTION,
+                                                                            ON DELETE CASCADE
+                                                                            ON UPDATE CASCADE,
                                                                     CONSTRAINT `fk_user_has_book_book1`
                                                                         FOREIGN KEY (`book_id`)
                                                                             REFERENCES `2024_oc_p6_tomtroc`.`book` (`id`)
-                                                                            ON DELETE NO ACTION
-                                                                            ON UPDATE NO ACTION);
+                                                                            ON DELETE CASCADE
+                                                                            ON UPDATE CASCADE);
 
 CREATE INDEX `fk_user_has_book_book1_idx` ON `2024_oc_p6_tomtroc`.`user_has_book` (`book_id` ASC);
 
@@ -141,13 +141,13 @@ CREATE TABLE IF NOT EXISTS `2024_oc_p6_tomtroc`.`book_has_author` (
                                                                       CONSTRAINT `fk_book_has_author_book1`
                                                                           FOREIGN KEY (`book_id`)
                                                                               REFERENCES `2024_oc_p6_tomtroc`.`book` (`id`)
-                                                                              ON DELETE NO ACTION
-                                                                              ON UPDATE NO ACTION,
+                                                                              ON DELETE CASCADE
+                                                                            ON UPDATE CASCADE,
                                                                       CONSTRAINT `fk_book_has_author_author1`
                                                                           FOREIGN KEY (`author_id`)
                                                                               REFERENCES `2024_oc_p6_tomtroc`.`author` (`id`)
-                                                                              ON DELETE NO ACTION
-                                                                              ON UPDATE NO ACTION);
+                                                                              ON DELETE CASCADE
+                                                                            ON UPDATE CASCADE);
 
 CREATE INDEX `fk_book_has_author_author1_idx` ON `2024_oc_p6_tomtroc`.`book_has_author` (`author_id` ASC);
 

@@ -11,6 +11,8 @@ insert into book_has_author (book_id, author_id) values (14, 11);
 insert into book_has_author (book_id, author_id) values (17, 16);
 insert into book_has_author (book_id, author_id) values (11, 17);
 insert into book_has_author (book_id, author_id) values (14, 12);
+insert into book_has_author (book_id, author_id) values (14, 13);
+insert into book_has_author (book_id, author_id) values (10, 12);
 insert into book_has_author (book_id, author_id) values (2, 4);
 insert into book_has_author (book_id, author_id) values (11, 28);
 insert into book_has_author (book_id, author_id) values (20, 13);
