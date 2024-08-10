@@ -16,7 +16,7 @@
     if (!empty($books)) {
         foreach ($books as $book) { ?>
 
-            <div class="book-card col-xs-2 col-sm-3 col-md-3 g-5 align-content-center align-self-center">
+            <div class="book-card col-xs-2 col-sm-3 col-md-3 g-5 align-content-center align-self-start">
                 <div class="d-block">
                     <a href="index.php?action=book&id=<?= $book->getId() ?>&vendor=<?= $book->getUser()->getId() ?>" class="m-auto text-decoration-none">
                     <div class="card border-0 shadow-sm rounded rounded-4">
@@ -24,9 +24,9 @@
                             <img src="<?= $book->getThumb() ?>" alt="place holder img" class="w-100">
                         </div>
                         <div class="card-body">
-                            <h3 class="h3"><?= $book->getTitle() ?></h3>
+                            <h6><?= $book->getTitle() ?></h6>
                             <p class="card-text text-body-secondary"><?= $book->getAuthor()->getFullname() ?></p>
-                            <p class="text-body-secondary"><i>Vendu par : <?= $book->getUser()->getUsername() ?></i></p>
+                            <p class="vendor-text text-body-secondary"><i>Vendu par : <?= $book->getUser()->getUsername() ?></i></p>
                         </div>
                     </div>
                     </a>

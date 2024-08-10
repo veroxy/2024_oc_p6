@@ -6,9 +6,9 @@
                     <div class="col-md-6">
                         <img src="<?= $book->getThumb() ?>" alt="<?= $book->getTitle() ?>" class="img-fluid w-100">
                     </div>
-                    <figcaption class="col-md-6 p-2 d-flex  align-items-start flex-column ">
+                    <figcaption class="col-md-6 p-2 d-flexlign-items-start flex-column bg-light ">
                         <div class="card-body">
-                            <h3 class="card-title "><?= $book->getTitle() ?></h3>
+                            <h1 class="card-title"><?= $book->getTitle() ?></h1>
                             <?php $authors = $book->getAuthors() ;
                             if (isset($authors)) {
                                 ?>
@@ -33,10 +33,10 @@
                             <p class="card-text"><?= $book->getContent() ?></p>
                         </div>
                         <footer class="col-12">
-                            <h5>proprietaire</h5>
+                            <h5 class="t-8">proprietaire</h5>
                             <div>
                                 <a href="index.php?action=profile&id=<?= $book->getUser()->getId() ?>" class="text-decoration-none">
-                                <span class="badge  align-items-center rounded text-black">
+                                <span class="badge align-items-center rounded text-black bg-white rounded-5">
                                     <img src="<?= $book->getUser()->getThumb() ?>" alt="" width="32" height="32"
                                          class="rounded-circle me-2">
                                 <?= $book->getUser()->getUsername() ?>

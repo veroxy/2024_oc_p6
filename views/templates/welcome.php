@@ -26,7 +26,7 @@
                         <div class="col">
                             <div class="card border-0 shadow-sm rounded rounded-4">
                                 <div>
-                                    <a href="index.php?action=book&id=<?= $book->getId()?>">
+                                    <a href="index.php?action=book&id=<?= $book->getId() ?>&vendor=<?= $book->getUser()->getId() ?>">
                                         <img src="<?= $book->getThumb() ?>" alt="<?= $book->getTitle() ?>" class="placeholder card-img-top" alt>
                                     </a>
                                 </div>
