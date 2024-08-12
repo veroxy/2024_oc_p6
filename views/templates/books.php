@@ -24,7 +24,7 @@
                             <img src="<?= $book->getThumb() ?>" alt="place holder img" class="w-100">
                         </div>
                         <div class="card-body">
-                            <h6><?= $book->getTitle() ?></h6>
+                            <h3 class="h6"><?= $book->getTitle() ?></h3>
                             <p class="card-text text-body-secondary"><?= $book->getAuthor()->getFullname() ?></p>
                             <p class="vendor-text text-body-secondary"><i>Vendu par : <?= $book->getUser()->getUsername() ?></i></p>
                         </div>

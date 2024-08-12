@@ -26,13 +26,13 @@
                         <div class="col">
                             <div class="card border-0 shadow-sm rounded rounded-4">
                                 <div>
-                                    <a href="index.php?action=book&id=<?= $book->getId() ?>&vendor=<?= $book->getUser()->getId() ?>">
-                                        <img src="<?= $book->getThumb() ?>" alt="<?= $book->getTitle() ?>" class="placeholder card-img-top" alt>
-                                    </a>
+                                    <img src="<?= $book->getThumb() ?>" alt="<?= $book->getTitle() ?>"
+                                         class="card-img-top">
                                 </div>
                                 <div class="card-body">
-                                    <a href="index.php?action=book&id=<?= $book->getId() ?>&vendor=<?= $book->getUser()->getId() ?>">
-                                        <h3 class="h3"><?= $book->getTitle() ?></h3>
+                                    <a href="index.php?action=book&id=<?= $book->getId() ?>&vendor=<?= $book->getUser()->getId() ?>"
+                                       class="text-decoration-none">
+                                        <h3 class="h6"><?= $book->getTitle() ?></h3>
                                         <p class="card-text"><?= $book->getAuthor()->getFullname() ?></p>
                                         <p><i>Vendu par : <?= $book->getUser()->getUsername() ?></i></p>
                                     </a>

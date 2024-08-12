@@ -33,13 +33,7 @@
                 if (isset($sender) && in_array($sender, $contacts) && $contact->getId() == $sender->getId()) {
                     $senderActive = true;
                 }
-                /*  if (isset($sender)) {
-                      if ($contact->getId() == $sender->getId()) {
-                          if (in_array($sender, $contacts)) {
-                              $senderActive = true;
-                          }
-                      }
-                  }*/
+
                 ?>
 
                 <a id="<?= $contact->getId() ?>" href="#"

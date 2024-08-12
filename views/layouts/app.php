@@ -7,11 +7,14 @@
  * @var $title string : page title
  * @var $conten string : page content
  */
-$showTitle = $_SESSION['show-title'] ;
+$showTitle = $_SESSION['show-title'];
+$action    = Utils::request('action');
+//TOFIXED
+
+var_dump(in_array($action, ['book', 'messenger']));
 ?>
 
 <!DOCTYPE html>
-
 <html lang="fr">
 <head>
     <meta charset="UTF-8">
@@ -19,7 +22,8 @@ $showTitle = $_SESSION['show-title'] ;
     <title><?= $title ?></title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
+          rel="stylesheet">
     <link rel="stylesheet" href="./views/assets/css/mybs-5.css">
     <link rel="stylesheet" href="./views/assets/vendors/bootstrap-5.0.2-src/dist/css/show-password-toggle.css">
     <link rel="stylesheet" href="./views/assets/css/style.css">
@@ -59,8 +63,11 @@ $showTitle = $_SESSION['show-title'] ;
                     <ul class="navbar-nav mt-auto mb-2 mb-lg-0">
 
                         <?php if (Utils::user()) { ?>
-                            <li class="nav-item"><a href="index.php?action=messenger    "
-                                                    class="nav-link">messagerie</a></li>
+                            <li class="nav-item">
+                                <a href="index.php?action=messenger"
+                                   class="nav-link"><i class="fa"></i>
+                                    messagerie
+                                </a></li>
 
                             <li class="nav-item">
                                 <a class="nav-link" href="index.php?action=profile">mon compte</a>
@@ -85,7 +92,7 @@ $showTitle = $_SESSION['show-title'] ;
     </header>
 
     <main class="d-flex align-items-center py-4 <?= $showTitle ? 'bg-beige' : 'bg-beige-light' ?>">
-        <div class="container col-md-8">
+        <div class="container <?= !in_array($action, ['book', 'messenger']) ? 'col-md-8' : '' ?>">
             <div class="d-flex flex-wrap">
                 <?php if (!$showTitle) { ?>
                     <h1 class="col-md-6 link-dark" id="page-title"><?= $title ?></h1>
@@ -110,16 +117,15 @@ $showTitle = $_SESSION['show-title'] ;
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
         crossorigin="anonymous"></script>
-<script src="./views/assets/vendors/bootstrap-5.0.2src/dist/js/bootstrap.js" type="application/javascript"></script>
+<script src="./views/assets/vendors/bootstrap-5.0.2-src/dist/js/bootstrap.js" type="application/javascript"></script>
 
-<script type="application/javascript">
 <script type="application/javascript" src="./views/assets/js/ajax.js"></script>
-<script type="application/javascript" src="./views/assets/js/messenger.js"></script>
+
 <?php
 // uniquement pour la page messagerie
-$action = Utils::request('action');
 if ($action == "messenger") {
     ?>
+    <script type="application/javascript" src="./views/assets/js/messenger.js"></script>
     <script type="application/javascript">
         if (document.readyState === "loading") {
             document.addEventListener(("DOMContentLoaded"), ftx_getContact);
@@ -156,7 +162,7 @@ if ($action == "messenger") {
     <?php
 }
 
-if ($action == "books"){
+if ($action == "books") {
     ?>
     <script type="application/javascript">
         if (document.readyState === "loading") {
@@ -166,7 +172,6 @@ if ($action == "books"){
             ftx_getContact();
             console.log('LOADED')
         }
-
 
 
     </script>
