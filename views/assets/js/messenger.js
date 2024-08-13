@@ -24,28 +24,26 @@ function ftx_getContact(senderIdAx = null) {
 
             currActived        = this
             senderIdAx         = this.id;
-            var currMsgActived = document.getElementById("contact-message-" + senderIdAx);
+            var currMsgContainerActived = document.getElementById("contact-message-" + senderIdAx);
 
-            console.info('clicked:', "contact-message-" + senderIdAx, '', senderIdAx);
-
-            if (messageContainer.classList.contains('active')) {
+            if (messageContainer.classList.contains('active') && messageContainer != currMsgContainerActived) {
                 let tester = document.getElementById("contact-message-" + senderIdAx);
                 // var currMsgActived = document.getElementsByClassName('contact-message')[i];
-                console.info('clicked:', currMsgActived, tester, senderIdAx);
-                currMsgActived.classList.remove("d-none");
-                currMsgActived.classList.add("active");
-                currMsgActived.setAttribute("aria-current", 'true');
+                currMsgContainerActived.classList.remove("d-none");
+                currMsgContainerActived.classList.add("active");
+                currMsgContainerActived.setAttribute("aria-current", 'true');
 
+                // si currMsgContainerActived actif est clicked
+                // on n'enleve pas les element
                 messageContainer.classList.remove("active");
                 messageContainer.classList.add("d-none");
                 messageContainer.removeAttribute("aria-current");
 
             }
-            messageContainer = currMsgActived
-            console.info('apres: ', messageContainer, currMsgActived, senderIdAx)
+            messageContainer = currMsgContainerActived
+            // console.info('apres: ', messageContainer, currMsgContainerActived, senderIdAx)
         });
     }
-console.log('id to send :' + senderIdAx)
     let url = 'index.php?action=getCurrentSender&sender=' + senderIdAx;
     return url;
 }

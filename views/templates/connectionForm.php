@@ -17,7 +17,7 @@
             <input type="password" class="form-control" name="password" id="password" required>
         </fieldset>
 
-        <button class="btn btn-primary w-100 py-2 btn btn-success" type="submit">Se connecter</button>
+        <button class="btn btn-primary w-100 py-2" type="submit">Se connecter</button>
         <p class="mt-5 mb-3 text-body-secondary">Pas de compte ? <a href="index.php?action=suscribeForm">Inscrivez vous</a></p>
     </form>
 </div>

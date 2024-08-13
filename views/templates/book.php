@@ -44,7 +44,7 @@
                                 </a>
                             </div>
                             <div class="col py-5">
-                                <a href="index.php?action=messenger&sender=<?= $book->getUser()->getId() ?>" class="col-8 btn btn-success"><?php ?>envoyer un message</a>
+                                <a href="index.php?action=messenger&sender=<?= $book->getUser()->getId() ?>" class="col-12 btn btn-primary"><?php ?>Écrire un message</a>
                             </div>
                         </footer>
                     </div>

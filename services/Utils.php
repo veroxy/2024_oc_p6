@@ -20,7 +20,7 @@ class Utils
     {
         // On vérifie que l'utilisateur est connecté.
         $userConnected = isset($_SESSION['user']) ? true : false;
-                return $userConnected;
+        return $userConnected;
     }
 
     /**
@@ -28,14 +28,16 @@ class Utils
      * @param DateTime $date : la date à convertir.
      * @return string : la date convertie.
      */
-    public static function convertDateToFrenchFormat(DateTime $date): string
+    public static function convertDateToFrenchFormat(DateTime $date, string $format): string
     {
         // Attention, s'il y a un soucis lié à IntlDateFormatter c'est qu'il faut
         // activer l'extention intl_date_formater (ou intl) au niveau du serveur apache. 
         // Ca peut se faire depuis php.ini ou parfois directement depuis votre utilitaire (wamp/mamp/xamp)
         $dateFormatter = new IntlDateFormatter('fr_FR', IntlDateFormatter::FULL, IntlDateFormatter::FULL);
 //        $dateFormatter->setPattern('EEEE d MMMM Y ');
-        $dateFormatter->setPattern('dd.MM HH:mm:ss');
+//        $dateFormatter->setPattern('dd.MM'); // jour.mois 04.12
+//        $dateFormatter->setPattern('dd MMMM yyyy HH:mm:ss'); //jour fevrier annee horaire
+        $dateFormatter->setPattern($format); //jour fevrier annee horaire
         return $dateFormatter->format($date);
     }
 
@@ -75,8 +77,8 @@ class Utils
         $url = "index.php?action=$action";
 
         foreach ($params as $paramName => $paramValue) {
-            $extends =  is_string($paramName) ? "&$paramName=$paramValue" : $paramValue;
-            $url .= $extends;
+            $extends = is_string($paramName) ? "&$paramName=$paramValue" : $paramValue;
+            $url     .= $extends;
         }
         header("Location: $url");
         exit();
@@ -118,9 +120,9 @@ class Utils
     public static function addClassActive(string $refOrder, string $refCol, string $col, string $order): string
     {
         $refOrder = strtolower($refOrder);
-        $order = strtolower($order);
-        $refCol = strtolower($refCol);
-        $col = strtolower($col);
+        $order    = strtolower($order);
+        $refCol   = strtolower($refCol);
+        $col      = strtolower($col);
 
         if ($refOrder == $order && $refCol == $col) {
             $refOrder .= " active";
@@ -135,7 +137,7 @@ class Utils
      */
     public static function dateIntervalDuration($dateOrigin)
     {
-        $dateEnd = new DateTime(); // 'now' default
+        $dateEnd  = new DateTime(); // 'now' default
         $interval = $dateEnd->diff($dateOrigin);
         // params accepte par format '%y years, %d days, %H hours, %I minutes, %S seconds';
         if ($interval->y < 1) {
@@ -155,10 +157,38 @@ class Utils
     {
         if (str_word_count($text, 0) > $limit) {
             $words = str_word_count($text, 2);
-            $pos = array_keys($words);
-            $text = substr($text, 0, $pos[$limit]) . '...';
+            $pos   = array_keys($words);
+            $text  = substr($text, 0, $pos[$limit]) . '...';
         }
         return $text;
+    }
+
+    public static function getIdHasArrayIndex(array $arr)
+    {
+        $newArr = [];
+
+
+        foreach ($arr as $key => $value) {
+            $i = 0;
+            $newArr[$value->getId()]= [$i];
+            if ($newArr[$value->getId()]){
+                $newArr[$value->getId()][++$i] = $value;
+            }else {
+//                ++$i;
+            }
+        }
+        self::dd($newArr);
+        return $newArr;
+    }
+
+    /**
+     * pretty var_dump()
+     * @param ...$paramater
+     * @return void
+     */
+    public static function dd(...$paramater)
+    {
+        highlight_string("<?php\n " . var_export($paramater, true) . "?>");
     }
 
 }
