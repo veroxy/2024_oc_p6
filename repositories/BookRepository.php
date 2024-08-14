@@ -183,12 +183,15 @@ class BookRepository extends AbstractEntityRepository
      */
     public function updateBook(Book|array $bookDatas): ?Book
     {
-        $datas = [];
+        $baseUrl = "./views/assets/img/covers/";
+        $datas   = [];
         if (is_object($bookDatas)) {
             $datas = [
                 'title' => $bookDatas->getTitle(),
                 'content' => $bookDatas->getContent(),
                 'stock' => $bookDatas->getStock(),
+                'thumb' => $bookDatas->getThumb(),
+                'author' => $bookDatas->getAuthors()[0],
                 'id' => $bookDatas->getId()
             ];
         }
@@ -203,12 +206,13 @@ class BookRepository extends AbstractEntityRepository
                 $result     = $this->db->query($sql, $d);
             }
             $datas = [
+                'thumb' => $baseUrl . $bookDatas['current-thumb'],
                 'title' => $bookDatas['current-title'],
                 'content' => $bookDatas['current-content'],
                 'id' => $book->getId()];
         }
 
-        $sql = "UPDATE book SET thumb='test', title= :title, content= :content, modified_at=NOW() WHERE id= :id";
+        $sql = "UPDATE book SET thumb=:thumb, title= :title, content= :content, modified_at=NOW() WHERE id= :id";
         $this->db->query($sql, $datas);
 
         if ($book) {

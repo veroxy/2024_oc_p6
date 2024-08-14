@@ -124,6 +124,9 @@ function generateMigrations()
     foreach ($migrations as $migration) {
         sqlMigrate($migration);
         echo ft_colorSucces($migration . ".sql -> done\n");
+        if ($migration == "user_has_book"){
+            echo 'Vous pouvez maintenant vous connecter en tant qu\'utilisateur avec l\'id 17 - \n usersname : '.ft_colorSucces("cgotcliffeg")."</br> password : ". ft_colorSucces("password");
+        }
     }
 }
 

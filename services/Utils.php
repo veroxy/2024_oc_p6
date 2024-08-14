@@ -191,4 +191,10 @@ class Utils
         highlight_string("<?php\n " . var_export($paramater, true) . "?>");
     }
 
+    public static function urlExists($url){
+        $headers = @get_headers($url);
+//        var_dump('@socket_get_status($url)', $headers);
+        if($headers === false) return false;
+        return preg_grep('~^HTTP/\d+\.\d+\s+2\d{2}~',$headers) ? true : false;
+    }
 }
