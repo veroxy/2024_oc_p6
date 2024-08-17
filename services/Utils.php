@@ -163,21 +163,21 @@ class Utils
         return $text;
     }
 
+    /**
+     * return an array of identifer werease ordonate default index
+     * @param array $arr
+     * @return array
+     */
+
     public static function getIdHasArrayIndex(array $arr)
     {
         $newArr = [];
 
-
         foreach ($arr as $key => $value) {
-            $i = 0;
-            $newArr[$value->getId()]= [$i];
-            if ($newArr[$value->getId()]){
-                $newArr[$value->getId()][++$i] = $value;
-            }else {
-//                ++$i;
+            if ($value->getId()) {
+                $newArr[$value->getId()][] = $value;
             }
         }
-        self::dd($newArr);
         return $newArr;
     }
 
@@ -191,10 +191,27 @@ class Utils
         highlight_string("<?php\n " . var_export($paramater, true) . "?>");
     }
 
-    public static function urlExists($url){
+    /**
+     * check if Url Exist or not
+     * @param $url
+     * @return bool
+     */
+    public static function urlExists($url)
+    {
         $headers = @get_headers($url);
-//        var_dump('@socket_get_status($url)', $headers);
-        if($headers === false) return false;
-        return preg_grep('~^HTTP/\d+\.\d+\s+2\d{2}~',$headers) ? true : false;
+        if ($headers === false) return false;
+        return preg_grep('~^HTTP/\d+\.\d+\s+2\d{2}~', $headers) ? true : false;
+    }
+
+    /**
+     * @param string|null $uri
+     * @return string
+     */
+    public static function getUriAction(?string $uri = null): string
+    {
+        $uri    = $uri ?: $_SESSION['redirect_url'];
+        $action = explode('=', $uri, 2)[1];
+
+        return $action;
     }
 }

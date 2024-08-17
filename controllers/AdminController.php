@@ -1,5 +1,6 @@
 <?php
 
+use controllers\AbstactController;
 use models\entities\User;
 use repositories\BookRepository;
 use repositories\UserRepository;
@@ -12,9 +13,8 @@ use repositories\UserRepository;
 /**
  * Contrôleur de la partie admin.
  */
-class AdminController extends \controllers\AbstactController
+class AdminController extends AbstactController
 {
-
 
 
     /**
@@ -33,6 +33,7 @@ class AdminController extends \controllers\AbstactController
      */
     public function connectUser(): void
     {
+
         // On récupère les données du formulaire.
         $login    = Utils::request("username");
         $password = Utils::request("password");
@@ -47,7 +48,7 @@ class AdminController extends \controllers\AbstactController
         $user           = $userRepository->getUserByLogin($login);
 
         if (!$user) {
-            throw new Exception("L'utilisateur demandé n'existe pas : ". $login);
+            throw new Exception("L'utilisateur demandé n'existe pas : " . $login);
         }
 
         // On vérifie que le mot de passe est correct.
@@ -55,13 +56,18 @@ class AdminController extends \controllers\AbstactController
             $hash = password_hash($password, PASSWORD_DEFAULT);
             throw new Exception("Le mot de passe est incorrect : $hash");
         }
-
         // On connecte l'utilisateur.
-        $_SESSION['user']   = $user;
-        $_SESSION['uid'] = $user->getId();
-
-        // On redirige vers la page de profile.
-        Utils::redirect("profile");
+        $_SESSION['user'] = $user;
+        $_SESSION['uid']  = $user->getId();
+        $actionsExlude = ["welcome", "connectionForm", "messenger&sender=".$_SESSION['uid'], "book&id=4&vendor=".$_SESSION['uid'] ];
+        $redirectAction   = in_array(Utils::getUriAction($_SESSION['redirect_uri']),$actionsExlude );
+Utils::dd(Utils::getUriAction($_SESSION['redirect_uri']), $redirectAction);
+        if ($_SESSION['redirect_uri'] && !$redirectAction) {
+            Utils::redirect(Utils::getUriAction($_SESSION['redirect_uri']));
+        } else {
+            // On redirige vers la page de profile.
+            Utils::redirect("profile");
+        }
     }
 
     /**
@@ -106,12 +112,13 @@ class AdminController extends \controllers\AbstactController
         }
 
         // On connecte l'utilisateur.
-        $_SESSION['user']   = $user;
-        $_SESSION['uid'] = $entity->getId();
+        $_SESSION['user'] = $user;
+        $_SESSION['uid']  = $entity->getId();
 
         // On redirige vers la page d'profile.
         Utils::redirect("profile");
     }
+
     /**
      * Update de l'utilisateur.
      * @return void
@@ -145,8 +152,8 @@ class AdminController extends \controllers\AbstactController
         }
 
         // On connecte l'utilisateur.
-        $_SESSION['user']   = $user;
-        $_SESSION['uid'] = $entity->getId();
+        $_SESSION['user'] = $user;
+        $_SESSION['uid']  = $entity->getId();
 
         // On redirige vers la page d'profile.
         Utils::redirect("profile");
@@ -279,7 +286,7 @@ class AdminController extends \controllers\AbstactController
 
         $bookRepository = new BookRepository();
         $books          = $bookRepository->orderBy($col, $order);
-        $view              = new View("profile");
+        $view           = new View("profile");
         $view->render("profile", [
             'books' => $books
         ]);

@@ -11,7 +11,6 @@ $showTitle = $_SESSION['show-title'];
 $action    = Utils::request('action');
 //TOFIXED
 
-var_dump(in_array($action, ['book', 'messenger']));
 ?>
 
 <!DOCTYPE html>
