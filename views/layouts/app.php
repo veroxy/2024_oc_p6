@@ -8,8 +8,8 @@
  * @var $conten string : page content
  */
 $showTitle = $_SESSION['show-title'];
-$action    = Utils::request('action');
-//TOFIXED
+$action    = Utils::request('action', 'welcome');
+
 
 ?>
 
@@ -19,6 +19,7 @@ $action    = Utils::request('action');
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?= $title ?></title>
+    <link rel="icon" type="image/svg" href="./views/assets/img/logo_picto.svg" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap"
@@ -26,10 +27,11 @@ $action    = Utils::request('action');
     <link rel="stylesheet" href="./views/assets/css/mybs-5.css">
     <link rel="stylesheet" href="./views/assets/vendors/bootstrap-5.0.2-src/dist/css/show-password-toggle.css">
     <link rel="stylesheet" href="./views/assets/css/style.css">
+
 </head>
 
 <body class="<?= $showTitle ? 'bg-beige' : 'bg-beige-light' ?>">
-<div class="">
+<div class="d-block">
     <!--<div class="container py-3">-->
     <!--   TOFIXED  --><?php //include_once "./views/layouts/partials/header.php"; ?>
 
@@ -37,9 +39,8 @@ $action    = Utils::request('action');
         <nav class="navbar navbar-expand-lg navbar-light bg-secondary">
             <div class="container">
                 <a class="navbar-brand" href="index.php">
-                    <img src="./views/assets/img/noun-book.png" alt="" width="30" height="24"
+                    <img src="./views/assets/img/logo.svg" alt="" width="" height=""
                          class="d-inline-block align-text-top">
-                    Tom Troc
                 </a>
 
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -64,12 +65,13 @@ $action    = Utils::request('action');
                         <?php if (Utils::user()) { ?>
                             <li class="nav-item">
                                 <a href="index.php?action=messenger"
-                                   class="nav-link"><i class="fa"></i>
-                                    messagerie
+                                   class="nav-link"
+                                   id="link-message"  data-value="<?="2"?>">
+                                    messages
                                 </a></li>
 
                             <li class="nav-item">
-                                <a class="nav-link" href="index.php?action=profile">mon compte</a>
+                                <a class="nav-link" id="link-compte" href="index.php?action=profile">mon compte</a>
                             </li>
                         <?php } ?>
 
@@ -90,28 +92,38 @@ $action    = Utils::request('action');
 
     </header>
 
-    <main class="d-flex align-items-center py-4 <?= $showTitle ? 'bg-beige' : 'bg-beige-light' ?>">
-        <div class="container <?= !in_array($action, ['book', 'messenger']) ? 'col-md-8' : '' ?>">
-            <div class="d-flex flex-wrap">
-                <?php if (!$showTitle) { ?>
-                    <h1 class="col-md-6 link-dark" id="page-title"><?= $title ?></h1>
-                <?php } ?>
-                <?= $content /* Ici est affiché le contenu réel de la page. */ ?>
-            </div>
-        </div>
-    </main>
+    <main class="d-flex align-items-center <?= $showTitle ? 'bg-beige' : 'bg-beige-light' ?> <?= in_array($action, ['book', 'messenger', 'welcome']) ? 'flex-column' : '' ?>">
 
-    <footer class="d-flex align-items-center py-4 bg-secondary position-fixed bottom-0 text-body-secondary py-3 w-100">
-        <nav class="container align-content-end justify-content-end">
-            <ul class="d-sm-flex justify-content-end list-group-item list-unstyled g-2">
-                <li class="d-flex justify-content-center"><a href="#" class="link-dark">Politique de confidentialité</a>
-                </li>
-                <li class="d-flex justify-content-center"><a href="#" class="link-dark">Mentions légales</a></li>
-                <li class="d-flex justify-content-center"><a href="#" class="link-dark">Tom Troc©</a></li>
-                <li class="d-flex justify-content-center"><a href="#" class="link-dark">LOGO</a></li>
-            </ul>
-        </nav>
-    </footer>
+
+        <div class="<?= !in_array($action, ['book', 'messenger', 'welcome', 'connectionForm']) ? 'container col-md-8' : 'container-fluid p-0' ?>">
+            <?php if (!$showTitle) {
+                ?>
+                <h1 class="col-md-6 link-dark" id="page-title"><?= $title ?></h1>
+            <?php } ?>
+
+            <?= $content /* Ici est affiché le contenu réel de la page. */ ?>
+
+        </div>
+</div>
+
+</main>
+
+<footer class="d-flex align-items-center py-4 bg-secondary bottom-0 text-body-secondary py-3 w-100 bg-white">
+    <nav class="container align-content-end justify-content-end">
+        <ul class="d-sm-flex justify-content-end list-group-item list-unstyled g-2">
+            <li class="px-4 d-flex justify-content-center"><a href="#" class="link-dark text-decoration-none">Politique
+                    de confidentialité</a>
+            </li>
+            <li class="px-4 d-flex justify-content-center"><a href="#" class="link-dark text-decoration-none">Mentions
+                    légales</a></li>
+            <li class="px-4 d-flex justify-content-center"><a href="#" class="link-dark text-decoration-none">Tom
+                    Troc©</a></li>
+            <li class="px-4 d-flex justify-content-center"><a href="#"
+                                                              class="link-dark text-decoration-none"><img
+                            alt="picto logo tom troc" src="./views/assets/img/logo_picto.svg"></a></li>
+        </ul>
+    </nav>
+</footer>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
         integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"

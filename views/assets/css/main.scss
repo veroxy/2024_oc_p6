@@ -2,40 +2,61 @@
   font-family: "Inter", sans-serif !important;
   font-weight: 400;
 }
-h1,h2,h3{
+
+h1, h2, h3 {
   font-family: "Playfair Display", serif !important;
 }
 
-#page-title{
+#page-title {
   font-family: "Playfair Display", serif !important;
   font-size: 2.25rem !important;
   font-weight: 400;
 }
-.navbar-brand{
+
+.navbar-brand {
   font-family: "Playfair Display", serif !important;
   font-size: 1.25rem !important;
   color: var(--bs-success);
 }
-.t-8{
+
+.t-8 {
   font-size: 0.5rem;
   text-transform: uppercase;
   font-weight: 600;
 }
-.btn-primary{
+
+.btn-primary {
   color: #fff !important;
 }
+
 .card-img-top {
   min-height: 160px !important;
 }
-.book-card{
-  $width : 200px;
-  .card-img{
+
+.book-card {
+  $width: 200px;
+
+  .card-img {
     max-height: $width;
-overflow: hidden;
+    overflow: hidden;
     border-radius: 0;
   }
-  .vendor-text{
+
+  .vendor-text {
     font-size: 10px;
+  }
+}
+
+#books {
+  .card {
+    height: 300px !important;
+  }
+
+}
+
+#searchBook {
+  :focus {
+    outline: none;
   }
 }
 
@@ -58,6 +79,36 @@ overflow: hidden;
   }
 }
 
+#link-compte, #link-message {
+  &:before,
+  &:after{
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    vertical-align: middle;
+  }
+}
+
+#link-compte {
+  &:before {
+    content: url(../img/icon_account.svg);
+  }
+
+}
+
+#link-message {
+  &:before {
+    content: url(../img/icon_message.svg);
+  }
+  &:after{
+    content: attr(data-value);
+    color: #fff;
+    background-color: #000;
+    border-radius: 50%;
+  }
+}
+
 #content-message {
   .list-group-item {
     border: none;
@@ -73,5 +124,13 @@ overflow: hidden;
     overflow-wrap: break-word;
     resize: none;
     height: 47px;
+  }
+}
+
+#adminBook {
+  .book-card {
+    width: 78px;
+    height: 78px;
+    overflow: hidden;
   }
 }
